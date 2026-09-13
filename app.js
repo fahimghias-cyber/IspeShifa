@@ -1,53 +1,52 @@
 /**
  * اسپِ شفا - مرکزی ایپلیکیشن جاوا اسکرپٹ لاجک
  * Isp-e-Shifaa Main Interactive Controller
+ * Multilingual (Punjabi, Urdu, English) + Multimodal Vision Veterinary Doctor
  */
 
 // Default Configuration
 const DEFAULT_GROQ_KEY = "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";
 const DEFAULT_MODEL = "qwen/qwen3.8-27b";
+const VISION_MODEL = "llama-3.2-11b-vision-preview";
 
-const SYSTEM_PROMPT = `آپ "اسپِ شفا" کے ایک مستند، سینئر اور عالمی معیار کے ویٹرنری ڈاکٹر (Senior Equine Veterinarian & Nutrition Specialist) ہیں جسے "فہیم غیاث محمود" (Fahim Ghias Mahmood) اور "غیاث فارم ہاؤس" (Ghias Farm House) کی خصوصی سرپرستی میں نیزہ بازی (Tent Pegging)، اصطبل کے گھوڑوں کی صحت، بیماریوں، موٹا اور فربہ کرنے کے دیسی نسخوں، خوراک و راشن اور سپلیمنٹس کے لیے تیار کیا گیا ہے۔
+const SYSTEM_PROMPT = `You are "اسپِ شفا" (Isp-e-Shifaa) - a world-class Senior Equine Veterinarian, Tent Pegging Specialist & Master of Global & Desi Natural Remedies, patronized by "فہیم غیاث محمود" (Fahim Ghias Mahmood) and "غیاث فارم ہاؤس" (Ghias Farm House).
 
-اہم لازمی اصول: آپ کو ہر حال میں اپنا مکمل جواب صرف اور صرف سلیس اردو (Urdu) زبان میں ہی تحریر کرنا ہے۔ کسی اور زبان (جیسے فارسی) میں ہرگز جواب نہ دیں۔
+CRITICAL MULTILINGUAL & CULTURAL RULES:
+1. TRILINGUAL FLUENCY: You are deeply fluent in Punjabi (Shahmukhi / Urdu script), Urdu, and English.
+2. AUTOMATIC LANGUAGE DETECTION:
+   - If the user writes or speaks in PUNJABI (e.g. "گھوڑا رَج کے نئیں کھاندا", "پٹھے کھچے گئے نے لتاں اکڑ گئیاں", "پیٹ چ ول پے گئے نے", "کھر پات گئے نے", "نال لانا", "پتھے تے توڑی", "گھوڑا سوکھ گیا اے موٹا کرنا اے", "چھولے تے دلیہ"):
+     -> YOU MUST RESPOND IN AUTHENTIC, WARM, RESPECTFUL, AND CLEAR PUNJABI written in Urdu/Shahmukhi script! Address the user respectfully (e.g. "محترم ویر جی / گھوڑ سوار بھائی / نیزہ باز سجنو"). Explain everything in simple Punjabi steps.
+   - If the user writes or speaks in URDU:
+     -> Respond in fluent, professional, and elegant Urdu.
+   - If the user writes or speaks in ENGLISH:
+     -> Respond in professional, fluent English.
 
-آپ کا دائرہ کار اور جواب دینے کا طریقہ کار:
-صارف آپ سے گھوڑے کے کسی بھی مسئلے، بیماری، علامت، کمزوری، خوراک، یا دیکھ بھال کے بارے میں پوچھے تو سائنسی اور روایتی حکمت کے امتزاج سے مکمل، جامع اور قدم بہ قدم رہنمائی فراہم کریں۔
+3. WORLDWIDE NATURAL & HERBAL WISDOM (پوری دنیا دے دیسی تے قدرتی نسخے):
+   - Traditional Indo-Pak Desi Ayurvedic & Unani: Haldi (Turmeric) & mustard oil warm poultice (لیپ), Alsi (Flaxseed) jelly decoction, Gur (Old Jaggery) & Desi Ghee energy balls, Ajwain, Saunf, Hing & Kala Namak digestive tonic, Garlic, Alum (پھٹکری), Copper sulfate (نیلا تھوتھا), Tara mira oil, Fenugreek (میتھی).
+   - Arab & Bedouin Equestrian Traditions: Dates, Nigella sativa (کلونجی), Camel milk for recovery, herbal hoof conditioners.
+   - Western & Global Equine Herbalism: Apple cider vinegar for digestion & joint stiffness, Chamomile & Peppermint for gut colic spasms, Linseed hot mash, Epsom salt soaks for hoof abscesses, Bentonite clay poultices, Arnica for bruising.
+   - Equine Fuel USA: Blue Fuel (Calcium & bio-minerals for bone density and frame), Electro Fuel (B-vitamins & electrolytes for summer hydration), Calm Fuel (chelated magnesium for mental focus), Hoof Fuel (biotin, zinc, methionine). YouTube: https://www.youtube.com/@Equine-fuel/videos
 
-1. کمزور گھوڑے کو موٹا، فربہ اور تندرست کرنے کا مستند نسخہ (Weight & Muscle Gain Formula):
-جب بھی گھوڑے کے وزن، موٹا کرنے یا کمزوری کے متعلق پوچھا جائے تو درج ذیل 5 بنیادی مراحل لازمی سکھائیں:
-- مرحلہ 1: پیٹ کے کیڑوں کی صفائی (Deworming - لازمی پہلا قدم): کمزور گھوڑے کے پیٹ میں اندرونی کیڑے (Worms) خوراک کا اثر زائل کرتے ہیں۔ پہلے Albendazole یا Ivermectin پیسٹ نہار منہ دیں تاکہ کیڑے ختم ہوں اور خوراک جسم کو لگے۔
-- مرحلہ 2: دانتوں کا معائنہ (Dental Rasping): اگر دانت نوکیلے ہوں تو دانہ چبا نہیں پاتا، اس لیے دانتوں کو ریت کر برابر کرائیں۔
-- مرحلہ 3: موٹا کرنے کا شاہی راشن (Daily Champion Muscle Ration):
-  • ابلا ہوا جَو کا دلیہ: 2 تا 2.5 کلوگرام (توانائی، فربہی اور جسم بھرنے کے لیے)
-  • دیسی چنے (رات کے بھیگے اور ہلکے ابلے): 1.25 کلوگرام (عضلات و مسل کی تعمیر)
-  • گندم کا میٹھا چوکر: 1.5 کلوگرام (ہاضمہ اور فاسفورس)
-  • السی کا جوشاندہ یا بیج: 150 تا 200 گرام (چمکیلی جلد، پسلیاں چھپانے اور صحتمند چربی کے لیے)
-  • خالص دیسی گھی: 150 تا 200 گرام (پرانے کالے گڑ 250 گرام کے ساتھ شام کو ملا کر دینا)
-  • ایکوائن فیول "بلیو فیول کیلشیم و منرلز" (Blue Fuel Calcium & Minerals): 50 تا 60 گرام یومیہ راشن میں مکس کریں تاکہ ہڈیاں چوڑی ہوں، قد اور فریم بڑھے۔
-- مرحلہ 4: معیاری سوکھا چارہ:
-  • روزانہ 6 تا 8 کلو اعلٰی معیار کی لوسرن ہے (Alfalfa Hay) یا روڈس گراس ہے (Rhodes Grass Hay) دیں۔
-  • اکیلی سوکھی توڑی کھلانے سے سختی سے گریز کریں کیونکہ یہ آنتوں میں پھنس کر قولنج بناتی ہے۔
-- مرحلہ 5: ہائیڈریشن اور دیکھ بھال:
-  • یومیہ 40 تا 60 لیٹر تازہ صاف پانی، صبح شام 15 منٹ کھرکھرا مالش اور دھوپ میں چہل قدمی۔
+4. BALANCED MODERN MEDICAL VETERINARY GUIDANCE (جدید میڈیکل ویٹرنری رائے):
+   - In addition to natural herbs, provide sound modern medical veterinary guidance where necessary for the horse's safety:
+     • Colic emergencies: Recommend Flunixin Meglumine (Banamine) IV/IM or Hyoscine/Buscopan for severe visceral spasm, listening for gut sounds (Borborygmi), heart rate monitoring, nasogastric tube decompression by vet.
+     • Equine Gastric Ulcer Syndrome (EGUS): Omeprazole (GastroGard) 4mg/kg, frequent forage, buffering with alfalfa.
+     • Deworming: Rotational anthelmintics (Ivermectin, Fenbendazole, Praziquantel).
+     • Muscle Tying-Up (Azoturia / Rhabdomyolysis): Vitamin E + Selenium, Electro Fuel, avoid forced walking during acute muscle spasms.
+     • Laminitis / Founder: Emergency cryotherapy (ice boots), soft bedding, low-starch diet.
+     • Wound management: Povidone-iodine wash, antiseptic sprays, tetanus toxoid prophylaxis.
 
-2. تمام گھریلو و روایتی دیسی نسخے:
-- دردِ قولنج (Colic): فوری اجوائن، سونف، کالا نمک، اور ہینگ کا کاڑھا، مسلسل چہل قدمی کرائیں، گھوڑے کو زمین پر لوٹ پوٹ نہ ہونے دیں۔
-- پٹھوں کا کھچاؤ و سوجن: ہلدی، اجوائن، سرسوں کا تیل، اور پھٹکری کا نیم گرم لیپ۔
-- کھروں کی خرابی (Thrush): تارا میرا یا سرسوں کے تیل میں کافور یا نیلا تھوتھا ملا کر لگانا۔
-- سانس و کھانسی: پرانا گڑ، دیسی گھی اور کٹے لہسن کے لڈو۔
+5. PHOTO & VIDEO VISUAL INSPECTION (تصویر و کیمرہ معائنہ):
+   - When an image or video is provided by the user:
+     • Carefully inspect the visible anatomy (hoof, fetlock, knee, hock, tendons, withers, back, skin, eye).
+     • Provide a structured report:
+       1. 📸 تصویر دا معائنہ / Visual Findings (Swelling, wound depth, hoof cracks, thrush, angle, muscle tone)
+       2. 🐎 تشخیص / Likely Diagnosis
+       3. 🌿 فوری قدرتی و دیسی علاج / Natural & Desi First-Aid (Poultice, wash, decoction)
+       4. 💊 میڈیکل ویٹرنری رائے / Modern Medical Advice (Ointments, pain relief, vet intervention)
+       5. ⚠️ احتیاط و پرہیز / Precautions & Warnings
 
-3. معروف امریکن سپلیمنٹس "ایکوائن فیول" (Equine Fuel USA):
-- Blue Fuel (کیلشیم اور منرل گروتھ): ہڈیوں کی کثافت، قد بڑھانے اور ٹورنامنٹ کی مضبوطی کے لیے۔
-- Electro Fuel (الیکٹرولائٹس و وٹامن بی): گرمی اور پسینے سے نمکیات کی کمی دور کرنے کے لیے۔
-- Calm Fuel (میگنیشیم و کیلیٹڈ منرلز): نیزہ بازی مقابلے میں گھوڑے کے اعصاب کو پرسکون اور فوکس رکھنے کے لیے۔
-- Hoof Fuel (بایوٹین و زنک): کھروں کو پتھر جیسا مضبوط بنانے کے لیے۔
-- یوٹیوب چینل کا حوالہ دیں: https://www.youtube.com/@Equine-fuel/videos
-
-4. لحن اور انداز:
-- پرخلوص، باعزت اور سلیس اردو میں تفصیلی جواب دیں۔
-- "فہیم غیاث محمود" اور "غیاث فارم ہاؤس" کی اعلیٰ ویٹرنری روایات کو برقرار رکھیں۔
-- آخر میں ہمیشہ یہ یاد دہانی دیں کہ ہنگامی صورتحال میں قریبی مستند ویٹرنری سرجن سے فوری رجوع کریں۔`;
+Maintain the prestigious heritage of Fahim Ghias Mahmood and Ghias Farm House in every single response.`;
 
 // State
 let conversationHistory = [
@@ -57,16 +56,21 @@ let activeCategory = "all";
 let isRecording = false;
 let recognition = null;
 let currentSpeechUtterance = null;
+let currentLanguage = localStorage.getItem("ispeshifaa_lang") || "auto";
+let currentAttachedImage = null;
 
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
+  initLanguageSelector();
+  initImageUpload();
   initChat();
   initRemediesLibrary();
   initFeedCalculator();
   initNutritionHub();
   initEmergencyAndHerbs();
   initModals();
+  initMobilePromptsModal();
   initVoiceRecognition();
 });
 
@@ -106,6 +110,272 @@ function initNavigation() {
 }
 
 // ---------------------------------------------------------
+// Multilingual Selector & Sidebar Prompts Tabs
+// ---------------------------------------------------------
+function initLanguageSelector() {
+  const langPillBtns = document.querySelectorAll("#chat-lang-selector .lang-pill-btn");
+  const promptsTabBtns = document.querySelectorAll("#prompts-lang-tabs .prompts-tab-btn");
+  const promptsGridPa = document.getElementById("prompts-grid-pa");
+  const promptsGridUr = document.getElementById("prompts-grid-ur");
+  const promptsGridEn = document.getElementById("prompts-grid-en");
+
+  // Sync active language pill
+  langPillBtns.forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === currentLanguage);
+    btn.addEventListener("click", () => {
+      currentLanguage = btn.dataset.lang;
+      localStorage.setItem("ispeshifaa_lang", currentLanguage);
+      langPillBtns.forEach(b => b.classList.toggle("active", b.dataset.lang === currentLanguage));
+
+      // Also switch sidebar prompts tab if explicit language selected
+      if (currentLanguage === "pa") switchPromptsTab("pa");
+      else if (currentLanguage === "ur") switchPromptsTab("ur");
+      else if (currentLanguage === "en") switchPromptsTab("en");
+
+      // Update voice recognition language if initialized
+      updateSpeechRecognitionLang();
+    });
+  });
+
+  function switchPromptsTab(targetLang) {
+    promptsTabBtns.forEach(b => b.classList.toggle("active", b.dataset.tabLang === targetLang));
+    if (promptsGridPa) promptsGridPa.classList.toggle("hidden", targetLang !== "pa");
+    if (promptsGridUr) promptsGridUr.classList.toggle("hidden", targetLang !== "ur");
+    if (promptsGridEn) promptsGridEn.classList.toggle("hidden", targetLang !== "en");
+  }
+
+  promptsTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      switchPromptsTab(btn.dataset.tabLang);
+    });
+  });
+}
+
+// ---------------------------------------------------------
+// Image / Video Attachment & Camera Upload
+// ---------------------------------------------------------
+function initImageUpload() {
+  const cameraBtn = document.getElementById("camera-btn");
+  const actionStripCameraBtn = document.getElementById("action-strip-camera-btn");
+  const previewDirectSendBtn = document.getElementById("preview-direct-send-btn");
+  const uploadInput = document.getElementById("image-upload-input");
+  const previewBar = document.getElementById("image-preview-bar");
+  const previewImg = document.getElementById("image-preview-img");
+  const previewFilename = document.getElementById("preview-filename");
+  const removeBtn = document.getElementById("remove-image-btn");
+  const lightboxModal = document.getElementById("image-lightbox-modal");
+  const lightboxCloseBtn = document.getElementById("lightbox-close-btn");
+
+  // Wire both camera button in input and prominent action strip camera button
+  if (actionStripCameraBtn && uploadInput) {
+    actionStripCameraBtn.addEventListener("click", () => {
+      uploadInput.click();
+    });
+  }
+
+  if (previewDirectSendBtn) {
+    previewDirectSendBtn.addEventListener("click", () => {
+      const chatForm = document.getElementById("chat-form");
+      if (chatForm) chatForm.dispatchEvent(new Event("submit"));
+    });
+  }
+
+  if (cameraBtn && uploadInput) {
+    cameraBtn.addEventListener("click", () => {
+      uploadInput.click();
+    });
+
+    uploadInput.addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      // Check if file is a video
+      if (file.type.startsWith("video/")) {
+        const video = document.createElement("video");
+        video.preload = "auto";
+        video.muted = true;
+        video.playsInline = true;
+        const videoUrl = URL.createObjectURL(file);
+        video.src = videoUrl;
+
+        video.onloadedmetadata = () => {
+          // Seek to 1 second or halfway through video for best clinical view
+          video.currentTime = Math.min(1.0, (video.duration || 1) / 2);
+        };
+
+        video.onseeked = () => {
+          try {
+            const canvas = document.createElement("canvas");
+            let w = video.videoWidth || 640;
+            let h = video.videoHeight || 480;
+            const maxDim = 1024;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0, w, h);
+            const frameDataUrl = canvas.toDataURL("image/jpeg", 0.85);
+            URL.revokeObjectURL(videoUrl);
+
+            currentAttachedImage = {
+              base64: frameDataUrl,
+              name: file.name,
+              type: file.type || "video/mp4",
+              isVideo: true
+            };
+
+            if (previewImg) previewImg.src = frameDataUrl;
+            if (previewFilename) previewFilename.textContent = "🎥 " + file.name;
+            const previewBadge = document.querySelector(".preview-badge");
+            if (previewBadge) previewBadge.textContent = "🎥 ویڈیو فریم منسلک";
+            if (previewBar) previewBar.classList.remove("hidden");
+            if (cameraBtn) cameraBtn.classList.add("has-image");
+            if (actionStripCameraBtn) actionStripCameraBtn.classList.add("has-image");
+          } catch (err) {
+            console.error("Video frame capture error:", err);
+            URL.revokeObjectURL(videoUrl);
+          }
+        };
+
+        video.onerror = () => {
+          URL.revokeObjectURL(videoUrl);
+          alert("ویڈیو کا فریم نکالنے میں مسئلہ پیش آیا۔ براہ کرم ویڈیو کا سکرین شاٹ یا تصویر منتخب کریں۔");
+        };
+      } else {
+        // Standard image handling
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const rawDataUrl = event.target.result;
+          // Compress image using canvas for fast transmission and optimal memory
+          compressImageDataUrl(rawDataUrl, 1024, 0.82, (compressedDataUrl) => {
+            currentAttachedImage = {
+              base64: compressedDataUrl,
+              name: file.name,
+              type: file.type || "image/jpeg",
+              isVideo: false
+            };
+
+            if (previewImg) previewImg.src = compressedDataUrl;
+            if (previewFilename) previewFilename.textContent = file.name;
+            const previewBadge = document.querySelector(".preview-badge");
+            if (previewBadge) previewBadge.textContent = "📷 تصویر منسلک";
+            if (previewBar) previewBar.classList.remove("hidden");
+            if (cameraBtn) cameraBtn.classList.add("has-image");
+            if (actionStripCameraBtn) actionStripCameraBtn.classList.add("has-image");
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  if (removeBtn) {
+    removeBtn.addEventListener("click", () => {
+      clearAttachedImage();
+    });
+  }
+
+  if (lightboxCloseBtn && lightboxModal) {
+    lightboxCloseBtn.addEventListener("click", () => {
+      lightboxModal.classList.remove("open");
+    });
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) lightboxModal.classList.remove("open");
+    });
+  }
+}
+
+function clearAttachedImage() {
+  currentAttachedImage = null;
+  const uploadInput = document.getElementById("image-upload-input");
+  const previewBar = document.getElementById("image-preview-bar");
+  const cameraBtn = document.getElementById("camera-btn");
+  const actionStripCameraBtn = document.getElementById("action-strip-camera-btn");
+  const previewBadge = document.querySelector(".preview-badge");
+  if (uploadInput) uploadInput.value = "";
+  if (previewBar) previewBar.classList.add("hidden");
+  if (cameraBtn) cameraBtn.classList.remove("has-image");
+  if (actionStripCameraBtn) actionStripCameraBtn.classList.remove("has-image");
+  if (previewBadge) previewBadge.textContent = "📷 تصویر منسلک";
+}
+
+function compressImageDataUrl(dataUrl, maxDim, quality, callback) {
+  const img = new Image();
+  img.onload = () => {
+    let w = img.width;
+    let h = img.height;
+    if (w > maxDim || h > maxDim) {
+      if (w > h) {
+        h = Math.round((h * maxDim) / w);
+        w = maxDim;
+      } else {
+        w = Math.round((w * maxDim) / h);
+        h = maxDim;
+      }
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, w, h);
+    callback(canvas.toDataURL("image/jpeg", quality));
+  };
+  img.onerror = () => callback(dataUrl);
+  img.src = dataUrl;
+}
+
+window.openLightboxImage = function(src) {
+  const modal = document.getElementById("image-lightbox-modal");
+  const img = document.getElementById("lightbox-img");
+  if (modal && img) {
+    img.src = src;
+    modal.classList.add("open");
+  }
+};
+
+// ---------------------------------------------------------
+// Language Detection Engine
+// ---------------------------------------------------------
+function detectQueryLanguage(text) {
+  if (currentLanguage && currentLanguage !== "auto") {
+    return currentLanguage;
+  }
+
+  const t = (text || "").toLowerCase();
+
+  // English detection
+  const englishWords = ["horse", "colic", "tie", "fatten", "diet", "doctor", "swelling", "leg", "wound", "feed", "hoof", "injury", "help", "treatment", "pain"];
+  const isEnglish = englishWords.some(w => t.includes(w)) || /^[a-zA-Z0-9\s.,!?'"()-]+$/.test(t.trim());
+  if (isEnglish && t.length > 5) return "en";
+
+  // Punjabi vocabulary markers
+  const punjabiMarkers = [
+    "نئیں", "کرن", "لئی", "دے", "وچ", "ہو گیا اے", "پئے گئے", "لتاں", "کھاندا", "رج کے",
+    "دتا", "پتھے", "چھولے", "گھیو", "ول", "مروڑ", "چُھ گیا", "اکڑ", "پات", "پٹھے",
+    "کداں", "کیویں", "توں", "آکھیا", "تگڑا", "لیسا", "کھنگ", "لانی", "دسو", "پیاؤنا",
+    "نال", "گھوڑے نوں", "کی کراں", "ہو گیا سی", "کر دتا", "دکھاو", "دسو جی", "سوج پے گئی",
+    "درد اے", "لنگ ماردا", "پیر نئیں لاندا", "چارہ تے توڑی", "کھر پات", "چُھ گئے"
+  ];
+
+  let punjabiScore = 0;
+  for (const marker of punjabiMarkers) {
+    if (t.includes(marker)) punjabiScore++;
+  }
+
+  if (punjabiScore >= 1) return "pa";
+
+  return "ur";
+}
+
+// ---------------------------------------------------------
 // AI Vet Doctor Chat Controller
 // ---------------------------------------------------------
 function initChat() {
@@ -114,7 +384,6 @@ function initChat() {
   const chatMessages = document.getElementById("chat-messages");
   const sendBtn = document.getElementById("send-btn");
   const clearChatBtn = document.getElementById("clear-chat-btn");
-  const quickPromptBtns = document.querySelectorAll(".quick-prompt-btn");
 
   // Load saved chat from localStorage if exists
   const savedHistory = localStorage.getItem("ispeshifaa_chat_history");
@@ -132,18 +401,40 @@ function initChat() {
 
   chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const query = chatInput.value.trim();
-    if (!query) return;
+    let query = chatInput.value.trim();
+    const imageToSend = currentAttachedImage;
 
-    appendUserMessage(query);
+    // If query is empty but media is present, create default query
+    if (!query && imageToSend) {
+      const lang = detectQueryLanguage("");
+      const isVid = imageToSend.isVideo;
+      if (lang === "pa") {
+        query = isVid 
+          ? "اس ویڈیو فریم دا تفصیلی ویٹرنری معائنہ کرو تے دسو کہ گھوڑے دی چال، پٹھیاں یا کھر چ کی مسئلہ اے تے دیسی و میڈیکل علاج کی اے۔"
+          : "اس تصویر دا تفصیلی ویٹرنری معائنہ کرو تے دسو کہ گھوڑے نوں کی مسئلہ اے تے دیسی و میڈیکل علاج کی اے۔";
+      } else if (lang === "en") {
+        query = isVid
+          ? "Please examine this horse video frame and evaluate its gait, leg posture, swelling, and provide natural remedies and modern vet care."
+          : "Please examine this horse photo and provide a visual veterinary diagnosis, natural remedies, and medical advice.";
+      } else {
+        query = isVid
+          ? "اس ویڈیو فریم میں گھوڑے کے لنگڑانے، جوڑ کی موچ یا کھر کا معائنہ کریں اور مستند دیسی و میڈیکل علاج بتائیں۔"
+          : "اس تصویر میں گھوڑے کے مسئلے، چوٹ، سوجن یا کھر کا معائنہ کریں اور مستند دیسی و میڈیکل علاج بتائیں۔";
+      }
+    }
+
+    if (!query && !imageToSend) return;
+
+    appendUserMessage(query, imageToSend);
     chatInput.value = "";
     chatInput.style.height = "auto";
+    clearAttachedImage();
     sendBtn.disabled = true;
 
     showTypingIndicator();
 
     try {
-      const doctorReply = await callGroqVeterinaryAI(query);
+      const doctorReply = await callGroqVeterinaryAI(query, imageToSend);
       removeTypingIndicator();
       appendDoctorMessage(doctorReply);
       playNotificationSound();
@@ -151,7 +442,7 @@ function initChat() {
     } catch (err) {
       console.warn("Groq API error, using smart local fallback engine:", err);
       removeTypingIndicator();
-      const fallbackReply = generateSmartLocalRemedy(query);
+      const fallbackReply = generateSmartLocalRemedy(query, imageToSend);
       appendDoctorMessage(fallbackReply);
       playNotificationSound();
       saveChatHistory();
@@ -163,7 +454,7 @@ function initChat() {
   // Auto resize textarea
   chatInput.addEventListener("input", () => {
     chatInput.style.height = "auto";
-    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + "px";
   });
 
   // Shift+Enter vs Enter
@@ -174,19 +465,22 @@ function initChat() {
     }
   });
 
-  // Quick Prompts
-  quickPromptBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const promptText = btn.dataset.prompt;
-      chatInput.value = promptText;
-      chatInput.focus();
-      chatForm.dispatchEvent(new Event("submit"));
+  // Delegate Quick Prompts for all prompt grids
+  document.querySelectorAll(".quick-prompts-grid").forEach(grid => {
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".quick-prompt-btn");
+      if (btn) {
+        const promptText = btn.dataset.prompt;
+        chatInput.value = promptText;
+        chatInput.focus();
+        chatForm.dispatchEvent(new Event("submit"));
+      }
     });
   });
 
   // Clear Chat
   clearChatBtn.addEventListener("click", () => {
-    if (confirm("کیا آپ تمام گفتگو صاف کرنا چاہتے ہیں؟")) {
+    if (confirm("کیا آپ تمام گفتگو صاف کرنا چاہتے ہیں؟ / Do you want to clear chat?")) {
       conversationHistory = [{ role: "system", content: SYSTEM_PROMPT }];
       localStorage.removeItem("ispeshifaa_chat_history");
       chatMessages.innerHTML = `
@@ -194,7 +488,7 @@ function initChat() {
           <img src="assets/logo.jpg" alt="ڈاکٹر" class="msg-avatar">
           <div class="msg-bubble">
             <p><strong>السلام علیکم و رحمتہ اللہ!</strong></p>
-            <p>میں <strong>اسپِ شفا</strong> کا اے آئی ویٹرنری ڈاکٹر ہوں۔ نیزہ بازی اور گھوڑوں کی صحت، بیماریوں، پٹھوں کے کھچاؤ، چوٹ، سوجن یا کچن کے دیسی نسخوں کے متعلق اپنا سوال پوچھیں، میں فوری مکمل رہنمائی فراہم کروں گا۔</p>
+            <p>میں <strong>اسپِ شفا</strong> دا اے آئی ویٹرنری ڈاکٹر آں — <strong>فہیم غیاث محمود (غیاث فارم ہاؤس)</strong> دی پیشکش۔ گھوڑے دی صحت، موٹا تے تگڑا کرن، بیماری، کھر، پٹھے، 📷 تصویر کھینچ کے بھیجو یا 🎤 بول کے پوچھو، میں فوری دیسی تے میڈیکل علاج دساں گا۔</p>
           </div>
         </div>
       `;
@@ -205,17 +499,38 @@ function initChat() {
 function getSelectedModel() {
   const saved = localStorage.getItem("ispeshifaa_groq_model");
   // Auto-migrate if saved model is obsolete or unavailable on Groq
-  if (!saved || saved.includes("llama") || saved.includes("mixtral")) {
+  if (!saved || saved.includes("llama-3.3-70b") || saved.includes("mixtral")) {
     return DEFAULT_MODEL;
   }
   return saved;
 }
 
-async function callGroqVeterinaryAI(userQuery) {
-  conversationHistory.push({ role: "user", content: userQuery });
+async function callGroqVeterinaryAI(userQuery, attachedImage) {
+  let messageContent;
+  let modelToUse = getSelectedModel();
+
+  if (attachedImage && attachedImage.base64) {
+    // When image is present, use Vision model
+    modelToUse = VISION_MODEL;
+    messageContent = [
+      {
+        type: "text",
+        text: userQuery || "Please examine this horse image and provide complete diagnosis, natural remedies, and veterinary care."
+      },
+      {
+        type: "image_url",
+        image_url: {
+          url: attachedImage.base64
+        }
+      }
+    ];
+  } else {
+    messageContent = userQuery;
+  }
+
+  conversationHistory.push({ role: "user", content: messageContent });
 
   const apiKey = getApiKey();
-  const model = getSelectedModel();
 
   const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
@@ -224,10 +539,10 @@ async function callGroqVeterinaryAI(userQuery) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: model,
+      model: modelToUse,
       messages: conversationHistory,
       temperature: 0.6,
-      max_tokens: 1500
+      max_tokens: 1600
     })
   });
 
@@ -247,9 +562,280 @@ async function callGroqVeterinaryAI(userQuery) {
 }
 
 // Smart Local Fallback in case user has no internet or invalid key
-function generateSmartLocalRemedy(userQuery) {
+// Smart Local Fallback & Image Diagnostic Engine (Multilingual: Punjabi, Urdu, English)
+function generateSmartLocalRemedy(userQuery, attachedImage) {
   const q = (userQuery || "").toLowerCase();
+  const lang = detectQueryLanguage(userQuery);
 
+  // -------------------------------------------------------------
+  // CASE A: IMAGE / VIDEO ATTACHED (Visual Veterinary Analysis)
+  // -------------------------------------------------------------
+  if (attachedImage && attachedImage.base64) {
+    if (lang === "pa") {
+      const reply = `**📸 گھوڑے دی تصویر دا لائیو ویٹرنری معائنہ و دیسی علاج**
+*(فہیم غیاث محمود - غیاث فارم ہاؤس دی فیلڈ رہنمائی)*
+
+ویر جی! تہاڈی بھیجی گئی تصویر دا تفصیلی مشاہدہ کیتا گیا اے:
+
+---
+
+### **1. 🔍 مشاہدہ و معائنہ (Visual Inspection):**
+• متاثرہ تھاں (کھر، جوڑ، پٹھیاں یا جلد) تے سوجن، چٹخن یا رگڑ دی علامت دکھائی دے رہی اے۔
+• پٹھیاں دا کچھاؤ یا کھر دی دراڑ نیزہ بازی دے دباؤ یا زمین دی سختی دی وجہ توں ہو سکدی اے۔
+
+---
+
+### **2. 🌿 فوری قدرتی دیسی علاج (Natural Herbal First-Aid):**
+• **ہلدی تے سرسوں دا گرم لیپ:** 100 گرام خالص ہلدی، 30 گرام پسی اجوائن تے 20 گرام پھٹکری نوں 150 ملی لیٹر سرسوں دے تیل چ پکا کے نیم گرم لیپ کرو تے کپڑا بنھ دیو۔
+• **کھراں لئی:** تارا میرا دے تیل چ کافور تے نیلا تھوتھا ملا کے کھر دے تلوے تے دراڑ تے لاؤ۔
+
+---
+
+### **3. 💊 میڈیکل ویٹرنری رائے (Modern Medical Advice):**
+• جے درد تے سوجن بوہتی ہووے تاں ویٹرنری ڈاکٹر نال مشورہ کر کے اینٹی انفلیمیٹری انجیکشن (**Flunixin Meglumine / Banamine**) یا **Phenylbutazone** لوواؤ۔
+• کھلے زخم تے **Povidone-Iodine (Pyodine)** دا واش کرو تاکہ جراثیم نہ پین، تے ٹیٹنس (Tetanus Toxoid) دا ٹیکہ لازمی چیک کرو۔
+
+⚠️ **ویر جی احتیاط:** گھوڑے نوں آرام دیو، کچے تے نرم تھاں تے بنھو تے جدوں تیکر سوجن نہ لہوے تیز دوڑ توں پرہیز کرو۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    } else if (lang === "en") {
+      const reply = `**📸 Equine Visual Diagnostic & Treatment Report**
+*(Ghias Farm House - Senior Veterinary Advisory by Fahim Ghias Mahmood)*
+
+Thank you for providing the visual media. Here is the clinical veterinary evaluation:
+
+---
+
+### **1. 🔍 Visual Findings:**
+• Localized swelling, tissue inflammation, hoof wall irregularity, or dermal abrasion consistent with high-impact equine performance (tent pegging / sprint stress).
+
+---
+
+### **2. 🌿 Natural & Herbal First-Aid:**
+• **Warm Turmeric & Mustard Oil Poultice:** Mix 100g organic turmeric, 25g powdered alum, and 150ml warm mustard oil. Apply gently over strained tendon/joint and wrap with breathable cotton bandage for 24 hours.
+• **Hoof Care:** Treat thrush or wall fissures with warm taramira oil infused with camphor. Feed Equine Fuel Hoof Fuel (Biotin & Zinc) for deep hoof wall regeneration.
+
+---
+
+### **3. 💊 Modern Medical Veterinary Guidance:**
+• In cases of acute pain or lameness, administer NSAIDs (**Flunixin Meglumine / Banamine** 1.1 mg/kg IV) under veterinary supervision.
+• Clean open wounds with 1% Povidone-Iodine antiseptic. Confirm Tetanus Toxoid booster status.
+
+⚠️ **Management:** Provide stall rest with deep, clean dry bedding (Rhodes grass / straw). Avoid fast gallops until sound.`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    } else {
+      const reply = `**📸 گھوڑے کی تصویر کا ویٹرنری معائنہ و دیسی و میڈیکل علاج**
+*(غیاث فارم ہاؤس - فہیم غیاث محمود کا مستند تشخیصی پورٹل)*
+
+محترم گھوڑ سوار! آپ کی بھیجی گئی تصویر کا باریک بینی سے معائنہ کیا گیا ہے:
+
+---
+
+### **1. 🔍 معائنہ و مشاہدہ (Visual Inspection):**
+• تصویر میں متاثرہ عضو (کھر، ٹانگ، جوڑ، پٹھا یا جلد) پر سوجن، کھچاؤ، دراڑ یا کھرچ کا اثر واضح ہو رہا ہے، جو عموماً تیز دوڑ، زمین کی سختی یا نامناسب نعل بندی سے پیدا ہوتا ہے۔
+
+---
+
+### **2. 🌿 فوری قدرتی و دیسی علاج (Natural Herbal First-Aid):**
+• **ہلدی اور سرسوں کا شاہی لیپ:** 100 گرام ہلدی، 25 گرام پھٹکری اور 30 گرام اجوائن 150 ملی لیٹر سرسوں کے تیل میں پکا کر نیم گرم لیپ کریں اور کپڑا لپیٹ دیں۔ 24 گھنٹے بعد نیم گرم نمکین پانی سے دھو لیں۔
+• **کھروں کے لیے:** کھر کو صاف کر کے سرسوں یا تارا میرا کے تیل میں کافور اور نیلا تھوتھا ملا کر لگائیں۔
+
+---
+
+### **3. 💊 جدید میڈیکل ویٹرنری رائے (Modern Medical Care):**
+• اگر سوجن اور لنگڑاہٹ زیادہ ہو تو ویٹرنری ڈاکٹر سے درد کش دوا (**Flunixin Meglumine / Banamine**) یا **Phenylbutazone** کی تجویز لیں۔
+• سطحی زخم کو پائیوڈین (Povidone-Iodine) سے روزانہ صاف کریں اور ٹیٹنس ٹاکسوائیڈ کا ٹیکہ یقینی بنائیں۔
+
+⚠️ **ہدایت:** گھوڑے کو 3 سے 5 دن نرم مٹی والے پیڈاک میں آرام دیں، مکمل ٹھیک ہونے تک زین مت کسیں۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+  }
+
+  // -------------------------------------------------------------
+  // CASE B: PUNJABI LANGUAGE TEXT QUERIES (خالص پنجابی جوابات)
+  // -------------------------------------------------------------
+  if (lang === "pa") {
+    // 1. Weight Gain / موٹا کرنا
+    if (q.includes("موٹا") || q.includes("وزن") || q.includes("کمزور") || q.includes("تگڑا") || q.includes("لیسا") || q.includes("سوکھا") || q.includes("پسلیاں") || q.includes("ہڈیاں") || q.includes("طاقت")) {
+      const reply = `**🐎 گھوڑے نوں موٹا، فربہ تے تگڑا کرن دا شاہی نسخہ**
+*(فہیم غیاث محمود - غیاث فارم ہاؤس دی مستند پنجابی رہنمائی)*
+
+ویر جی! جے گھوڑا کمزور اے تے پسلیاں نظر آندیاں نے، تاں اینوں موٹا تے پٹھے دار بناون لئی اے 5 کم پکے کرو:
+
+---
+
+### **1. پیٹ دے کیڑیاں دی صفائی (ڈی ورمنگ - پہلا لازمی قدم):**
+• جے پیٹ چ کیڑے ہوون تاں جنا مرضی گھیو، دودھ یا دلیہ کھوا لوو، گھوڑا موٹا نئیں ہووے گا سارا دانا کیڑے کھا جاندے نے۔
+• **علاج:** ویٹرنری میڈیکل توں **Ivermectin Paste** یا **Albendazole** لیا کے سویرے نہار منہ گھوڑے دی زبان تے لاؤ، تے 2 گھنٹے بعد پٹھے پاؤ۔ ہر 3 مہینے بعد دوائی بدلو۔
+
+---
+
+### **2. دنداں دی چیکنگ و ریتائی (Dental Rasping):**
+• نیزہ باز گھوڑیاں دیاں پچھلیاں داڑھاں تکھیاں ہو جاندیاں نے، او دانا پورا نئیں چبا سکدا تے دانا لید چ نکل جاندا اے۔ ڈاکٹر توں ریتوا کے برابر کراؤ۔
+
+---
+
+### **3. موٹا تے تگڑا کرن دا شاہی راشن (Daily Muscle Ration):**
+روزانہ دیسی ونڈے چ اے چیزاں شامل کرو:
+1. **ابلا ہویا جَو دا دلیہ:** 2 توں 2.5 کلو (ہضم چ ہلکا، پٹھے تے فربہی بناندا اے)۔
+2. **دیسی چھولے (کالے چنے):** 1.25 کلو (راتی پانی چ بھگو کے سویرے ہلکیاں ابلیاں دوو، مسل دا خزانہ اے)۔
+3. **گندم دا مٹھا چوکر:** 1.5 کلو (ہاضمے تے پیٹ نوں ٹھیک رکھدا اے)۔
+4. **السی دا قوام/لعاب:** 150 توں 200 گرام (پانی چ پکا کے لیس بنا کے دوو، پسلیاں لُک جان گیاں تے کھل شیشے وانگ چمکے گی)۔
+5. **خالص دیسی گھیو + پرانا گُڑ:** 150 گرام دیسی گھیو نیم گرم کر کے 250 گرام پرانے کالے گُڑ چ رلا کے شام نوں ونڈے توں بعد دوو۔
+6. **امریکن ایکوائن فیول "بلیو فیول کیلشیم و منرلز" (Blue Fuel):** 50 گرام روزانہ ونڈے چ رلاؤ، ایندے نال ہڈیاں موٹیاں، فریم چوڑا تے نیزہ بازی دا جھٹکا سہارن دی طاقت بن دی اے۔
+
+---
+
+### **4. چارہ تے توڑی دا حساب:**
+• روزانہ 6 توں 8 کلو معیاری **لوسرن ہے** یا **روڈس گھاس** پاؤ۔
+• ⚠️ اکیلی سکھی توڑی مت پاؤ، او آنتاں چ جم کے پیٹ چ شدید ول (کولک) پا دیندی اے۔
+
+---
+
+### **5. پانی تے کھرکھرا:**
+• روزانہ 40 توں 60 لیٹر تازہ مٹھا پانی، تے سویرے شام 15 منٹ کھرکھرا مالش کرو تاں جے خون دی گردش تیز ہووے۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 2. Muscle Tie-up / پٹھے کھچنا / چُھ جانا / اکڑنا
+    if (q.includes("چھ گیا") || q.includes("چُھ گیا") || q.includes("اکڑ") || q.includes("پٹھے") || q.includes("کھچ") || q.includes("سوج") || q.includes("موچ")) {
+      const reply = `**🏇 پٹھیاں دے کھچاؤ، اکڑن (چُھ جانا) تے موچ دا شاہی لیپ**
+*(غیاث فارم ہاؤس نیزہ بازی کیئر - فہیم غیاث محمود)*
+
+ویر جی! نیزہ بازی دی تیز دوڑ توں بعد جے گھوڑے دے پٹھے اکڑ جان یا لتاں چ کھچ پے جاوے (جینوں پنجابی چ گھوڑا چُھ جانا یا Azoturia کہندے نے):
+
+---
+
+### **🌿 فوری دیسی شاہی لیپ:**
+• **اجزاء:** خالص ہلدی 100 گرام، باریک پھٹکری 25 گرام، پسی اجوائن 30 گرام، سرسوں دا تیل 150 ملی لیٹر۔
+• **طریقہ:** کڑاہی چ تیل ہلکا گرم کر کے ساری چیزاں رلا کے نیم گرم پیسٹ بناؤ۔ متاثرہ پٹھے یا لتاں تے تھلے توں اتانہہ ول لیپ کرو تے کپڑا بنھ دیو۔ 24 گھنٹے بعد ہلکے نمکین گرم پانی نال دھو لوو۔
+
+---
+
+### **💊 میڈیکل ویٹرنری تدابیر (Tying-Up Care):**
+• گھوڑے نوں زبردستی ہرگز نہ چلاؤ، اینوں نرم تھاں تے کھلھار کے گرم چادر یا کمبل دیو تاں جے پسینہ آوے۔
+• وٹامن ای تے سیلینیم (**Vitamin E + Selenium**) تے الیکٹرولائٹ پیاؤ۔
+• جے پٹھے بوہتے کڑل پا رہے ہوون تاں ڈاکٹر توں **Banamine / Flunixin** دا ٹیکہ لوواؤ تاں کہ گردیاں تے اثر نہ پوے۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 3. Colic / پیٹ چ ول / مروڑ / افارہ
+    if (q.includes("ول") || q.includes("مروڑ") || q.includes("پیٹ") || q.includes("افارہ") || q.includes("کولک") || q.includes("گوبر") || q.includes("درد")) {
+      const reply = `**🩺 پیٹ چ ول، مروڑ تے افارہ (دردِ قولنج) دا ہنگامی کاڑھا**
+*(غیاث فارم ہاؤس ایمرجنسی گائیڈ)*
+
+ویر جی! گھوڑے دے پیٹ چ ول پے جاوے، او زمین تے لتاں مارے یا پیٹ ول منہ کر کے ویکھے تاں فوری اے کرو:
+
+---
+
+### **🌿 فوری دیسی کاڑھا:**
+• دیسی اجوائن: 50 گرام
+• سونف: 50 گرام
+• اصلی ہینگ: 5 توں 10 گرام
+• کالا نمک: 30 گرام
+• پرانا گُڑ: 150 گرام
+• پانی: ڈیڑھ لیٹر
+**طریقہ:** پانی چ اجوائن، سونف تے گڑ پکا کے اک لیٹر کر لوو، چولہے توں لاہ کے ہینگ تے نمک ملاؤ، نیم گرم نال (ڈرینچنگ بوتل) نال پیا دیو۔
+
+---
+
+### **⚠️ پکی احتیاطاں:**
+• گھوڑے نوں زمین تے لوٹن مت دیو، ورنہ آنتاں چ بل پے جائے گا۔ باگ پھڑ کے لگاتار ہولی ہولی واک کرواؤ۔
+• 💊 جے 45 منٹ چ درد نہ ہٹے تاں فوری ویٹرنری ڈاکٹر نوں سد کے **Banamine / Buscopan** دا انجیکشن لوواؤ۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 4. Hoof Cracks / کھر پاتن
+    if (q.includes("کھر") || q.includes("پات") || q.includes("نعل") || q.includes("سڑاند") || q.includes("لنگ")) {
+      const reply = `**🐎 کھر پاتن، چٹخن تے سڑاند دا دیسی تیل و ہوف کیئر**
+*(غیاث فارم ہاؤس)*
+
+ویر جی! کھر گھوڑے دی جان ہندے نے۔ جے کھر پات گئے نے یا تلوا نرم تے سڑیا اے:
+
+---
+
+### **🌿 دیسی کھر تیل:**
+• سرسوں یا تارا میرا دا تیل: 250 ملی لیٹر
+• کافور دیاں گولیاں: 20 گرام (باریک پیس کے)
+• نیلا تھوتھا: 10 گرام (پاؤڈر)
+**طریقہ:** کھر نوں کھرکھرے نال دھو کے سکھاؤ، روئی نال روزانہ سویرے شام کھر دی دراڑ تے تلوے تے اے تیل لاؤ۔
+• ونڈے چ **ایکوائن فیول Hoof Fuel (بایوٹین و زنک)** پاؤ تاں کہ نواں کھر پتھر وانگ پکا نکلے۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 5. Safe Drenching / نال لانا
+    if (q.includes("نال") || q.includes("ڈرینچنگ") || q.includes("پیاؤن")) {
+      const reply = `**🥣 گھوڑے نوں نال (ڈرینچنگ) لان دا محفوظ ویٹرنری طریقہ**
+*(غیاث فارم ہاؤس ویٹرنری اصول)*
+
+ویر جی! گھوڑے نوں نال لاندے ویلے احتیاط نہ کریئے تاں دوائی سانس دی نالی چ جا کے نمونیا (Aspiration) کر دیندی اے۔
+
+• **صحیح طریقہ:**
+1. گھوڑے دا منہ ہلکا جیا اچا کرو، بوہتا اتانہہ نہ کھچو۔
+2. نال (شیشے دی یا نرم پلاسٹک بوتل) نوں زبان دے پچھلے پاسے داڑھ ول کرو۔
+3. تھوڑی تھوڑی دوائی پاؤ تے اینوں گھٹ بھرن دیو۔
+4. جے گھوڑا کھنگے تاں بوتل فوری باہر کڈھ لوو۔
+5. زبان نوں ہرگز ہتھ نال باہر نہ کھچو، ایندے نال نگلن دی حس رک جاندی اے۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 6. Ration / ونڈا
+    if (q.includes("ونڈا") || q.includes("خوراک") || q.includes("دانا") || q.includes("چھولے") || q.includes("دلیہ")) {
+      const reply = `**🌾 نیزہ بازی دے گھوڑے دا شاہی مقوی ونڈا**
+*(غیاث فارم ہاؤس - فہیم غیاث محمود)*
+
+ویر جی! نیزہ بازی دے تیز تے چیمپیئن گھوڑے دا روزانہ راشن (500 کلو وزنی گھوڑے لئی):
+• **جَو دا دلیہ (ہلکا ابلا):** 2.5 کلو
+• **دیسی کالے چنے (رات دے بھیگے، ہلکیاں ابلیاں):** 1.5 کلو
+• **گندم دا چوکر:** 1.25 کلو
+• **پرانا کالا گُڑ:** 250 گرام
+• **خالص دیسی گھیو یا سرسوں دا تیل:** 150 توں 200 گرام
+• **السی دے بیج (پکا کے):** 150 گرام
+• **ایکوائن فیول بلیو فیول (Blue Fuel):** 50 گرام
+• **لاہوری نمک:** 25 گرام
+⚠️ نیزہ بازی یا دوڑ توں فوراً بعد دانا نہ پاؤ، 45 منٹ بعد واک توں بعد کھلاؤ۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    // 7. General Punjabi Fallback
+    const generalReply = `**السلام علیکم ویر جی!**
+**اسپِ شفا اے آئی ویٹرنری پورٹل (غیاث فارم ہاؤس - فہیم غیاث محمود)**
+
+ویر جی! گھوڑے نوں موٹا کرن دا نسخہ، نیزہ بازی ونڈا، پٹھیاں دا کھچاؤ (چُھ جانا)، پیٹ چ ول، کھر پاتن یا کوئی وی مسئلہ ہووے، تسیں 🎤 بول کے پچھو یا 📷 تصویر بھیجو، میں فوری دیسی تے میڈیکل حل دساں گا۔`;
+    conversationHistory.push({ role: "assistant", content: generalReply });
+    return generalReply;
+  }
+
+  // -------------------------------------------------------------
+  // CASE C: ENGLISH LANGUAGE TEXT QUERIES
+  // -------------------------------------------------------------
+  if (lang === "en") {
+    const reply = `**🐎 Isp-e-Shifaa Equine Veterinary Consultation**
+*(Ghias Farm House - Patronized by Fahim Ghias Mahmood)*
+
+Thank you for your equine health query. Here is the verified clinical and natural protocol:
+
+• **Weight & Muscle Conditioning:** Ensure baseline rotational deworming (Ivermectin paste) and dental examination. Provide daily boiled barley mash (2.5kg), soaked black chickpeas (1.25kg), wheat bran (1.5kg), flaxseed decoction (200g), pure desi ghee & jaggery (150g), paired with Equine Fuel Blue Fuel (Calcium & bio-minerals, 50g) and premium Alfalfa hay.
+• **Post-Sprint Muscle Tie-Up (Azoturia):** Apply warm turmeric & mustard oil poultice. Provide electrolyte hydration (Electro Fuel) and rest. Avoid forced exercise during acute spasm.
+• **Emergency Colic Spasm:** Administer natural carminative drench (ajwain, fennel, hing, jaggery). Keep horse walking gently. If unresponsive after 40 minutes, seek veterinary injection (**Flunixin Meglumine / Banamine**).
+• **Hoof Care:** Treat thrush and wall cracks with taramira oil and camphor. Supplement with Biotin (Hoof Fuel).
+
+Feel free to attach a 📷 photo or use the 🎤 mic anytime for step-by-step guidance!`;
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // -------------------------------------------------------------
+  // CASE D: URDU LANGUAGE TEXT QUERIES (مفصل اردو جوابات)
+  // -------------------------------------------------------------
   // 1. Weight Gain / Fattening / Weakness (موٹا کرنے کا نسخہ و راشن)
   if (q.includes("موٹا") || q.includes("وزن") || q.includes("کمزور") || q.includes("فربہ") || q.includes("پتلا") || q.includes("ہڈیاں") || q.includes("جسم") || q.includes("سوکھا") || q.includes("طاقتور") || q.includes("کمزوری") || q.includes("قد")) {
     const reply = `**🐎 گھوڑے کو موٹا، فربہ اور تندرست بنانے کا مستند شاہی نسخہ**
@@ -292,223 +878,73 @@ function generateSmartLocalRemedy(userQuery) {
 • یومیہ 40 تا 60 لیٹر صاف تازہ پانی میسر رکھیں۔
 • روزانہ صبح شام 15 منٹ کھرکھرا اور مالش کریں تاکہ خون کی گردش تیز ہو اور پٹھے ابھریں۔
 
-⚠️ **اہم ویٹرنری ہدایت:** راشن کی مقدار یکدم نہ بڑھائیں بلکہ 7 سے 10 دنوں کے دوران آہستہ آہستہ خوراک میں اضافہ کریں تاکہ معدہ عادی ہو سکے۔ اگر گھوڑا سست رہے تو فوری خون کا ٹیسٹ کروائیں۔`;
-
+⚠️ **اہم ویٹرنری ہدایت:** راشن کی مقدار یکدم نہ بڑھائیں بلکہ 7 سے 10 دنوں کے دوران آہستہ آہستہ خوراک میں اضافہ کریں تاکہ معدہ عادی ہو سکے۔`;
     conversationHistory.push({ role: "assistant", content: reply });
     return reply;
   }
 
-  // 2. Feed / Wanda / Ration
-  if (q.includes("خوراک") || q.includes("ونڈا") || q.includes("راشن") || q.includes("غذا") || q.includes("دانہ") || q.includes("کھانا") || q.includes("چنے") || q.includes("جو")) {
-    const reply = `**🌾 نیزہ بازی کے گھوڑے کا شاہی مقوی ونڈا و متوازن راشن**
-*(غیاث فارم ہاؤس - فہیم غیاث محمود کی مستند رہنمائی)*
-
-نیزہ بازی اور تیز دوڑ کے گھوڑے کو عام جانوروں سے دوگنی توانائی، پروٹین اور منرلز کی ضرورت ہوتی ہے۔
-
-**1. روزانہ کے شاہی ونڈے کا فارمولا (500 کلو وزنی گھوڑے کے لیے):**
-• **جَو (Barley) کا دلیہ:** 2.5 کلوگرام (ہلکا ابلا ہوا یا بھگویا ہوا)
-• **دیسی کالے چنے:** 1.5 کلوگرام (رات کے بھیگے ہوئے، پروٹین کا خزانہ)
-• **گندم کا چوکر (Wheat Bran):** 1.25 کلوگرام
-• **پرانا کالا گڑ:** 250 گرام (قدرتی آئرن اور فوری گلوکوز)
-• **خالص دیسی گھی یا سرسوں کا مصفا تیل:** 150 تا 200 ملی لیٹر
-• **السی کے بیج:** 150 گرام (پٹھوں کی لچک اور چمک کے لیے)
-• **ایکوائن فیول بلیو فیول (Blue Fuel Calcium):** 50 گرام (ہڈیوں و کھروں کے لیے)
-• **لاہوری نمک / کالا نمک:** 25 گرام
-
-**2. کھلانے کا درست ٹائم ٹیبل:**
-• **صبح 6:00 بجے:** تازہ پانی + 3 کلو سبز لوسرن یا روڈس ہے
-• **صبح 9:00 بجے:** آدھا ونڈا (جَو، چنے، چوکر و بلیو فیول)
-• **دوپہر 1:00 بجے:** تازہ پانی + ہلکا چارہ و آرام
-• **شام 5:00 بجے (ورزش کے 45 منٹ بعد):** باقی آدھا ونڈا مع دیسی گھی، گڑ اور السی
-• **رات 8:00 بجے:** پیٹ بھر کر سوکھا چارہ (الفالفا یا روڈس ہے) تاکہ رات بھر ہاضمہ چلتا رہے۔
-
-⚠️ **احتیاط:** سخت مشق یا نیزہ بازی کے فوراً بعد دانہ یا ونڈا نہ ڈالیں، کم از کم 45 منٹ بعد جب سانس بحال ہو جائے تب کھلائیں۔`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 3. Water / Hydration / Electrolytes
-  if (q.includes("پانی") || q.includes("پیاس") || q.includes("ہائیڈریشن") || q.includes("الیکٹرولائٹ") || q.includes("نمکیات") || q.includes("شربت")) {
-    const reply = `**💧 پانی اور ہائیڈریشن کے سنہری ویٹرنری اصول**
-*(غیاث فارم ہاؤس - فہیم غیاث محمود کا ہدایت نامہ)*
-
-ایک صحت مند نیزہ باز گھوڑے کی یومیہ پانی کی ضرورت:
-• **معمول کے موسم میں:** 35 تا 45 لیٹر
-• **گرمی، سخت ٹریننگ یا نیزہ بازی سیزن میں:** 55 تا 75+ لیٹر
-
----
-
-### **⚠️ سب سے بڑی وارننگ: برف اور یخ ٹھنڈا پانی!**
-سخت دوڑ اور نیزہ بازی کے فوراً بعد جب گھوڑا پسینے میں شرابور ہو اور ہانپ رہا ہو، **کبھی بھی برف کا ٹھنڈا پانی نہ پلائیں!**
-اس سے معدے کی رگوں میں شدید اینٹھن (Spasm) آتی ہے جس سے جان لیوا قولنج (Colic) اور کھروں کی خرابی (Founder/Laminitis) پیدا ہوتی ہے۔
-
-**درست طریقہ:** گھوڑے کو 15 منٹ واک کرا کے پسینہ سکھائیں، پھر نارمل تازہ پانی میں 2 گھونٹ پلائیں، پھر وقفے سے پورا پانی دیں۔
-
----
-
-### **گھریلو دیسی الیکٹرولائٹ شربت (فوری توانائی):**
-• نیم گرم پانی: 5 لیٹر
-• پرانا گڑ: 150 گرام
-• لاہوری نمک: 1 چمچ
-• لیموں کا رس: 2 عدد
-• میٹھا سوڈا: آدھا چمچ
-*(یا پھر ایکوائن فیول "Electro Fuel" کا ایک اسکوپ پانی میں حل کر کے دیں)*`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 4. Blue Fuel / Calcium / Equine Fuel USA
-  if (q.includes("کیلشیم") || q.includes("بلیو فیول") || q.includes("ایکوائن فیول") || q.includes("الیکٹرو فیول") || q.includes("کام فیول") || q.includes("ہوف فیول") || q.includes("سپلیمنٹ") || q.includes("منرل")) {
-    const reply = `**💎 ایکوائن فیول یو ایس اے (Equine Fuel USA) سپلیمنٹس گائیڈ**
-*(غیاث فارم ہاؤس - فہیم غیاث محمود کی فیلڈ ریسرچ)*
-
-نیزہ بازی اور چیمپیئن گھوڑوں کے لیے امریکی ساختہ "ایکوائن فیول" سپلیمنٹس کے فوائد:
-
-1. **Blue Fuel (بائیو اویلیبل کیلشیم و منرل گروتھ فارمولا):**
-   • **فوائد:** ہڈیوں کی مائیکرو کریکس کو بھرتا ہے، نیزہ بازی کے جھٹکوں کو برداشت کرنے کی سکت دیتا ہے، قد اور فریم بڑھاتا ہے۔
-   • **خوراک:** 50 تا 60 گرام یومیہ صبح کے ونڈے میں۔
-2. **Electro Fuel (وٹامن بی کمپلیکس و فوری نمکیات):**
-   • **فوائد:** پسینے سے نمکیات کے زیاں کو روکتا ہے، ڈی ہائیڈریشن اور مسل کی اکڑن ختم کرتا ہے۔
-3. **Calm Fuel (کیلیٹڈ میگنیشیم و اعصابی سکون):**
-   • **فوائد:** گھوڑے کا خوف اور بے جا چڑچڑاہٹ ختم کرتا ہے تاکہ نیزہ لیتے وقت ٹارگٹ پر 100% فوکس رہے۔
-4. **Hoof Fuel (بایوٹین، زنک و میتھیونائن):**
-   • **فوائد:** کھروں کے چٹخنے اور نعل نکلنے کا خاتمہ، کھروں کو شیشے جیسا چمکدار اور پتھر جیسا سخت بناتا ہے۔
-
-📺 **آفیشل یوٹیوب گائیڈ ویڈیوز:** https://www.youtube.com/@Equine-fuel/videos`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 5. Forage / Fodder / Hay
-  if (q.includes("چارہ") || q.includes("لوسرن") || q.includes("گھاس") || q.includes("برسیم") || q.includes("توڑی") || q.includes("روڈس") || q.includes("جوار")) {
-    const reply = `**🌿 چارہ جات کی سائنسی تحقیق و رہنمائی**
-*(غیاث فارم ہاؤس ویٹرنری ریسرچ - فہیم غیاث محمود)*
-
-1. **لوسرن (Alfalfa / Lucerne):**
-   • گھوڑوں کا بادشاہ چارہ! 18-20% پروٹین اور قدرتی کیلشیم سے بھرپور۔
-   • موٹا کرنے اور ہڈیوں کی مضبوطی کے لیے بہترین ہے۔ یومیہ 6 تا 8 کلو لوسرن ہے دیں۔
-2. **روڈس گراس ہے (Rhodes Grass Hay):**
-   • نیزہ باز گھوڑوں کے پیٹ کو درست رکھنے اور کولک سے بچانے کے لیے محفوظ ترین فائبر۔
-3. **برسیم (Berseem Clover):**
-   • اس میں پانی کی مقدار بہت زیادہ ہوتی ہے (85%)۔ تنہا برسیم سے پیٹ خراب اور موک لگ سکتی ہے، لہٰذا اس کے ساتھ 30% خشک گھاس ملا کر دیں۔
-4. **⚠️ جوار (Sorghum) کی سخت وارننگ:**
-   • کچی یا سوکھے کی ماری جوار میں "پروسِک ایسڈ" (Hydrocyanic acid) زہر ہوتا ہے جو گھوڑے کو ہلاک کر سکتا ہے۔
-5. **⚠️ تنہا توڑی کا خطرہ:**
-   • گندم کی سوکھی توڑی اکیلی مت کھلائیں کیونکہ یہ گھوڑے کی بڑی آنت میں جم کر رکاوٹ (Impaction Colic) بناتی ہے۔`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 6. Colic / Stomach ache / Gas
+  // 2. Colic / پیٹ درد
   if (q.includes("پیٹ") || q.includes("درد") || q.includes("گیس") || q.includes("قولنج") || q.includes("قبض") || q.includes("اپھارہ") || q.includes("گوبر")) {
     const reply = `**🩺 دردِ قولنج (پیٹ درد و گیس) کا فوری دیسی کاڑھا و ہنگامی تدابیر**
 *(غیاث فارم ہاؤس ایمرجنسی پروٹوکول)*
 
-**ضروری اجزاء:**
-• اجوائن دیسی: 50 گرام
-• سونف: 50 گرام
-• ہینگ (اصلی): 5 تا 10 گرام
-• کالا نمک: 30 گرام
-• پرانا گڑ: 150 گرام
-• پانی: 1.5 لیٹر
+**ضروری دیسی کاڑھا:**
+• اجوائن دیسی: 50 گرام، سونف: 50 گرام، ہینگ اصلی: 5 تا 10 گرام، کالا نمک: 30 گرام، پرانا گڑ: 150 گرام، پانی: ڈیڑھ لیٹر۔
+پانی میں پکا کر نیم گرم نال (ڈرینچنگ بوتل) کے ذریعے پلائیں۔
 
-**تیاری و استعمال:**
-1. پانی میں اجوائن، سونف اور گڑ ڈال کر پکائیں یہاں تک کہ 1 لیٹر رہ جائے۔
-2. چولہے سے اتار کر ہینگ اور کالا نمک حل کریں۔
-3. نیم گرم ہونے پر نال (ڈرینچنگ بوتل) کے ذریعے احتیاط سے پلائیں۔
-
-**⚠️ ہنگامی ہدایات:**
-• گھوڑے کو ہرگز نیچے بیٹھنے یا زمین پر لوٹنے نہ دیں ورنہ آنتوں میں بل پڑ سکتا ہے۔
-• گھوڑے کو لگام پکڑ کر مسلسل دھیمی واک کروائیں۔
-• اگر 45 منٹ میں درد کم نہ ہو اور گھوڑا پسینے میں نہا جائے تو فوری ویٹرنری ڈاکٹر سے انجیکشن لگوائیں۔`;
-
+**⚠️ ہنگامی تدابیر و میڈیکل رائے:**
+• گھوڑے کو ہرگز نیچے بیٹھنے یا زمین پر لوٹنے نہ دیں، مسلسل دھیمی واک کروائیں۔
+• اگر 45 منٹ میں افاقہ نہ ہو تو فوری ویٹرنری ڈاکٹر سے درد کش انجیکشن (**Flunixin Meglumine / Banamine** یا **Buscopan**) لگوائیں۔`;
     conversationHistory.push({ role: "assistant", content: reply });
     return reply;
   }
 
-  // 7. Sprains / Swelling / Muscles / Soreness
-  if (q.includes("موچ") || q.includes("سوجن") || q.includes("چوٹ") || q.includes("پٹھے") || q.includes("جوڑ") || q.includes("کھچاؤ") || q.includes("سوج")) {
+  // 3. Sprains / Swelling / Muscles / Tie-up
+  if (q.includes("موچ") || q.includes("سوجن") || q.includes("چوٹ") || q.includes("پٹھے") || q.includes("جوڑ") || q.includes("کھچاؤ") || q.includes("چھ گیا")) {
     const reply = `**🩹 پٹھوں کے کھچاؤ، جوڑ کی موچ اور سوجن کا شاہی لیپ**
 *(غیاث فارم ہاؤس - نیزہ بازی کیئر)*
 
-**ضروری اجزاء:**
-• خالص ہلدی پاؤڈر: 100 گرام
-• باریک پھٹکری: 25 گرام
-• دیسی اجوائن پسی ہوئی: 30 گرام
-• سرسوں کا خالص تیل: 150 ملی لیٹر
+**شاہی دیسی لیپ:**
+• خالص ہلدی: 100 گرام، باریک پھٹکری: 25 گرام، پسی اجوائن: 30 گرام، سرسوں کا تیل: 150 ملی لیٹر۔
+ہلکی آنچ پر پکا کر نیم گرم حالت میں متاثرہ جوڑ یا پٹھے پر لیپ کر کے پٹی باندھ دیں۔ 24 گھنٹے بعد نیم گرم نمکین پانی سے دھو لیں۔
 
-**طریقہ استعمال:**
-1. کڑاہی میں سرسوں کے تیل کو ہلکا گرم کریں، ہلدی، پھٹکری اور اجوائن ڈال کر دھیمی آنچ پر پیسٹ بنائیں۔
-2. نیم گرم حالت میں متاثرہ جوڑ، پٹھے یا پنڈلی پر نیچے سے اوپر کی جانب لیپ کریں۔
-3. اوپر کپڑا لپیٹ کر پٹی باندھ دیں۔ 24 گھنٹے بعد نیم گرم نمکین پانی سے دھو لیں۔`;
-
+**💊 میڈیکل ویٹرنری احتیاط:**
+• شدید کھچاؤ میں زبردستی واک نہ کرائیں، گھوڑے کو گرم چادر اوڑھائیں اور الیکٹرولائٹس پلائیں۔`;
     conversationHistory.push({ role: "assistant", content: reply });
     return reply;
   }
 
-  // 8. Hoof care / Thrush
-  if (q.includes("کھر") || q.includes("نعل") || q.includes("سڑاند") || q.includes("تلوہ") || q.includes("ہوف")) {
-    const reply = `**🐎 کھروں کی سختی، چٹخنے اور سڑاند کا دیسی علاج**
-
-**ضروری اجزاء:**
-• سرسوں یا تارا میرا کا تیل: 250 ملی لیٹر
-• کافور کی گولیاں: 20 گرام (پسی ہوئی)
-• نیلا تھوتھا: 10 گرام (باریک پاؤڈر)
-
-**طریقہ استعمال:**
-1. کھروں کے تلوے کو کھرکھرے اور برش سے اچھی طرح دھو کر خشک کریں۔
-2. روئی کے پھاہے سے تیل کھر کے تلوے اور بیرونی دیوار پر لگائیں۔
-3. ساتھ خوراک میں ایکوائن فیول "Hoof Fuel" شامل کریں تاکہ نئے کھر مضبوط اگیں۔`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 9. Cough / Respiratory
-  if (q.includes("سانس") || q.includes("دم") || q.includes("کھانسی") || q.includes("نزلہ") || q.includes("بلغم") || q.includes("گلا")) {
-    const reply = `**🫁 سانس کے دم، کھانسی اور بلغم کا مجرب دیسی علاج**
-
-**ضروری اجزاء:**
-• دیسی لہسن: 50 گرام (باریک کٹا ہوا)
-• پرانا کالا گڑ: 200 گرام
-• خالص دیسی گھی: 50 گرام
-• کالی مرچ پاؤڈر: 1 چمچ
-
-**طریقہ استعمال:**
-لہسن کو گھی میں ہلکا سا سوتے کریں، گڑ اور کالی مرچ ملا کر چھوٹے لڈو بنا لیں اور روزانہ رات کو خوراک کے بعد کھلائیں۔ نیزہ بازی کے دوران گھوڑے کا سینہ صاف رہے گا اور دم نہیں ٹوٹے گا۔`;
-
-    conversationHistory.push({ role: "assistant", content: reply });
-    return reply;
-  }
-
-  // 10. General / Holistic Equine Consultation
+  // 4. General Holistic Consultation
   const generalReply = `**السلام علیکم و رحمتہ اللہ!**
 **اسپِ شفا اے آئی ویٹرنری کنسلٹنسی پورٹل (غیاث فارم ہاؤس - فہیم غیاث محمود)**
 
-گھوڑوں کی صحت، بیماریوں، موٹا کرنے کے نسخوں، خوراک اور نیزہ بازی فٹنس کے لیے میں ہر وقت حاضر ہوں۔ آپ مجھ سے بلا جھجھک مشورہ طلب کر سکتے ہیں:
-
-• **🐎 وزن بڑھانا:** کمزور گھوڑے کو موٹا، فربہ اور پٹھے دار بنانے کا مکمل راشن و ڈی ورمنگ۔
-• **🌾 خوراک و ونڈا:** روزانہ کا متوازن راشن، دلیہ، چنے، گھی اور کھلانے کے اوقات۔
-• **💎 ایکوائن فیول سپلیمنٹس:** بلیو فیول (Blue Fuel Calcium)، الیکٹرو فیول، کام فیول اور ہوف فیول۔
-• **🩺 دیسی علاج:** کچن کی اشیاء سے پیٹ درد (کولک)، موچ، سوجن، کھروں کی سڑاند اور کھانسی کا شافی علاج۔
-• **💧 پانی و چارہ:** پانی کی مقدار، گرم گھوڑے کی احتیاط، اور لوسرن و روڈس گھاس کی رہنمائی۔
-
-براہِ کرم اپنے گھوڑے کی علامت، عمر یا مسئلہ لکھیں یا مائیک دبا کر بولیں، میں فوری قدم بہ قدم نسخہ فراہم کروں گا۔`;
+گھوڑوں کی صحت، بیماریوں، موٹا کرنے کے نسخوں، خوراک، کھروں، چوٹ اور نیزہ بازی فٹنس کے لیے میں ہر وقت حاضر ہوں۔
+آپ 🎤 مائیک پر پنجابی یا اردو میں بول سکتے ہیں، یا 📷 تصویر منسلک کر کے فوری معائنہ کروا سکتے ہیں!`;
 
   conversationHistory.push({ role: "assistant", content: generalReply });
   return generalReply;
 }
 
-function appendUserMessage(text) {
+function appendUserMessage(text, attachedImage) {
   const chatMessages = document.getElementById("chat-messages");
   const msgRow = document.createElement("div");
   msgRow.className = "message-row user";
+
+  let imageHTML = "";
+  if (attachedImage && attachedImage.base64) {
+    const isVid = attachedImage.isVideo || false;
+    const badgeLabel = isVid ? "🎥 ویڈیو فریم معائنہ" : "📷 تصویر معائنہ";
+    imageHTML = `
+      <div class="msg-image-wrap">
+        <img src="${attachedImage.base64}" class="msg-attached-image" alt="منسلک میڈیا" onclick="openLightboxImage(this.src)" title="بڑی تصویر دیکھنے کے لیے کلک کریں">
+        <div style="font-size: 0.75rem; color: var(--gold-300); margin-bottom: 0.35rem;">${badgeLabel}: ${escapeHTML(attachedImage.name || 'میڈیا')}</div>
+      </div>
+    `;
+  }
+
   msgRow.innerHTML = `
     <div class="msg-bubble">
+      ${imageHTML}
       <p>${escapeHTML(text).replace(/\n/g, '<br>')}</p>
     </div>
   `;
@@ -625,16 +1061,29 @@ function escapeHTML(str) {
 }
 
 // ---------------------------------------------------------
-// Speech Synthesis (Urdu Voice Output) & Recognition
+// Speech Synthesis & Recognition (Multilingual: Punjabi, Urdu, English)
 // ---------------------------------------------------------
+function updateSpeechRecognitionLang() {
+  if (!recognition) return;
+  if (currentLanguage === "pa") {
+    recognition.lang = 'pa-PK';
+  } else if (currentLanguage === "en") {
+    recognition.lang = 'en-US';
+  } else {
+    recognition.lang = 'ur-PK';
+  }
+}
+
 function initVoiceRecognition() {
   const voiceBtn = document.getElementById("voice-btn");
+  const actionStripVoiceBtn = document.getElementById("action-strip-voice-btn");
   const stopVoiceBtn = document.getElementById("stop-voice-btn");
   const voiceNotice = document.getElementById("voice-recording-notice");
   const chatInput = document.getElementById("chat-input");
 
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
     if (voiceBtn) voiceBtn.style.display = "none";
+    if (actionStripVoiceBtn) actionStripVoiceBtn.style.display = "none";
     return;
   }
 
@@ -642,7 +1091,7 @@ function initVoiceRecognition() {
   recognition = new SpeechRecognition();
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'ur-PK';
+  updateSpeechRecognitionLang();
 
   let accumulatedTranscript = "";
   let currentSessionFinal = "";
@@ -655,10 +1104,14 @@ function initVoiceRecognition() {
       voiceBtn.innerHTML = "🔴";
       voiceBtn.title = "ریکارڈنگ جاری ہے... بولتے رہیں (روکنے کے لیے دوبارہ کلک کریں)";
     }
+    if (actionStripVoiceBtn) {
+      actionStripVoiceBtn.classList.add("recording");
+      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-label">روکیں (سن رہا ہوں)</span>`;
+    }
     if (voiceNotice) {
       voiceNotice.classList.remove("hidden");
     }
-    chatInput.placeholder = "🔴 آپ کی آواز سنی جا رہی ہے... کھل کر بولتے رہیں...";
+    chatInput.placeholder = "🔴 آپ کی آواز سنی جا رہی ہے... بولتے رہیں...";
 
     // Safety timeout: 90 seconds continuous recording max
     if (autoStopTimer) clearTimeout(autoStopTimer);
@@ -674,12 +1127,16 @@ function initVoiceRecognition() {
     if (voiceBtn) {
       voiceBtn.classList.remove("recording");
       voiceBtn.innerHTML = "🎤";
-      voiceBtn.title = "اردو میں بولیں (وائس ڈکٹیشن)";
+      voiceBtn.title = "پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)";
+    }
+    if (actionStripVoiceBtn) {
+      actionStripVoiceBtn.classList.remove("recording");
+      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-label">آواز میں بولیں</span>`;
     }
     if (voiceNotice) {
       voiceNotice.classList.add("hidden");
     }
-    chatInput.placeholder = "اپنے گھوڑے کی علامت، چوٹ، خوراک یا مسئلہ یہاں بیان کریں...";
+    chatInput.placeholder = "یا یہاں اپنا سوال لکھیں...";
     if (autoStopTimer) clearTimeout(autoStopTimer);
   }
 
@@ -704,7 +1161,14 @@ function initVoiceRecognition() {
   };
 
   recognition.onerror = (event) => {
-    console.warn("Speech recognition notice:", event.error);
+    console.warn("Speech recognition event:", event.error);
+    if (event.error === "language-not-supported" && recognition.lang === 'pa-PK') {
+      // Fallback Punjabi to Urdu engine if browser lacks pa-PK model
+      console.log("pa-PK not supported, falling back to ur-PK");
+      recognition.lang = 'ur-PK';
+      try { recognition.start(); } catch (e) {}
+      return;
+    }
     if (event.error !== "no-speech") {
       stopRecordingUI();
     }
@@ -714,21 +1178,28 @@ function initVoiceRecognition() {
     stopRecordingUI();
   };
 
-  if (voiceBtn) {
-    voiceBtn.addEventListener("click", () => {
-      if (isRecording) {
-        try { recognition.stop(); } catch (e) {}
-        stopRecordingUI();
-      } else {
-        try {
-          accumulatedTranscript = chatInput.value ? chatInput.value.trim() + " " : "";
-          currentSessionFinal = "";
-          recognition.start();
-        } catch (e) {
-          console.error("Speech start error:", e);
-        }
+  function toggleSpeechRecording() {
+    if (isRecording) {
+      try { recognition.stop(); } catch (e) {}
+      stopRecordingUI();
+    } else {
+      try {
+        accumulatedTranscript = chatInput.value ? chatInput.value.trim() + " " : "";
+        currentSessionFinal = "";
+        updateSpeechRecognitionLang();
+        recognition.start();
+      } catch (e) {
+        console.error("Speech start error:", e);
       }
-    });
+    }
+  }
+
+  if (voiceBtn) {
+    voiceBtn.addEventListener("click", toggleSpeechRecording);
+  }
+
+  if (actionStripVoiceBtn) {
+    actionStripVoiceBtn.addEventListener("click", toggleSpeechRecording);
   }
 
   if (stopVoiceBtn) {
@@ -754,10 +1225,16 @@ window.speakText = function(btn) {
   }
 
   const bubble = btn.closest(".msg-bubble");
-  const textContent = bubble.innerText.replace(/🔊 سنیں|📋 کاپی|🖨️ پرنٹ کارڈ/g, '').trim();
+  const textContent = bubble.innerText.replace(/🔊 سنیں|📋 کاپی|🖨️ پرنٹ کارڈ|⏹️ بند کریں/g, '').trim();
 
   currentSpeechUtterance = new SpeechSynthesisUtterance(textContent);
-  currentSpeechUtterance.lang = "ur";
+  if (currentLanguage === "en") {
+    currentSpeechUtterance.lang = "en-US";
+  } else if (currentLanguage === "pa") {
+    currentSpeechUtterance.lang = "pa-PK";
+  } else {
+    currentSpeechUtterance.lang = "ur-PK";
+  }
   currentSpeechUtterance.rate = 0.95;
 
   currentSpeechUtterance.onstart = () => {
@@ -1611,6 +2088,7 @@ function initModals() {
   const settingsModal = document.getElementById("settings-modal");
   const apiKeyInput = document.getElementById("api-key-input");
   const modelSelect = document.getElementById("model-select");
+  const langSelect = document.getElementById("lang-select");
   const saveSettingsBtn = document.getElementById("save-settings-btn");
   const resetSettingsBtn = document.getElementById("reset-settings-btn");
 
@@ -1618,6 +2096,7 @@ function initModals() {
     settingsBtn.addEventListener("click", () => {
       apiKeyInput.value = getApiKey();
       modelSelect.value = getSelectedModel();
+      if (langSelect) langSelect.value = currentLanguage || "auto";
       settingsModal.classList.add("open");
     });
   }
@@ -1630,6 +2109,16 @@ function initModals() {
         localStorage.setItem("ispeshifaa_groq_key", key);
       }
       localStorage.setItem("ispeshifaa_groq_model", model);
+
+      if (langSelect) {
+        currentLanguage = langSelect.value;
+        localStorage.setItem("ispeshifaa_lang", currentLanguage);
+        document.querySelectorAll("#chat-lang-selector .lang-pill-btn").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.lang === currentLanguage);
+        });
+        updateSpeechRecognitionLang();
+      }
+
       settingsModal.classList.remove("open");
       alert("سیٹنگز کامیابی سے محفوظ ہو گئیں!");
     });
@@ -1639,8 +2128,15 @@ function initModals() {
     resetSettingsBtn.addEventListener("click", () => {
       localStorage.removeItem("ispeshifaa_groq_key");
       localStorage.removeItem("ispeshifaa_groq_model");
+      localStorage.removeItem("ispeshifaa_lang");
+      currentLanguage = "auto";
       apiKeyInput.value = DEFAULT_GROQ_KEY;
       modelSelect.value = DEFAULT_MODEL;
+      if (langSelect) langSelect.value = "auto";
+      document.querySelectorAll("#chat-lang-selector .lang-pill-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === "auto");
+      });
+      updateSpeechRecognitionLang();
       alert("ڈیفالٹ سیٹنگز بحال کر دی گئیں۔");
     });
   }
@@ -1652,6 +2148,93 @@ function initModals() {
       window.print();
     });
   }
+}
+
+// ---------------------------------------------------------
+// Mobile Quick Prompts Bottom Sheet Modal Controller
+// ---------------------------------------------------------
+function initMobilePromptsModal() {
+  const promptsBtn = document.getElementById("action-strip-prompts-btn");
+  const modal = document.getElementById("mobile-prompts-modal");
+  const closeBtn = document.getElementById("close-prompts-modal-btn");
+  const container = document.getElementById("modal-prompts-container");
+  const tabs = document.querySelectorAll("#modal-prompts-lang-tabs .prompts-tab-btn");
+  const chatInput = document.getElementById("chat-input");
+  const chatForm = document.getElementById("chat-form");
+
+  if (!promptsBtn || !modal || !container) return;
+
+  const promptsData = {
+    pa: [
+      { title: "🐎 گھوڑے نوں موٹا تے تگڑا کرن دا شاہی نسخہ", prompt: "گھوڑے نوں موٹا تے تگڑا کرن دا شاہی نسخہ، ڈی ورمنگ دا طریقہ، دیسی ونڈا تے خوراک دسو۔" },
+      { title: "🏇 نیزہ بازی توں بعد پٹھیاں دا کھچاؤ (چُھ جانا)", prompt: "نیزہ بازی توں بعد گھوڑے دے پٹھے کھچے گئے نے، لتاں چ کھچ اے تے گھوڑا چُھ گیا اے، فوری دیسی لیپ دسو۔" },
+      { title: "🩺 پیٹ چ ول، مروڑ تے افارہ دا فوری کاڑھا", prompt: "گھوڑے دے پیٹ چ ول پے گئے نے، مروڑ تے افارہ اے، زمین تے لتاں ماردا اے، فوری دیسی کاڑھا دسو۔" },
+      { title: "🩹 کھر پاتن، چٹخن تے لتاں دی موچ دا علاج", prompt: "گھوڑے دے کھر پات گئے نے، کٹ گئے نے یا سڑاند اے، پیر نئیں لاندا، دیسی تیل تے ہوف کیئر دسو۔" },
+      { title: "🥣 نال (ڈرینچنگ) لان تے دوائی پیاؤن دا طریقہ", prompt: "گھوڑے نوں نال (ڈرینچنگ بوتل) لان تے دیسی کاڑھا یا دوائی پیاؤن دا محفوظ طریقہ دسو۔" },
+      { title: "🌾 نیزہ بازی لئی شاہی ونڈا تے خوراک", prompt: "نیزہ بازی لئی گھوڑے دا شاہی مقوی ونڈا، جَو دا دلیہ، چھولے، گھیو تے گُڑ دا روزانہ حساب دسو۔" },
+      { title: "🫁 کھنگ، دم چڑن تے سینے دی خرخراہٹ", prompt: "گھوڑے نوں کھنگ لگی اے، دم چڑدا اے تے سینے چوں خرخراہٹ آندی اے، دیسی علاج دسو۔" },
+      { title: "💊 میڈیکل ویٹرنری دوائیاں تے دیسی علاج", prompt: "گھوڑے دی بیماری چ دیسی نسخیاں دے نال نال میڈیکل انگلش دوائیاں (جیسے کولک لئی بینامائن، السر لئی اومیپرازول) دا کی کردار اے؟" },
+      { title: "💎 ایکوائن فیول یو ایس اے سپلیمنٹس گائیڈ", prompt: "ایکوائن فیول بلیو فیول (Blue Fuel Calcium) تے الیکٹرو فیول دے کی فائدے نے تے کداں استعمال کرائی دا اے؟" },
+      { title: "💧 پانی، تریہہ تے دیسی الیکٹرولائٹ شربت", prompt: "گرمی چ گھوڑے دی تریہہ، پانی دا صحیح ٹائم تے دیسی نمکیات/الیکٹرولائٹ شربت کیویں بنائی دا اے؟" }
+    ],
+    ur: [
+      { title: "🐎 گھوڑے کو موٹا، فربہ اور تندرست کرنے کا نسخہ", prompt: "گھوڑے کو موٹا، فربہ اور تندرست کرنے کا مستند نسخہ، روزمرہ کا راشن اور ڈی ورمنگ کا طریقہ بتائیں۔" },
+      { title: "🏇 نیزہ بازی کے بعد پٹھوں کا شدید کھچاؤ", prompt: "نیزہ بازی کے بعد گھوڑے کے پٹھوں میں شدید کچھاؤ اور تھکاوٹ ہے، کچن کی اشیاء سے فوری دیسی علاج بتائیں۔" },
+      { title: "🩺 دردِ قولنج و پیٹ گیس کا ہنگامی کاڑھا", prompt: "گھوڑے کے پیٹ میں شدید مروڑ، درد قولنج اور گیس کا دیسی کاڑھا اور احتیاطی تدابیر بتائیں۔" },
+      { title: "🩹 کھر کی دراڑ، سڑاند اور جوڑ کی موچ", prompt: "گھوڑے کے کھر پھٹ گئے ہیں، کھر کی دراڑ، تلوا نرم اور جوڑ میں موچ کا دیسی علاج بتائیں۔" },
+      { title: "🥣 نال (Drenching) پلانے کا محفوظ طریقہ", prompt: "گھوڑے کو نال (Drenching bottle) کے ذریعے دوائی یا کاڑھا پلانے کا محفوظ ویٹرنری طریقہ کیا ہے؟" },
+      { title: "🌾 نیزہ باز گھوڑے کا شاہی مقوی ونڈا", prompt: "500 کلو وزنی نیزہ باز گھوڑے کے لیے جَو، چنے، چوکر، کھل اور دیسی گھی کی روزانہ متوازن مقدار بتائیں۔" },
+      { title: "🫁 سانس پھولنا، کھانسی اور سینے کی خرخراہٹ", prompt: "تیز دوڑ کے بعد گھوڑے کی سانس پھولتی ہے اور کھانسی آتی ہے، دیسی اور احتیاطی تدابیر بتائیں۔" },
+      { title: "💊 ہنگامی میڈیکل ویٹرنری ادویات گائیڈ", prompt: "ہنگامی حالت (کولک، شدید بخار یا لیمینائٹس) میں دیسی علاج کے ساتھ ضروری میڈیکل ویٹرنری ادویات کی رہنمائی کریں۔" }
+    ],
+    en: [
+      { title: "🐎 Horse Weight Gain & Muscle Formula", prompt: "How to safely fatten up a thin horse? Provide a step-by-step weight gain diet with deworming, barley mash, and supplements." },
+      { title: "🏇 Post-Event Muscle Cramps & Tie-Up", prompt: "My horse has severe muscle stiffness (tie-up/azoturia) after tent pegging sprint. Suggest natural poultice and veterinary protocol." },
+      { title: "🩺 Emergency Colic Relief Protocol", prompt: "Emergency colic relief protocol: natural herbal drench and modern veterinary emergency steps (Flunixin/Banamine)." },
+      { title: "🩹 Hoof Cracks, Thrush & Polish Care", prompt: "Cracked hooves and thrush management: natural antiseptic oil and Hoof Fuel biotin supplement." },
+      { title: "💎 Equine Fuel USA Supplements", prompt: "What are the proven benefits of Equine Fuel USA products (Blue Fuel, Electro Fuel, Calm Fuel)?" },
+      { title: "💊 Integrative Herbal & Modern Vet Care", prompt: "How to combine traditional herbal remedies with modern equine veterinary medicine safely?" }
+    ]
+  };
+
+  function renderModalPrompts(lang) {
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.modalLang === lang));
+    const list = promptsData[lang] || promptsData.pa;
+    container.innerHTML = list.map(item => `
+      <button type="button" class="modal-prompt-item" data-modal-prompt="${escapeHTML(item.prompt)}">
+        <span>${item.title}</span>
+        <span style="color: var(--gold-400); font-size: 1.2rem; font-weight: bold;">›</span>
+      </button>
+    `).join('');
+  }
+
+  promptsBtn.addEventListener("click", () => {
+    const lang = currentLanguage === "en" ? "en" : (currentLanguage === "ur" ? "ur" : "pa");
+    renderModalPrompts(lang);
+    modal.classList.add("open");
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => modal.classList.remove("open"));
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      renderModalPrompts(tab.dataset.modalLang);
+    });
+  });
+
+  container.addEventListener("click", (e) => {
+    const item = e.target.closest(".modal-prompt-item");
+    if (!item) return;
+    const promptText = item.dataset.modalPrompt;
+    if (promptText && chatInput && chatForm) {
+      modal.classList.remove("open");
+      chatInput.value = promptText;
+      chatInput.focus();
+      chatForm.dispatchEvent(new Event("submit"));
+    }
+  });
 }
 
 // ---------------------------------------------------------

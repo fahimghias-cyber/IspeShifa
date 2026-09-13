@@ -109,14 +109,68 @@
 
     <!-- 1. AI VET DOCTOR CHAT PANEL -->
     <div class="tab-panel active" id="chat-tab">
+      
+      <!-- Mobile Only Simple App Intro Banner (Simple Description & Easy To Use) -->
+      <div class="mobile-intro-banner">
+        <div class="mobile-intro-badge-row">
+          <span class="mobile-farm-pill">🏛️ غیاث فارم ہاؤس | فہیم غیاث محمود</span>
+          <span class="mobile-live-pill"><span class="live-dot"></span> لائیو AI ڈاکٹر</span>
+        </div>
+        <h2 class="mobile-intro-title">اسپِ شفا - ویٹرنری اے آئی ڈاکٹر</h2>
+        <p class="mobile-intro-desc">گھوڑے کی بیماری، موٹا کرنے کا نسخہ، راشن یا چوٹ کے بارے میں نیچے لکھیں یا مائیک دبائیں۔</p>
+      </div>
+
       <div class="chat-layout">
         
         <!-- Sidebar with Quick Prompts & Rules -->
         <aside class="chat-sidebar">
-          <h3 class="sidebar-title">
-            <span>⚡ فوری سوالات و علامات</span>
-          </h3>
-          <div class="quick-prompts-grid">
+          <div class="sidebar-header-row">
+            <h3 class="sidebar-title">
+              <span>⚡ فوری سوالات و نسخے</span>
+            </h3>
+            <div class="prompts-lang-tabs" id="prompts-lang-tabs">
+              <button type="button" class="prompts-tab-btn active" data-tab-lang="pa">🐎 پنجابی</button>
+              <button type="button" class="prompts-tab-btn" data-tab-lang="ur">اردو</button>
+              <button type="button" class="prompts-tab-btn" data-tab-lang="en">English</button>
+            </div>
+          </div>
+
+          <!-- Punjabi Prompts Grid (Default Active for Easy Access) -->
+          <div class="quick-prompts-grid" id="prompts-grid-pa">
+            <button class="quick-prompt-btn" data-prompt="گھوڑے نوں موٹا تے تگڑا کرن دا شاہی نسخہ، ڈی ورمنگ دا طریقہ، دیسی ونڈا تے خوراک دسو۔">
+              <span>🐎 گھوڑے نوں موٹا تے تگڑا کرن دا نسخہ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="نیزہ بازی توں بعد گھوڑے دے پٹھے کھچے گئے نے، لتاں چ کھچ اے تے گھوڑا چُھ گیا اے، فوری دیسی لیپ دسو۔">
+              <span>🏇 نیزہ بازی توں بعد پٹھیاں دا کھچاؤ (چُھ جانا)</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے دے پیٹ چ ول پے گئے نے، مروڑ تے افارہ اے، زمین تے لتاں ماردا اے، فوری دیسی کاڑھا دسو۔">
+              <span>🩺 پیٹ چ ول، مروڑ تے افارہ دا فوری کاڑھا</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے دے کھر پات گئے نے، کٹ گئے نے یا سڑاند اے، پیر نئیں لاندا، دیسی تیل تے ہوف کیئر دسو۔">
+              <span>🩹 کھر پاتن، چٹخن تے لتاں دی موچ دا علاج</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے نوں نال (ڈرینچنگ بوتل) لان تے دیسی کاڑھا یا دوائی پیاؤن دا محفوظ طریقہ دسو۔">
+              <span>🥣 نال (ڈرینچنگ) لان تے دوائی پیاؤن دا طریقہ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="نیزہ بازی لئی گھوڑے دا شاہی مقوی ونڈا، جَو دا دلیہ، چھولے، گھیو تے گُڑ دا روزانہ حساب دسو۔">
+              <span>🌾 نیزہ بازی لئی شاہی ونڈا تے خوراک</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے نوں کھنگ لگی اے، دم چڑدا اے تے سینے چوں خرخراہٹ آندی اے، دیسی علاج دسو۔">
+              <span>🫁 کھنگ، دم چڑن تے سینے دی خرخراہٹ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے دی بیماری چ دیسی نسخیاں دے نال نال میڈیکل انگلش دوائیاں (جیسے کولک لئی بینامائن، السر لئی اومیپرازول) دا کی کردار اے؟">
+              <span>💊 میڈیکل ویٹرنری دوائیاں تے دیسی علاج دا ملاپ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="ایکوائن فیول بلیو فیول (Blue Fuel Calcium) تے الیکٹرو فیول دے کی فائدے نے تے کداں استعمال کرائی دا اے؟">
+              <span>💎 ایکوائن فیول یو ایس اے سپلیمنٹس گائیڈ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گرمی چ گھوڑے دی تریہہ، پانی دا صحیح ٹائم تے دیسی نمکیات/الیکٹرولائٹ شربت کیویں بنائی دا اے؟">
+              <span>💧 پانی، تریہہ تے دیسی الیکٹرولائٹ شربت</span>
+            </button>
+          </div>
+
+          <!-- Urdu Prompts Grid -->
+          <div class="quick-prompts-grid hidden" id="prompts-grid-ur">
             <button class="quick-prompt-btn" data-prompt="گھوڑے کو موٹا، فربہ اور تندرست کرنے کا مستند نسخہ، روزمرہ کا راشن اور ڈی ورمنگ کا طریقہ بتائیں۔">
               <span>🐎 گھوڑے کو موٹا و فربہ کرنے کا نسخہ</span>
             </button>
@@ -144,17 +198,36 @@
             <button class="quick-prompt-btn" data-prompt="گھوڑے کو امریکن ایکوائن فیول بلیو فیول (Blue Fuel Calcium) دینے کے کیا فوائد ہیں اور راشن میں کتنی مقدار شامل کریں؟">
               <span>💎 ایکوائن فیول بلیو فیول و کیلشیم</span>
             </button>
-            <button class="quick-prompt-btn" data-prompt="نیزہ بازی کے گھوڑے کے لیے روزانہ صبح، دوپہر، شام اور رات کا مکمل فیڈنگ اور پانی کا ٹائم ٹیبل بتائیں۔">
-              <span>⏰ اوقاتِ خوراک و پانی کا شیڈول</span>
+            <button class="quick-prompt-btn" data-prompt="ہنگامی حالت (کولک، شدید بخار یا لیمینائٹس) میں دیسی علاج کے ساتھ ضروری میڈیکل ویٹرنری ادویات کی رہنمائی کریں۔">
+              <span>💊 ایمرجنسی میڈیکل ویٹرنری گائیڈ</span>
             </button>
-            <button class="quick-prompt-btn" data-prompt="لوسرن، برسیم اور روڈس گراس میں سے نیزہ بازی کے گھوڑے کے لیے کون سا چارہ کس مقدار میں دینا چاہیے؟">
-              <span>🌿 چارہ جات کی تحقیق و فوائد</span>
+          </div>
+
+          <!-- English Prompts Grid -->
+          <div class="quick-prompts-grid hidden" id="prompts-grid-en">
+            <button class="quick-prompt-btn" data-prompt="How to safely fatten up a thin horse? Provide a step-by-step weight gain diet with deworming, barley mash, and supplements.">
+              <span>🐎 Horse Weight Gain & Muscle Formula</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="My horse has severe muscle stiffness (tie-up/azoturia) after tent pegging sprint. Suggest natural poultice and veterinary protocol.">
+              <span>🏇 Post-Event Muscle Cramps & Tie-Up</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Emergency colic relief protocol: natural herbal drench and modern veterinary emergency steps (Flunixin/Banamine).">
+              <span>🩺 Colic Spasm Relief & Vet Advice</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Cracked hooves and thrush management: natural antiseptic oil and Hoof Fuel biotin supplement.">
+              <span>🩹 Hoof Cracks, Thrush & Polish</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="What are the proven benefits of Equine Fuel USA products (Blue Fuel, Electro Fuel, Calm Fuel)?">
+              <span>💎 Equine Fuel USA Supplements</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="How to combine traditional herbal remedies with modern equine veterinary medicine safely?">
+              <span>💊 Integrative Herbal & Modern Vet Care</span>
             </button>
           </div>
 
           <div class="doc-rules-box">
-            <strong>📋 ویٹرنری ڈاکٹر کے بنیادی اصول:</strong>
-            <p>ہر نسخے میں کچن اشیاء کی درست مقدار، تیاری کا مرحلہ وار طریقہ، سائنسی افادیت اور نیزہ بازی کی ضروری احتیاطی تدابیر شامل ہیں۔</p>
+            <strong>📋 ویٹرنری ڈاکٹر دے اصول:</strong>
+            <p>ہر نسخے چ قدرتی دیسی اجزاء، تیاری دا طریقہ، میڈیکل سائنسی افادیت تے نیزہ بازی لئی ضروری احتیاط شامل اے۔</p>
           </div>
         </aside>
 
@@ -169,11 +242,20 @@
               </div>
               <div class="doc-meta">
                 <h4>اسپِ شفا اے آئی ڈاکٹر</h4>
-                <p>ماہر امراض و خوراک برائے نیزہ بازی گھوڑے</p>
+                <p>ماہر امراض، خوراک و دیسی علاج (پنجابی / اردو / English)</p>
               </div>
             </div>
 
             <div class="chat-tools">
+              <!-- Multilingual Language Selector -->
+              <div class="lang-selector-pills" id="chat-lang-selector" title="زبان منتخب کریں (Select Language)">
+                <span class="lang-pill-icon">🗣️</span>
+                <button type="button" class="lang-pill-btn active" data-lang="auto" title="خودکار زبان کی شناخت (Auto Detect)">خودکار</button>
+                <button type="button" class="lang-pill-btn" data-lang="pa" title="پنجابی وچ جواب">پنجابی</button>
+                <button type="button" class="lang-pill-btn" data-lang="ur" title="سلیس اردو میں جواب">اردو</button>
+                <button type="button" class="lang-pill-btn" data-lang="en" title="English Veterinary Response">EN</button>
+              </div>
+
               <button class="chat-tool-btn" id="clear-chat-btn" title="گفتگو صاف کریں">
                 <span>🗑️ چیٹ صاف کریں</span>
               </button>
@@ -186,35 +268,74 @@
               <img src="assets/logo.jpg" alt="ڈاکٹر" class="msg-avatar">
               <div class="msg-bubble">
                 <p><strong>السلام علیکم و رحمتہ اللہ!</strong></p>
-                <p>میں <strong>اسپِ شفا</strong> کا اے آئی ویٹرنری ڈاکٹر ہوں — <strong>فہیم غیاث محمود (غیاث فارم ہاؤس - Ghias Farm House)</strong> کی خصوصی پیشکش۔ نیزہ بازی اور گھوڑوں کی صحت، بیماریوں، پٹھوں کے کھچاؤ، چوٹ، سوجن، متوازن خوراک، چارہ جات، اوقاتِ راشن، پانی، یا امریکن ایکوائن فیول اور دیسی نسخوں کے متعلق اپنا سوال پوچھیں، میں فوری قدم بہ قدم رہنمائی فراہم کروں گا۔</p>
+                <p>میں <strong>اسپِ شفا</strong> کا اے آئی ویٹ ڈاکٹر ہوں — <strong>فہیم غیاث محمود (غیاث فارم ہاؤس)</strong> کی خصوصی پیشکش۔ گھوڑے کے علاج کے لیے نیچے <strong>📸 تصویر/ویڈیو</strong> اپلوڈ کریں، <strong>🎤 بول کر بتائیں</strong> یا <strong>⚡ فوری نسخوں</strong> کا انتخاب کریں۔</p>
               </div>
             </div>
           </div>
 
           <!-- Input Form -->
           <div class="chat-input-container">
+            <!-- Mobile Quick Action Strip (Prominent Options for Mobile) -->
+            <div class="mobile-action-strip" id="mobile-action-strip">
+              <button type="button" class="action-strip-btn btn-action-camera" id="action-strip-camera-btn">
+                <span class="action-icon">📸</span>
+                <span class="action-label">تصویر یا ویڈیو بھیجیں</span>
+              </button>
+              <button type="button" class="action-strip-btn btn-action-voice" id="action-strip-voice-btn">
+                <span class="action-icon">🎤</span>
+                <span class="action-label">آواز میں بولیں</span>
+              </button>
+              <button type="button" class="action-strip-btn btn-action-prompts" id="action-strip-prompts-btn">
+                <span class="action-icon">⚡</span>
+                <span class="action-label">فوری نسخے</span>
+              </button>
+            </div>
+
+            <!-- Image Attachment Preview Bar -->
+            <div id="image-preview-bar" class="image-preview-bar hidden">
+              <div class="preview-thumb-wrap">
+                <img id="image-preview-img" src="" alt="پیشگی تصویر">
+                <span class="preview-badge">📷 تصویر منسلک</span>
+              </div>
+              <div class="preview-info">
+                <span id="preview-filename">horse_photo.jpg</span>
+                <small>ویٹرنری معائنے کے لیے تیار</small>
+              </div>
+              <button type="button" id="preview-direct-send-btn" class="btn-preview-send" title="ڈاکٹر سے فوری معائنہ کرائیں">
+                🚀 معائنہ کرائیں
+              </button>
+              <button type="button" id="remove-image-btn" class="btn-remove-preview" title="تصویر ہٹائیں">✕</button>
+            </div>
+
+            <!-- Voice Recording Notice -->
             <div id="voice-recording-notice" class="voice-recording-notice hidden">
               <div class="recording-indicator-left">
                 <span class="recording-dot"></span>
-                <span class="recording-text">🔴 لائیو وائس ریکارڈنگ جاری ہے... بولتے رہیں (مکمل ہونے پر روکیں دبائیں)</span>
+                <span class="recording-text">🔴 لائیو آواز سنی جا رہی ہے... بولتے رہیں</span>
               </div>
               <button type="button" id="stop-voice-btn" class="btn-stop-voice" title="ریکارڈنگ روکیں">
                 روکیں ⏹️
               </button>
             </div>
+
+            <!-- Hidden File and Camera Inputs -->
+            <input type="file" id="image-upload-input" accept="image/*,video/*" style="display: none;">
+
             <form class="chat-input-form" id="chat-form">
               <textarea 
                 class="chat-textarea" 
                 id="chat-input" 
                 rows="1" 
-                placeholder="اپنے گھوڑے کی علامت، چوٹ، خوراک یا مسئلہ یہاں بیان کریں..." 
-                required></textarea>
+                placeholder="یا یہاں اپنا سوال لکھیں..."></textarea>
               
               <div class="input-actions">
-                <button type="button" class="btn-voice" id="voice-btn" title="اردو میں بولیں (وائس ڈکٹیشن)">
+                <button type="button" class="btn-camera" id="camera-btn" title="گھوڑے کی بیماری، چوٹ یا کھر کی تصویر/ویڈیو بھیجیں">
+                  📷
+                </button>
+                <button type="button" class="btn-voice" id="voice-btn" title="پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)">
                   🎤
                 </button>
-                <button type="submit" class="btn-send" id="send-btn">
+                <button type="submit" class="btn-send" id="send-btn" title="مشورہ لیں">
                   <span>مشورہ لیں</span> 🚀
                 </button>
               </div>
@@ -652,6 +773,32 @@
       <div class="modal-body" id="rx-pad-content">
         <!-- Injected via JS -->
       </div>
+    <!-- Mobile Quick Prompts Bottom Sheet Modal -->
+  <div class="modal-overlay mobile-prompts-overlay" id="mobile-prompts-modal">
+    <div class="modal-card mobile-prompts-sheet">
+      <div class="mobile-sheet-drag-handle"></div>
+      <div class="modal-header" style="padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.4rem;">⚡</span>
+          <div>
+            <h3 class="modal-title" style="margin: 0; font-size: 1.15rem; color: var(--gold-400);">فوری سوالات و نسخے</h3>
+            <p style="margin: 0; font-size: 0.76rem; color: var(--text-muted);">اپنے گھوڑے کے مسئلے پر کلک کریں، فوری جواب سامنے آئے گا</p>
+          </div>
+        </div>
+        <button type="button" class="btn-modal-close" id="close-prompts-modal-btn" aria-label="بند کریں">&times;</button>
+      </div>
+
+      <!-- Language selector inside modal -->
+      <div class="prompts-lang-tabs in-modal" id="modal-prompts-lang-tabs" style="margin-bottom: 0.65rem; justify-content: center;">
+        <button type="button" class="prompts-tab-btn active" data-modal-lang="pa">🐎 پنجابی نسخے</button>
+        <button type="button" class="prompts-tab-btn" data-modal-lang="ur">اردو نسخے</button>
+        <button type="button" class="prompts-tab-btn" data-modal-lang="en">English</button>
+      </div>
+
+      <!-- Prompts list container -->
+      <div class="modal-prompts-container" id="modal-prompts-container">
+        <!-- Injected via JS -->
+      </div>
     </div>
   </div>
 
@@ -686,6 +833,16 @@
           </select>
         </div>
 
+        <div class="form-group">
+          <label class="form-label" for="lang-select">پسندیدہ زبان (Language Preference):</label>
+          <select id="lang-select" class="form-select">
+            <option value="auto">خودکار شناخت (Auto Detect - اردو / پنجابی / English)</option>
+            <option value="pa">پنجابی (ਪੰਜਾਬੀ / Punjabi)</option>
+            <option value="ur">اردو (Urdu)</option>
+            <option value="en">English (انگریزی)</option>
+          </select>
+        </div>
+
         <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
           <button type="button" class="btn-card-view" id="reset-settings-btn">
             ڈیفالٹ پر لائیں
@@ -695,6 +852,14 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div class="image-lightbox-modal" id="image-lightbox-modal">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="lightbox-close-btn" title="بند کریں">&times;</button>
+      <img id="lightbox-img" src="" alt="بڑی تصویر">
     </div>
   </div>
 

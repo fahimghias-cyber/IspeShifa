@@ -194,6 +194,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.2px;
 }
 
+.mobile-intro-banner {
+  display: none;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -552,6 +556,103 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
+/* Language Selector Pills */
+.lang-selector-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-glass);
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.lang-pill-icon {
+  font-size: 0.85rem;
+  margin: 0 0.15rem;
+}
+
+.lang-pill-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-urdu);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-pill-btn:hover {
+  color: var(--gold-300);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.lang-pill-btn.active {
+  color: var(--bg-dark);
+  background: var(--gold-gradient);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+  font-weight: 700;
+}
+
+/* Sidebar Prompts Header & Lang Tabs */
+.sidebar-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-header-row .sidebar-title {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 1.05rem;
+}
+
+.prompts-lang-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.15rem 0.25rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.prompts-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-urdu);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prompts-tab-btn:hover {
+  color: var(--gold-300);
+}
+
+.prompts-tab-btn.active {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold-300);
+  border: 1px solid var(--gold-500);
+  font-weight: 700;
+}
+
+.quick-prompts-grid.hidden {
+  display: none !important;
+}
+
 .chat-tools {
   display: flex;
   align-items: center;
@@ -824,6 +925,213 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+.btn-camera {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--gold-400);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-camera:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-500);
+  transform: scale(1.05);
+}
+
+.btn-camera.has-image {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  border-color: #fff;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+}
+
+/* Image Attachment Preview Bar */
+.image-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(6, 32, 23, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  animation: slideDown 0.25s ease;
+}
+
+.preview-thumb-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid var(--gold-500);
+  flex-shrink: 0;
+}
+
+#image-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 0.55rem;
+  color: var(--gold-300);
+  text-align: center;
+  padding: 1px 0;
+}
+
+.preview-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#preview-filename {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+  text-align: right;
+}
+
+.preview-info small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.btn-preview-send {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  border: none;
+  font-family: var(--font-urdu);
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 0.45rem 0.95rem;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-preview-send:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.6);
+}
+
+.btn-preview-send:active {
+  transform: scale(0.96);
+}
+
+.btn-remove-preview {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  color: #fda4af;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-remove-preview:hover {
+  background: #f43f5e;
+  color: #fff;
+}
+
+/* User Message Attached Image */
+.msg-attached-image {
+  max-width: 240px;
+  max-height: 200px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gold-500);
+  margin-bottom: 0.5rem;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.msg-attached-image:hover {
+  transform: scale(1.02);
+}
+
+/* Lightbox Modal */
+.image-lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.image-lightbox-modal.open {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gold-500);
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-voice {
@@ -2246,7 +2554,74 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: #92400e;
+/* Mobile Quick Prompts Slide-Up Bottom Sheet Modal */
+.mobile-prompts-overlay {
+  align-items: flex-end;
+  padding: 0;
+}
+
+.mobile-prompts-sheet {
+  width: 100%;
+  max-width: 600px;
+  max-height: 82vh;
+  border-radius: 22px 22px 0 0;
+  background: linear-gradient(180deg, rgba(8, 38, 28, 0.99) 0%, rgba(4, 20, 14, 0.99) 100%);
+  border: 1.5px solid var(--gold-500);
+  border-bottom: none;
+  padding: 0.85rem 1rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 35px rgba(0, 0, 0, 0.85);
+  animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.mobile-sheet-drag-handle {
+  width: 42px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  margin: 0 auto 0.5rem;
+}
+
+.modal-prompts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 52vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.25rem 0.1rem;
+}
+
+.modal-prompts-container .modal-prompt-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #fff;
+  font-family: var(--font-urdu);
+  font-size: 0.92rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  text-align: right;
+  line-height: 1.6;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.modal-prompts-container .modal-prompt-item:active {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  border-color: #fff;
+  transform: scale(0.98);
 }
 
 /* Mobile Bottom Navigation Bar */
@@ -2418,69 +2793,518 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  /* 1. Prevent Mobile Horizontal Overflow & Unwanted Zooming */
+  html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 2. Hide Heavy Desktop Marketing Elements */
   .nav-tabs {
+    display: none !important;
+  }
+  .hero-section {
+    display: none !important;
+  }
+  .mobile-intro-banner {
+    display: none !important; /* Prevents pushing chat off-screen on phones */
+  }
+
+  /* 3. Ultra-Slim Native-App Style Header (52px) */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0;
+    background: rgba(4, 26, 19, 0.98);
+  }
+  .header-inner {
+    padding: 0.35rem 0.75rem;
+    height: 50px;
+  }
+  .brand-wrapper {
+    gap: 0.5rem;
+  }
+  .brand-logo-img {
+    width: 36px;
+    height: 36px;
+    border-width: 1.5px;
+  }
+  .brand-title {
+    font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .brand-tagline, .brand-farm-badge {
+    display: none !important; /* Keep mobile header clean & uncluttered */
+  }
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  /* 4. Native App Chat Screen Layout (Fixed Viewport, Zero Double Scrolling) */
+  .main-container {
+    padding: 0 0 58px; /* Room for bottom mobile nav (58px) */
+    max-width: 100vw;
+  }
+
+  .tab-panel#chat-tab.active {
+    display: flex !important;
+    flex-direction: column;
+    height: calc(100dvh - 50px - 58px);
+    height: calc(100vh - 50px - 58px);
+    min-height: 0 !important;
+    margin-bottom: 0;
+    padding: 0.2rem 0.35rem 0;
+    box-sizing: border-box;
+  }
+
+  .tab-panel:not(#chat-tab) {
+    padding: 0.75rem 0.75rem 70px;
+  }
+
+  .chat-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    gap: 0;
+  }
+
+  /* 5. Hide Desktop Sidebar on Mobile (Prompts are now in the clean slide-up sheet) */
+  .chat-sidebar {
+    display: none !important;
+  }
+
+  /* 6. Mobile Chat Window (Fits Exactly in Screen, Scrollable Messages Only) */
+  .chat-window {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    max-height: none;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-glass);
+    background: rgba(6, 32, 23, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    padding: 0.35rem 0.65rem;
+    background: rgba(10, 45, 33, 0.95);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    flex-shrink: 0;
+    gap: 0.4rem;
+  }
+  .doc-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .doc-meta h4 {
+    font-size: 0.88rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .doc-meta p {
     display: none;
   }
+
+  .lang-selector-pills {
+    padding: 0.1rem 0.25rem;
+    gap: 0.15rem;
+  }
+  .lang-pill-icon {
+    font-size: 0.75rem;
+  }
+  .lang-pill-btn {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+  }
+  .chat-tool-btn {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .chat-messages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.65rem 0.55rem;
+    gap: 0.65rem;
+  }
+  .message-row {
+    max-width: 94%;
+  }
+  .message-row .msg-bubble {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    border-radius: var(--radius-md);
+  }
+  .msg-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* 7. PROMINENT MOBILE QUICK ACTION STRIP */
+  .mobile-action-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.45rem 0.25rem;
+    background: rgba(4, 26, 19, 0.98);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    flex-shrink: 0;
+  }
+
+  .action-strip-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.45rem 0.25rem;
+    border-radius: 18px;
+    font-family: var(--font-urdu);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-action-camera {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(14, 46, 56, 0.95) 100%);
+    color: var(--gold-300);
+    border-color: var(--gold-500);
+  }
+  .btn-action-camera:active {
+    transform: scale(0.95);
+    background: var(--gold-gradient);
+    color: var(--bg-dark);
+  }
+
+  .btn-action-voice {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 32, 23, 0.95) 100%);
+    color: #a7f3d0;
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+  .btn-action-voice.recording {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+    color: #fff !important;
+    border-color: #fca5a5 !important;
+    animation: pulseRecording 1s infinite;
+  }
+
+  .btn-action-prompts {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(6, 32, 23, 0.95) 100%);
+    color: #bae6fd;
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+  .btn-action-prompts:active {
+    transform: scale(0.95);
+  }
+
+  .action-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* Chat Input Form */
+  .chat-input-container {
+    flex-shrink: 0;
+    padding: 0.35rem 0.45rem 0.45rem;
+    background: rgba(10, 45, 33, 0.98);
+    border-top: none;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .chat-input-form {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: 26px;
+    padding: 0.2rem 0.35rem 0.2rem 0.65rem;
+  }
+
+  .chat-textarea {
+    flex: 1;
+    font-size: 0.88rem;
+    padding: 0.35rem 0.35rem;
+    min-height: 36px;
+    max-height: 70px;
+    line-height: 1.4;
+    color: #fff;
+  }
+
+  .input-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .btn-camera {
+    display: none !important;
+  }
+
+  .btn-voice {
+    display: none !important;
+  }
+
+  .btn-send {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    background: var(--gold-gradient);
+    color: var(--bg-dark);
+    border: none;
+  }
+  .btn-send span {
+    display: none !important;
+  }
+
+  /* Prominent Voice Notice on Mobile */
+  .voice-recording-notice {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.98) 0%, rgba(153, 27, 27, 0.99) 100%);
+    border: 2px solid #fca5a5;
+    border-radius: var(--radius-md);
+    padding: 0.55rem 0.8rem;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.6);
+    animation: slideDown 0.25s ease;
+  }
+  .recording-text {
+    font-size: 0.82rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  .btn-stop-voice {
+    background: #fff;
+    color: #b91c1c;
+    border: none;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 8. Fixed Mobile Bottom Navigation Bar (58px) */
   .mobile-nav-bar {
     display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    background: rgba(6, 32, 23, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0.2rem;
+  }
+  .mobile-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    font-family: var(--font-urdu);
+    font-size: 0.7rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    position: relative;
+    flex: 1;
+  }
+  .mobile-nav-btn.active {
+    color: var(--gold-400);
+    font-weight: 700;
+  }
+  .mobile-nav-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--gold-gradient);
+    border-radius: 2px;
+  }
+  .mobile-nav-btn span.icon {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  /* 8. Remedies & Other Panels on Mobile */
+  .section-header-wrap {
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  .section-subtitle {
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  .search-bar-wrap {
+    margin-bottom: 0.75rem;
+  }
+  .search-input {
+    font-size: 0.88rem;
+    padding: 0.55rem 2.25rem 0.55rem 0.85rem;
+  }
+  .category-filter-chips {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.4rem;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+  .category-filter-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-chip {
+    flex: 0 0 auto;
+    font-size: 0.82rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    white-space: nowrap;
   }
   .remedies-grid {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
-  .hero-card {
-    padding: 1.2rem 1rem;
-    margin-bottom: 1.25rem;
+  .remedy-card {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
   }
-  .hero-badge {
-    font-size: 0.78rem;
-    padding: 0.25rem 0.65rem;
+  .card-header-top {
+    margin-bottom: 0.5rem;
   }
-  .hero-title {
-    font-size: 1.45rem;
-    line-height: 1.4;
+  .remedy-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
   }
-  .hero-subtitle {
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
-  .hero-stats {
+
+  /* 9. Nutrition Hub & Equine Fuel on Mobile */
+  .nutrition-sub-tabs {
     display: flex;
     overflow-x: auto;
-    gap: 0.6rem;
-    padding-bottom: 0.35rem;
+    gap: 0.4rem;
+    padding: 0.2rem 0.1rem 0.6rem;
+    margin-bottom: 1rem;
     scrollbar-width: none;
-  }
-  .hero-stats::-webkit-scrollbar {
-    display: none;
-  }
-  .stat-chip {
-    flex: 0 0 auto;
-    padding: 0.5rem 0.85rem;
-  }
-  .chat-window {
-    height: min(580px, calc(100vh - 180px));
-  }
-  .chat-messages {
-    padding: 1rem 0.75rem;
-  }
-  .message-row .msg-bubble {
-    font-size: 0.95rem;
-    line-height: 1.9;
-    padding: 0.85rem 1rem;
-  }
-  .nutrition-sub-tabs {
-    padding-bottom: 0.5rem;
-    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
   }
   .nutrition-sub-tabs::-webkit-scrollbar {
     display: none;
   }
   .sub-tab-btn {
-    font-size: 0.85rem;
-    padding: 0.45rem 0.9rem;
+    flex: 0 0 auto;
+    font-size: 0.82rem;
+    padding: 0.38rem 0.8rem;
+    border-radius: 20px;
+    white-space: nowrap;
   }
-  .main-container {
-    padding-bottom: 5.5rem;
+  .calc-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .calc-card {
+    padding: 1.1rem 0.95rem;
+    border-radius: var(--radius-lg);
+  }
+  .efuel-hero-banner {
+    padding: 1.1rem 0.95rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.25rem;
+  }
+  .efuel-banner-title {
+    font-size: 1.35rem;
+  }
+  .efuel-banner-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+  .efuel-banner-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-efuel-youtube,
+  .btn-efuel-web {
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem 1rem;
+  }
+  .fodder-grid,
+  .ingredients-grid,
+  .efuel-products-grid,
+  .feed-mixes-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  /* 10. Compact Mobile Footer */
+  .app-footer {
+    padding: 1.5rem 1rem 5.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .footer-logo-row {
+    justify-content: center;
+  }
+  .footer-about-text {
+    font-size: 0.82rem;
+    line-height: 1.8;
+    margin: 0 auto;
+  }
+  .footer-credits-card {
+    padding: 1.1rem 0.85rem;
+    border-radius: var(--radius-lg);
+  }
+  .creator-name {
+    font-size: 1.35rem;
   }
 }
 
