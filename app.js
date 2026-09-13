@@ -5,18 +5,49 @@
 
 // Default Configuration
 const DEFAULT_GROQ_KEY = "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";
-const DEFAULT_MODEL = "llama-3.3-70b-versatile";
+const DEFAULT_MODEL = "qwen/qwen3.8-27b";
 
-const SYSTEM_PROMPT = `آپ "اسپِ شفا" کے ایک مستند، ماہر اور انتہائی تجربہ کار ویٹرنری ڈاکٹر (Veterinary Doctor) ہیں جسے "فہیم غیاث محمود" (Fahim Ghias Mahmood) اور "غیاث فارم ہاؤس" (Ghias Farm House) نے نیزہ بازی، اصطبل اور گھوڑوں کی صحت و غذائیت کے لیے خصوصی طور پر ڈیزائن کیا ہے۔ آپ کا کام نیزہ بازی کے گھوڑوں کی بیماریوں، پٹھوں کے کھچاؤ، چوٹوں، تھکاوٹ، متوازن خوراک و راشن اور فٹنس کے لیے بہترین مشورہ دینا ہے۔
+const SYSTEM_PROMPT = `آپ "اسپِ شفا" کے ایک مستند، سینئر اور عالمی معیار کے ویٹرنری ڈاکٹر (Senior Equine Veterinarian & Nutrition Specialist) ہیں جسے "فہیم غیاث محمود" (Fahim Ghias Mahmood) اور "غیاث فارم ہاؤس" (Ghias Farm House) کی خصوصی سرپرستی میں نیزہ بازی (Tent Pegging)، اصطبل کے گھوڑوں کی صحت، بیماریوں، موٹا اور فربہ کرنے کے دیسی نسخوں، خوراک و راشن اور سپلیمنٹس کے لیے تیار کیا گیا ہے۔
 
-جب بھی آپ سے کسی گھوڑے کے مسئلے، خوراک، چارے، پانی یا سپلیمنٹ کے بارے میں پوچھا جائے تو درج ذیل اصولوں پر عمل کریں:
-1. دیسی علاج کے لیے کچن کی قدرتی اشیاء (ہلدی، اجوائن، سرسوں کا تیل، گڑ، لہسن، سونف، السی، پھٹکری وغیرہ) کے مستند نسخے بتائیں۔
-2. خوراک اور ونڈے کے لیے روایتی اجزاء (دیسی چنے، جَو کا دلیہ، چوکر، گڑ، دیسی گھی) اور معروف امریکن سپلیمنٹ "ایکوائن فیول" (Equine Fuel USA) بالخصوص "بلیو فیول کیلشیم و منرلز" (Blue Fuel Calcium)، "الیکٹرو فیول" اور "ہوف فیول" کی درست مقدار اور سائنسی فوائد بتائیں کہ یہ ہڈیوں کی مضبوطی، قد بڑھانے اور نیزہ بازی کی اعلیٰ پرفارمنس کے لیے کتنا زبردست رزلٹ دیتے ہیں۔
-3. چارہ جات کی تحقیق میں لوسرن (Alfalfa) اور روڈس گراس ہے (Rhodes Grass Hay) کو بہترین قرار دیں، برسیم کے ساتھ خشک چارہ ملانے کا مشورہ دیں، اور جوار (Sorghum) کے زہریلے پروسِک ایسڈ اور تنہا سوکھی توڑی سے آنتوں کے رکنے (امپیکشن کولک) کے خطرات واضح کریں۔
-4. پانی کے سنہری اصول بتائیں: یومیہ 35 تا 60 لیٹر پانی، اور سخت دوڑ کے بعد گرم پسینے والے گھوڑے کو برف کا ٹھنڈا پانی پلانے سے سختی سے منع کریں تاکہ قولنج اور کھروں کی خرابی (Laminitis) سے بچا جا سکے۔
-5. طریقہ استعمال، درست اوزان اور کھلانے کا وقت قدم بہ قدم آسان اردو میں لکھیں۔
-6. اہم وارننگ (Warning): ہر طبی علاج کے آخر میں ہمیشہ یہ واضح ہدایت لازمی دیں کہ:
-"یہ ایک ابتدائی اور دیسی علاج ہے، اگر گھوڑے کی حالت میں بہتری نہ آئے یا مسئلہ سنگین ہو (جیسے پیٹ کا شدید درد یا گہرا زخم) تو وقت ضائع کیے بغیر فوری طور پر قریبی مستند ویٹرنری ڈاکٹر سے رابطہ کریں۔"`;
+اہم لازمی اصول: آپ کو ہر حال میں اپنا مکمل جواب صرف اور صرف سلیس اردو (Urdu) زبان میں ہی تحریر کرنا ہے۔ کسی اور زبان (جیسے فارسی) میں ہرگز جواب نہ دیں۔
+
+آپ کا دائرہ کار اور جواب دینے کا طریقہ کار:
+صارف آپ سے گھوڑے کے کسی بھی مسئلے، بیماری، علامت، کمزوری، خوراک، یا دیکھ بھال کے بارے میں پوچھے تو سائنسی اور روایتی حکمت کے امتزاج سے مکمل، جامع اور قدم بہ قدم رہنمائی فراہم کریں۔
+
+1. کمزور گھوڑے کو موٹا، فربہ اور تندرست کرنے کا مستند نسخہ (Weight & Muscle Gain Formula):
+جب بھی گھوڑے کے وزن، موٹا کرنے یا کمزوری کے متعلق پوچھا جائے تو درج ذیل 5 بنیادی مراحل لازمی سکھائیں:
+- مرحلہ 1: پیٹ کے کیڑوں کی صفائی (Deworming - لازمی پہلا قدم): کمزور گھوڑے کے پیٹ میں اندرونی کیڑے (Worms) خوراک کا اثر زائل کرتے ہیں۔ پہلے Albendazole یا Ivermectin پیسٹ نہار منہ دیں تاکہ کیڑے ختم ہوں اور خوراک جسم کو لگے۔
+- مرحلہ 2: دانتوں کا معائنہ (Dental Rasping): اگر دانت نوکیلے ہوں تو دانہ چبا نہیں پاتا، اس لیے دانتوں کو ریت کر برابر کرائیں۔
+- مرحلہ 3: موٹا کرنے کا شاہی راشن (Daily Champion Muscle Ration):
+  • ابلا ہوا جَو کا دلیہ: 2 تا 2.5 کلوگرام (توانائی، فربہی اور جسم بھرنے کے لیے)
+  • دیسی چنے (رات کے بھیگے اور ہلکے ابلے): 1.25 کلوگرام (عضلات و مسل کی تعمیر)
+  • گندم کا میٹھا چوکر: 1.5 کلوگرام (ہاضمہ اور فاسفورس)
+  • السی کا جوشاندہ یا بیج: 150 تا 200 گرام (چمکیلی جلد، پسلیاں چھپانے اور صحتمند چربی کے لیے)
+  • خالص دیسی گھی: 150 تا 200 گرام (پرانے کالے گڑ 250 گرام کے ساتھ شام کو ملا کر دینا)
+  • ایکوائن فیول "بلیو فیول کیلشیم و منرلز" (Blue Fuel Calcium & Minerals): 50 تا 60 گرام یومیہ راشن میں مکس کریں تاکہ ہڈیاں چوڑی ہوں، قد اور فریم بڑھے۔
+- مرحلہ 4: معیاری سوکھا چارہ:
+  • روزانہ 6 تا 8 کلو اعلٰی معیار کی لوسرن ہے (Alfalfa Hay) یا روڈس گراس ہے (Rhodes Grass Hay) دیں۔
+  • اکیلی سوکھی توڑی کھلانے سے سختی سے گریز کریں کیونکہ یہ آنتوں میں پھنس کر قولنج بناتی ہے۔
+- مرحلہ 5: ہائیڈریشن اور دیکھ بھال:
+  • یومیہ 40 تا 60 لیٹر تازہ صاف پانی، صبح شام 15 منٹ کھرکھرا مالش اور دھوپ میں چہل قدمی۔
+
+2. تمام گھریلو و روایتی دیسی نسخے:
+- دردِ قولنج (Colic): فوری اجوائن، سونف، کالا نمک، اور ہینگ کا کاڑھا، مسلسل چہل قدمی کرائیں، گھوڑے کو زمین پر لوٹ پوٹ نہ ہونے دیں۔
+- پٹھوں کا کھچاؤ و سوجن: ہلدی، اجوائن، سرسوں کا تیل، اور پھٹکری کا نیم گرم لیپ۔
+- کھروں کی خرابی (Thrush): تارا میرا یا سرسوں کے تیل میں کافور یا نیلا تھوتھا ملا کر لگانا۔
+- سانس و کھانسی: پرانا گڑ، دیسی گھی اور کٹے لہسن کے لڈو۔
+
+3. معروف امریکن سپلیمنٹس "ایکوائن فیول" (Equine Fuel USA):
+- Blue Fuel (کیلشیم اور منرل گروتھ): ہڈیوں کی کثافت، قد بڑھانے اور ٹورنامنٹ کی مضبوطی کے لیے۔
+- Electro Fuel (الیکٹرولائٹس و وٹامن بی): گرمی اور پسینے سے نمکیات کی کمی دور کرنے کے لیے۔
+- Calm Fuel (میگنیشیم و کیلیٹڈ منرلز): نیزہ بازی مقابلے میں گھوڑے کے اعصاب کو پرسکون اور فوکس رکھنے کے لیے۔
+- Hoof Fuel (بایوٹین و زنک): کھروں کو پتھر جیسا مضبوط بنانے کے لیے۔
+- یوٹیوب چینل کا حوالہ دیں: https://www.youtube.com/@Equine-fuel/videos
+
+4. لحن اور انداز:
+- پرخلوص، باعزت اور سلیس اردو میں تفصیلی جواب دیں۔
+- "فہیم غیاث محمود" اور "غیاث فارم ہاؤس" کی اعلیٰ ویٹرنری روایات کو برقرار رکھیں۔
+- آخر میں ہمیشہ یہ یاد دہانی دیں کہ ہنگامی صورتحال میں قریبی مستند ویٹرنری سرجن سے فوری رجوع کریں۔`;
 
 // State
 let conversationHistory = [
@@ -171,12 +202,13 @@ function initChat() {
   });
 }
 
-function getApiKey() {
-  return localStorage.getItem("ispeshifaa_groq_key") || DEFAULT_GROQ_KEY;
-}
-
 function getSelectedModel() {
-  return localStorage.getItem("ispeshifaa_groq_model") || DEFAULT_MODEL;
+  const saved = localStorage.getItem("ispeshifaa_groq_model");
+  // Auto-migrate if saved model is obsolete or unavailable on Groq
+  if (!saved || saved.includes("llama") || saved.includes("mixtral")) {
+    return DEFAULT_MODEL;
+  }
+  return saved;
 }
 
 async function callGroqVeterinaryAI(userQuery) {
@@ -216,50 +248,259 @@ async function callGroqVeterinaryAI(userQuery) {
 
 // Smart Local Fallback in case user has no internet or invalid key
 function generateSmartLocalRemedy(userQuery) {
-  const queryLower = userQuery.toLowerCase();
-  
-  // Find matching remedy from data
-  let match = REMEDIES_DATA.find(r => 
-    queryLower.includes(r.title.toLowerCase()) ||
-    queryLower.includes(r.categoryUrdu.toLowerCase()) ||
-    r.ingredients.some(i => queryLower.includes(i.name.toLowerCase()))
-  );
+  const q = (userQuery || "").toLowerCase();
 
-  if (!match) {
-    if (queryLower.includes("موچ") || queryLower.includes("سوجن") || queryLower.includes("چوٹ") || queryLower.includes("پٹھے")) {
-      match = REMEDIES_DATA[0]; // Turmeric poultice
-    } else if (queryLower.includes("پیٹ") || queryLower.includes("درد") || queryLower.includes("گیس") || queryLower.includes("قولنج")) {
-      match = REMEDIES_DATA[3]; // Colic decoction
-    } else if (queryLower.includes("طاقت") || queryLower.includes("ونڈا") || queryLower.includes("خوراک") || queryLower.includes("نیزہ بازی")) {
-      match = REMEDIES_DATA[6]; // Shahi Wanda
-    } else if (queryLower.includes("کھر") || queryLower.includes("نعل") || queryLower.includes("سڑاند")) {
-      match = REMEDIES_DATA[9]; // Hoof oil
-    } else if (queryLower.includes("سانس") || queryLower.includes("دم") || queryLower.includes("کھانسی")) {
-      match = REMEDIES_DATA[11]; // Garlic bolus
-    } else {
-      match = REMEDIES_DATA[0];
-    }
+  // 1. Weight Gain / Fattening / Weakness (موٹا کرنے کا نسخہ و راشن)
+  if (q.includes("موٹا") || q.includes("وزن") || q.includes("کمزور") || q.includes("فربہ") || q.includes("پتلا") || q.includes("ہڈیاں") || q.includes("جسم") || q.includes("سوکھا") || q.includes("طاقتور") || q.includes("کمزوری") || q.includes("قد")) {
+    const reply = `**🐎 گھوڑے کو موٹا، فربہ اور تندرست بنانے کا مستند شاہی نسخہ**
+*(فہیم غیاث محمود - غیاث فارم ہاؤس کی خصوصی ویٹرنری ہدایات)*
+
+کمزور گھوڑے کا وزن بڑھانے، پسلیاں چھپانے اور پٹھے مضبوط کرنے کے لیے درج ذیل 5 بنیادی مراحل پر سختی سے عمل کریں:
+
+---
+
+### **مرحلہ 1: پیٹ کے کیڑوں کی صفائی (ڈی ورمنگ - سب سے پہلا لازمی قدم)**
+• اگر گھوڑے کے پیٹ میں کیڑے (Worms) ہوں تو وہ جتنا مرضی دیسی گھی، دودھ یا دلیہ کھا لے، وزن نہیں بڑھے گا بلکہ سارا اثر کیڑے کھا جائیں گے۔
+• **علاج:** قریبی ویٹرنری اسٹور سے **Ivermectin Paste** یا **Albendazole** لا کر صبح نہار منہ زبان پر لگائیں اور 2 گھنٹے بعد چارہ دیں۔ ہر 3 ماہ بعد ڈی ورمنگ دہرائیں۔
+
+---
+
+### **مرحلہ 2: دانتوں کی چیکنگ (Dental Rasping)**
+• نیزہ باز گھوڑوں کے پچھلے داڑھ کے دانت نوکیلے ہو جاتے ہیں جس سے وہ دانہ اور چارہ پورا نہیں چبا پاتے اور خوراک فضلے میں ضائع ہو جاتی ہے۔
+• ویٹرنری ڈاکٹر سے دانت ریتوا کر برابر کروائیں تاکہ گھوڑا پورا چبا کر ہضم کر سکے۔
+
+---
+
+### **مرحلہ 3: وزن بڑھانے اور پٹھے بنانے کا شاہی راشن (Daily Champion Muscle Ration)**
+روزانہ کے راشن میں درج ذیل غذائی اجزاء شامل کریں:
+1. **ابلا ہوا جَو کا دلیہ:** 2 تا 2.5 کلوگرام (ہضم میں انتہائی ہلکا، جسم کو تیزی سے بھرتا ہے)۔
+2. **دیسی چنے:** 1.25 کلوگرام (رات کو پانی میں بھگو کر رکھیں، صبح ہلکا ابال کر دیں، خالص مسل بناتا ہے)۔
+3. **گندم کا میٹھا چوکر:** 1.5 کلوگرام (فاسفورس اور ہاضمے کی حرکت کے لیے)۔
+4. **السی کا جوشاندہ:** 150 تا 200 گرام (پانی میں پکا کر لعاب بنا کر کھلائیں، یہ کھال میں ریشم جیسی چمک اور پسلیاں چھپانے میں لاجواب ہے)۔
+5. **خالص دیسی گھی + پرانا گڑ:** 150 تا 200 گرام دیسی گھی نیم گرم کر کے 250 گرام کالے گڑ میں مکس کر کے شام کو ونڈے کے بعد دیں۔
+6. **امریکن ایکوائن فیول "بلیو فیول کیلشیم و منرلز" (Blue Fuel):** 50 تا 60 گرام یومیہ راشن میں ملائیں۔ یہ ہڈیوں کی ساخت، کثافت اور قد بڑھانے کے لیے بائیو اویلیبل فارمولا ہے۔ (مزید تفصیل کے لیے: https://www.youtube.com/@Equine-fuel/videos)
+
+---
+
+### **مرحلہ 4: اعلٰی معیار کا سوکھا چارہ**
+• روزانہ 6 تا 8 کلو اعلٰی کوالٹی **لوسرن ہے (Alfalfa Hay)** یا **روڈس گراس ہے (Rhodes Grass Hay)** دیں۔
+• ⚠️ تنہا سوکھی توڑی پر گھوڑے کو مت رکھیں، اس سے آنتیں خشک ہو کر امپیکشن قولنج (پیٹ درد) بنتا ہے۔
+
+---
+
+### **مرحلہ 5: ہائیڈریشن اور مالش**
+• یومیہ 40 تا 60 لیٹر صاف تازہ پانی میسر رکھیں۔
+• روزانہ صبح شام 15 منٹ کھرکھرا اور مالش کریں تاکہ خون کی گردش تیز ہو اور پٹھے ابھریں۔
+
+⚠️ **اہم ویٹرنری ہدایت:** راشن کی مقدار یکدم نہ بڑھائیں بلکہ 7 سے 10 دنوں کے دوران آہستہ آہستہ خوراک میں اضافہ کریں تاکہ معدہ عادی ہو سکے۔ اگر گھوڑا سست رہے تو فوری خون کا ٹیسٹ کروائیں۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
   }
 
-  const fallback = `**تشخیص و دیسی علاج: ${match.title}**
+  // 2. Feed / Wanda / Ration
+  if (q.includes("خوراک") || q.includes("ونڈا") || q.includes("راشن") || q.includes("غذا") || q.includes("دانہ") || q.includes("کھانا") || q.includes("چنے") || q.includes("جو")) {
+    const reply = `**🌾 نیزہ بازی کے گھوڑے کا شاہی مقوی ونڈا و متوازن راشن**
+*(غیاث فارم ہاؤس - فہیم غیاث محمود کی مستند رہنمائی)*
 
-**1. ضروری اجزاء اور درست مقدار:**
-${match.ingredients.map(ing => `• **${ing.name}**: ${ing.amount}`).join('\n')}
+نیزہ بازی اور تیز دوڑ کے گھوڑے کو عام جانوروں سے دوگنی توانائی، پروٹین اور منرلز کی ضرورت ہوتی ہے۔
 
-**2. طریقہ تیاری و استعمال (قدم بہ قدم):**
-${match.steps.map((st, idx) => `${idx + 1}. ${st}`).join('\n')}
+**1. روزانہ کے شاہی ونڈے کا فارمولا (500 کلو وزنی گھوڑے کے لیے):**
+• **جَو (Barley) کا دلیہ:** 2.5 کلوگرام (ہلکا ابلا ہوا یا بھگویا ہوا)
+• **دیسی کالے چنے:** 1.5 کلوگرام (رات کے بھیگے ہوئے، پروٹین کا خزانہ)
+• **گندم کا چوکر (Wheat Bran):** 1.25 کلوگرام
+• **پرانا کالا گڑ:** 250 گرام (قدرتی آئرن اور فوری گلوکوز)
+• **خالص دیسی گھی یا سرسوں کا مصفا تیل:** 150 تا 200 ملی لیٹر
+• **السی کے بیج:** 150 گرام (پٹھوں کی لچک اور چمک کے لیے)
+• **ایکوائن فیول بلیو فیول (Blue Fuel Calcium):** 50 گرام (ہڈیوں و کھروں کے لیے)
+• **لاہوری نمک / کالا نمک:** 25 گرام
 
-**3. سائنسی و روایتی افادیت:**
-${match.mechanism}
+**2. کھلانے کا درست ٹائم ٹیبل:**
+• **صبح 6:00 بجے:** تازہ پانی + 3 کلو سبز لوسرن یا روڈس ہے
+• **صبح 9:00 بجے:** آدھا ونڈا (جَو، چنے، چوکر و بلیو فیول)
+• **دوپہر 1:00 بجے:** تازہ پانی + ہلکا چارہ و آرام
+• **شام 5:00 بجے (ورزش کے 45 منٹ بعد):** باقی آدھا ونڈا مع دیسی گھی، گڑ اور السی
+• **رات 8:00 بجے:** پیٹ بھر کر سوکھا چارہ (الفالفا یا روڈس ہے) تاکہ رات بھر ہاضمہ چلتا رہے۔
 
-**4. نیزہ بازی ٹریننگ و احتیاطی تدابیر:**
-${match.precautions}
+⚠️ **احتیاط:** سخت مشق یا نیزہ بازی کے فوراً بعد دانہ یا ونڈا نہ ڈالیں، کم از کم 45 منٹ بعد جب سانس بحال ہو جائے تب کھلائیں۔`;
 
-**اہم وارننگ:**
-${match.warning}`;
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
 
-  conversationHistory.push({ role: "assistant", content: fallback });
-  return fallback;
+  // 3. Water / Hydration / Electrolytes
+  if (q.includes("پانی") || q.includes("پیاس") || q.includes("ہائیڈریشن") || q.includes("الیکٹرولائٹ") || q.includes("نمکیات") || q.includes("شربت")) {
+    const reply = `**💧 پانی اور ہائیڈریشن کے سنہری ویٹرنری اصول**
+*(غیاث فارم ہاؤس - فہیم غیاث محمود کا ہدایت نامہ)*
+
+ایک صحت مند نیزہ باز گھوڑے کی یومیہ پانی کی ضرورت:
+• **معمول کے موسم میں:** 35 تا 45 لیٹر
+• **گرمی، سخت ٹریننگ یا نیزہ بازی سیزن میں:** 55 تا 75+ لیٹر
+
+---
+
+### **⚠️ سب سے بڑی وارننگ: برف اور یخ ٹھنڈا پانی!**
+سخت دوڑ اور نیزہ بازی کے فوراً بعد جب گھوڑا پسینے میں شرابور ہو اور ہانپ رہا ہو، **کبھی بھی برف کا ٹھنڈا پانی نہ پلائیں!**
+اس سے معدے کی رگوں میں شدید اینٹھن (Spasm) آتی ہے جس سے جان لیوا قولنج (Colic) اور کھروں کی خرابی (Founder/Laminitis) پیدا ہوتی ہے۔
+
+**درست طریقہ:** گھوڑے کو 15 منٹ واک کرا کے پسینہ سکھائیں، پھر نارمل تازہ پانی میں 2 گھونٹ پلائیں، پھر وقفے سے پورا پانی دیں۔
+
+---
+
+### **گھریلو دیسی الیکٹرولائٹ شربت (فوری توانائی):**
+• نیم گرم پانی: 5 لیٹر
+• پرانا گڑ: 150 گرام
+• لاہوری نمک: 1 چمچ
+• لیموں کا رس: 2 عدد
+• میٹھا سوڈا: آدھا چمچ
+*(یا پھر ایکوائن فیول "Electro Fuel" کا ایک اسکوپ پانی میں حل کر کے دیں)*`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 4. Blue Fuel / Calcium / Equine Fuel USA
+  if (q.includes("کیلشیم") || q.includes("بلیو فیول") || q.includes("ایکوائن فیول") || q.includes("الیکٹرو فیول") || q.includes("کام فیول") || q.includes("ہوف فیول") || q.includes("سپلیمنٹ") || q.includes("منرل")) {
+    const reply = `**💎 ایکوائن فیول یو ایس اے (Equine Fuel USA) سپلیمنٹس گائیڈ**
+*(غیاث فارم ہاؤس - فہیم غیاث محمود کی فیلڈ ریسرچ)*
+
+نیزہ بازی اور چیمپیئن گھوڑوں کے لیے امریکی ساختہ "ایکوائن فیول" سپلیمنٹس کے فوائد:
+
+1. **Blue Fuel (بائیو اویلیبل کیلشیم و منرل گروتھ فارمولا):**
+   • **فوائد:** ہڈیوں کی مائیکرو کریکس کو بھرتا ہے، نیزہ بازی کے جھٹکوں کو برداشت کرنے کی سکت دیتا ہے، قد اور فریم بڑھاتا ہے۔
+   • **خوراک:** 50 تا 60 گرام یومیہ صبح کے ونڈے میں۔
+2. **Electro Fuel (وٹامن بی کمپلیکس و فوری نمکیات):**
+   • **فوائد:** پسینے سے نمکیات کے زیاں کو روکتا ہے، ڈی ہائیڈریشن اور مسل کی اکڑن ختم کرتا ہے۔
+3. **Calm Fuel (کیلیٹڈ میگنیشیم و اعصابی سکون):**
+   • **فوائد:** گھوڑے کا خوف اور بے جا چڑچڑاہٹ ختم کرتا ہے تاکہ نیزہ لیتے وقت ٹارگٹ پر 100% فوکس رہے۔
+4. **Hoof Fuel (بایوٹین، زنک و میتھیونائن):**
+   • **فوائد:** کھروں کے چٹخنے اور نعل نکلنے کا خاتمہ، کھروں کو شیشے جیسا چمکدار اور پتھر جیسا سخت بناتا ہے۔
+
+📺 **آفیشل یوٹیوب گائیڈ ویڈیوز:** https://www.youtube.com/@Equine-fuel/videos`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 5. Forage / Fodder / Hay
+  if (q.includes("چارہ") || q.includes("لوسرن") || q.includes("گھاس") || q.includes("برسیم") || q.includes("توڑی") || q.includes("روڈس") || q.includes("جوار")) {
+    const reply = `**🌿 چارہ جات کی سائنسی تحقیق و رہنمائی**
+*(غیاث فارم ہاؤس ویٹرنری ریسرچ - فہیم غیاث محمود)*
+
+1. **لوسرن (Alfalfa / Lucerne):**
+   • گھوڑوں کا بادشاہ چارہ! 18-20% پروٹین اور قدرتی کیلشیم سے بھرپور۔
+   • موٹا کرنے اور ہڈیوں کی مضبوطی کے لیے بہترین ہے۔ یومیہ 6 تا 8 کلو لوسرن ہے دیں۔
+2. **روڈس گراس ہے (Rhodes Grass Hay):**
+   • نیزہ باز گھوڑوں کے پیٹ کو درست رکھنے اور کولک سے بچانے کے لیے محفوظ ترین فائبر۔
+3. **برسیم (Berseem Clover):**
+   • اس میں پانی کی مقدار بہت زیادہ ہوتی ہے (85%)۔ تنہا برسیم سے پیٹ خراب اور موک لگ سکتی ہے، لہٰذا اس کے ساتھ 30% خشک گھاس ملا کر دیں۔
+4. **⚠️ جوار (Sorghum) کی سخت وارننگ:**
+   • کچی یا سوکھے کی ماری جوار میں "پروسِک ایسڈ" (Hydrocyanic acid) زہر ہوتا ہے جو گھوڑے کو ہلاک کر سکتا ہے۔
+5. **⚠️ تنہا توڑی کا خطرہ:**
+   • گندم کی سوکھی توڑی اکیلی مت کھلائیں کیونکہ یہ گھوڑے کی بڑی آنت میں جم کر رکاوٹ (Impaction Colic) بناتی ہے۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 6. Colic / Stomach ache / Gas
+  if (q.includes("پیٹ") || q.includes("درد") || q.includes("گیس") || q.includes("قولنج") || q.includes("قبض") || q.includes("اپھارہ") || q.includes("گوبر")) {
+    const reply = `**🩺 دردِ قولنج (پیٹ درد و گیس) کا فوری دیسی کاڑھا و ہنگامی تدابیر**
+*(غیاث فارم ہاؤس ایمرجنسی پروٹوکول)*
+
+**ضروری اجزاء:**
+• اجوائن دیسی: 50 گرام
+• سونف: 50 گرام
+• ہینگ (اصلی): 5 تا 10 گرام
+• کالا نمک: 30 گرام
+• پرانا گڑ: 150 گرام
+• پانی: 1.5 لیٹر
+
+**تیاری و استعمال:**
+1. پانی میں اجوائن، سونف اور گڑ ڈال کر پکائیں یہاں تک کہ 1 لیٹر رہ جائے۔
+2. چولہے سے اتار کر ہینگ اور کالا نمک حل کریں۔
+3. نیم گرم ہونے پر نال (ڈرینچنگ بوتل) کے ذریعے احتیاط سے پلائیں۔
+
+**⚠️ ہنگامی ہدایات:**
+• گھوڑے کو ہرگز نیچے بیٹھنے یا زمین پر لوٹنے نہ دیں ورنہ آنتوں میں بل پڑ سکتا ہے۔
+• گھوڑے کو لگام پکڑ کر مسلسل دھیمی واک کروائیں۔
+• اگر 45 منٹ میں درد کم نہ ہو اور گھوڑا پسینے میں نہا جائے تو فوری ویٹرنری ڈاکٹر سے انجیکشن لگوائیں۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 7. Sprains / Swelling / Muscles / Soreness
+  if (q.includes("موچ") || q.includes("سوجن") || q.includes("چوٹ") || q.includes("پٹھے") || q.includes("جوڑ") || q.includes("کھچاؤ") || q.includes("سوج")) {
+    const reply = `**🩹 پٹھوں کے کھچاؤ، جوڑ کی موچ اور سوجن کا شاہی لیپ**
+*(غیاث فارم ہاؤس - نیزہ بازی کیئر)*
+
+**ضروری اجزاء:**
+• خالص ہلدی پاؤڈر: 100 گرام
+• باریک پھٹکری: 25 گرام
+• دیسی اجوائن پسی ہوئی: 30 گرام
+• سرسوں کا خالص تیل: 150 ملی لیٹر
+
+**طریقہ استعمال:**
+1. کڑاہی میں سرسوں کے تیل کو ہلکا گرم کریں، ہلدی، پھٹکری اور اجوائن ڈال کر دھیمی آنچ پر پیسٹ بنائیں۔
+2. نیم گرم حالت میں متاثرہ جوڑ، پٹھے یا پنڈلی پر نیچے سے اوپر کی جانب لیپ کریں۔
+3. اوپر کپڑا لپیٹ کر پٹی باندھ دیں۔ 24 گھنٹے بعد نیم گرم نمکین پانی سے دھو لیں۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 8. Hoof care / Thrush
+  if (q.includes("کھر") || q.includes("نعل") || q.includes("سڑاند") || q.includes("تلوہ") || q.includes("ہوف")) {
+    const reply = `**🐎 کھروں کی سختی، چٹخنے اور سڑاند کا دیسی علاج**
+
+**ضروری اجزاء:**
+• سرسوں یا تارا میرا کا تیل: 250 ملی لیٹر
+• کافور کی گولیاں: 20 گرام (پسی ہوئی)
+• نیلا تھوتھا: 10 گرام (باریک پاؤڈر)
+
+**طریقہ استعمال:**
+1. کھروں کے تلوے کو کھرکھرے اور برش سے اچھی طرح دھو کر خشک کریں۔
+2. روئی کے پھاہے سے تیل کھر کے تلوے اور بیرونی دیوار پر لگائیں۔
+3. ساتھ خوراک میں ایکوائن فیول "Hoof Fuel" شامل کریں تاکہ نئے کھر مضبوط اگیں۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 9. Cough / Respiratory
+  if (q.includes("سانس") || q.includes("دم") || q.includes("کھانسی") || q.includes("نزلہ") || q.includes("بلغم") || q.includes("گلا")) {
+    const reply = `**🫁 سانس کے دم، کھانسی اور بلغم کا مجرب دیسی علاج**
+
+**ضروری اجزاء:**
+• دیسی لہسن: 50 گرام (باریک کٹا ہوا)
+• پرانا کالا گڑ: 200 گرام
+• خالص دیسی گھی: 50 گرام
+• کالی مرچ پاؤڈر: 1 چمچ
+
+**طریقہ استعمال:**
+لہسن کو گھی میں ہلکا سا سوتے کریں، گڑ اور کالی مرچ ملا کر چھوٹے لڈو بنا لیں اور روزانہ رات کو خوراک کے بعد کھلائیں۔ نیزہ بازی کے دوران گھوڑے کا سینہ صاف رہے گا اور دم نہیں ٹوٹے گا۔`;
+
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  // 10. General / Holistic Equine Consultation
+  const generalReply = `**السلام علیکم و رحمتہ اللہ!**
+**اسپِ شفا اے آئی ویٹرنری کنسلٹنسی پورٹل (غیاث فارم ہاؤس - فہیم غیاث محمود)**
+
+گھوڑوں کی صحت، بیماریوں، موٹا کرنے کے نسخوں، خوراک اور نیزہ بازی فٹنس کے لیے میں ہر وقت حاضر ہوں۔ آپ مجھ سے بلا جھجھک مشورہ طلب کر سکتے ہیں:
+
+• **🐎 وزن بڑھانا:** کمزور گھوڑے کو موٹا، فربہ اور پٹھے دار بنانے کا مکمل راشن و ڈی ورمنگ۔
+• **🌾 خوراک و ونڈا:** روزانہ کا متوازن راشن، دلیہ، چنے، گھی اور کھلانے کے اوقات۔
+• **💎 ایکوائن فیول سپلیمنٹس:** بلیو فیول (Blue Fuel Calcium)، الیکٹرو فیول، کام فیول اور ہوف فیول۔
+• **🩺 دیسی علاج:** کچن کی اشیاء سے پیٹ درد (کولک)، موچ، سوجن، کھروں کی سڑاند اور کھانسی کا شافی علاج۔
+• **💧 پانی و چارہ:** پانی کی مقدار، گرم گھوڑے کی احتیاط، اور لوسرن و روڈس گھاس کی رہنمائی۔
+
+براہِ کرم اپنے گھوڑے کی علامت، عمر یا مسئلہ لکھیں یا مائیک دبا کر بولیں، میں فوری قدم بہ قدم نسخہ فراہم کروں گا۔`;
+
+  conversationHistory.push({ role: "assistant", content: generalReply });
+  return generalReply;
 }
 
 function appendUserMessage(text) {
@@ -388,55 +629,116 @@ function escapeHTML(str) {
 // ---------------------------------------------------------
 function initVoiceRecognition() {
   const voiceBtn = document.getElementById("voice-btn");
+  const stopVoiceBtn = document.getElementById("stop-voice-btn");
+  const voiceNotice = document.getElementById("voice-recording-notice");
   const chatInput = document.getElementById("chat-input");
 
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    voiceBtn.style.display = "none";
+    if (voiceBtn) voiceBtn.style.display = "none";
     return;
   }
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = false;
+  recognition.continuous = true;
+  recognition.interimResults = true;
   recognition.lang = 'ur-PK';
 
-  recognition.onstart = () => {
+  let accumulatedTranscript = "";
+  let currentSessionFinal = "";
+  let autoStopTimer = null;
+
+  function startRecordingUI() {
     isRecording = true;
-    voiceBtn.classList.add("recording");
-    chatInput.placeholder = "بولیں، میں سن رہا ہوں...";
+    if (voiceBtn) {
+      voiceBtn.classList.add("recording");
+      voiceBtn.innerHTML = "🔴";
+      voiceBtn.title = "ریکارڈنگ جاری ہے... بولتے رہیں (روکنے کے لیے دوبارہ کلک کریں)";
+    }
+    if (voiceNotice) {
+      voiceNotice.classList.remove("hidden");
+    }
+    chatInput.placeholder = "🔴 آپ کی آواز سنی جا رہی ہے... کھل کر بولتے رہیں...";
+
+    // Safety timeout: 90 seconds continuous recording max
+    if (autoStopTimer) clearTimeout(autoStopTimer);
+    autoStopTimer = setTimeout(() => {
+      if (isRecording && recognition) {
+        try { recognition.stop(); } catch (e) {}
+      }
+    }, 90000);
+  }
+
+  function stopRecordingUI() {
+    isRecording = false;
+    if (voiceBtn) {
+      voiceBtn.classList.remove("recording");
+      voiceBtn.innerHTML = "🎤";
+      voiceBtn.title = "اردو میں بولیں (وائس ڈکٹیشن)";
+    }
+    if (voiceNotice) {
+      voiceNotice.classList.add("hidden");
+    }
+    chatInput.placeholder = "اپنے گھوڑے کی علامت، چوٹ، خوراک یا مسئلہ یہاں بیان کریں...";
+    if (autoStopTimer) clearTimeout(autoStopTimer);
+  }
+
+  recognition.onstart = () => {
+    startRecordingUI();
   };
 
   recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    chatInput.value = transcript;
-    chatInput.dispatchEvent(new Event('input'));
+    let interimTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      const transcriptPiece = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        currentSessionFinal += transcriptPiece + " ";
+      } else {
+        interimTranscript += transcriptPiece;
+      }
+    }
+    const fullText = (accumulatedTranscript + currentSessionFinal + interimTranscript).trim();
+    chatInput.value = fullText;
+    chatInput.style.height = "auto";
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
   };
 
   recognition.onerror = (event) => {
-    console.warn("Speech error:", event.error);
-    isRecording = false;
-    voiceBtn.classList.remove("recording");
-    chatInput.placeholder = "اپنے گھوڑے کی علامت یا مسئلہ یہاں لکھیں...";
+    console.warn("Speech recognition notice:", event.error);
+    if (event.error !== "no-speech") {
+      stopRecordingUI();
+    }
   };
 
   recognition.onend = () => {
-    isRecording = false;
-    voiceBtn.classList.remove("recording");
-    chatInput.placeholder = "اپنے گھوڑے کی علامت یا مسئلہ یہاں لکھیں...";
+    stopRecordingUI();
   };
 
-  voiceBtn.addEventListener("click", () => {
-    if (isRecording) {
-      recognition.stop();
-    } else {
-      try {
-        recognition.start();
-      } catch (e) {
-        console.error(e);
+  if (voiceBtn) {
+    voiceBtn.addEventListener("click", () => {
+      if (isRecording) {
+        try { recognition.stop(); } catch (e) {}
+        stopRecordingUI();
+      } else {
+        try {
+          accumulatedTranscript = chatInput.value ? chatInput.value.trim() + " " : "";
+          currentSessionFinal = "";
+          recognition.start();
+        } catch (e) {
+          console.error("Speech start error:", e);
+        }
       }
-    }
-  });
+    });
+  }
+
+  if (stopVoiceBtn) {
+    stopVoiceBtn.addEventListener("click", () => {
+      if (isRecording && recognition) {
+        try { recognition.stop(); } catch (e) {}
+      }
+      stopRecordingUI();
+    });
+  }
 }
 
 window.speakText = function(btn) {

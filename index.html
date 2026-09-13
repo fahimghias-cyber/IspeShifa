@@ -81,7 +81,7 @@
           <div class="stat-chip" data-nav-target="chat-tab" style="cursor: pointer;">
             <span class="stat-icon">⚡</span>
             <div class="stat-info">
-              <span class="stat-number">Groq LLaMA 3.3</span>
+              <span class="stat-number">Groq لائیو AI ڈاکٹر</span>
               <span class="stat-label">لائیو اے آئی ویٹ کنسلٹیشن</span>
             </div>
           </div>
@@ -117,6 +117,9 @@
             <span>⚡ فوری سوالات و علامات</span>
           </h3>
           <div class="quick-prompts-grid">
+            <button class="quick-prompt-btn" data-prompt="گھوڑے کو موٹا، فربہ اور تندرست کرنے کا مستند نسخہ، روزمرہ کا راشن اور ڈی ورمنگ کا طریقہ بتائیں۔">
+              <span>🐎 گھوڑے کو موٹا و فربہ کرنے کا نسخہ</span>
+            </button>
             <button class="quick-prompt-btn" data-prompt="نیزہ بازی کے بعد گھوڑے کے پٹھوں میں شدید کچھاؤ اور تھکاوٹ ہے، کچن کی اشیاء سے فوری دیسی علاج بتائیں۔">
               <span>🏇 نیزہ بازی کے بعد پٹھوں کا کھچاؤ</span>
             </button>
@@ -190,6 +193,15 @@
 
           <!-- Input Form -->
           <div class="chat-input-container">
+            <div id="voice-recording-notice" class="voice-recording-notice hidden">
+              <div class="recording-indicator-left">
+                <span class="recording-dot"></span>
+                <span class="recording-text">🔴 لائیو وائس ریکارڈنگ جاری ہے... بولتے رہیں (مکمل ہونے پر روکیں دبائیں)</span>
+              </div>
+              <button type="button" id="stop-voice-btn" class="btn-stop-voice" title="ریکارڈنگ روکیں">
+                روکیں ⏹️
+              </button>
+            </div>
             <form class="chat-input-form" id="chat-form">
               <textarea 
                 class="chat-textarea" 
@@ -667,9 +679,10 @@
         <div class="form-group">
           <label class="form-label" for="model-select">AI ماڈل کا انتخاب:</label>
           <select id="model-select" class="form-select" style="direction: ltr;">
-            <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (تجویز کردہ - ذہین اور تیز ترین)</option>
-            <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (انتہائی تیز رفتار)</option>
-            <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+            <option value="qwen/qwen3.8-27b">qwen/qwen3.8-27b (تجویز کردہ - انتہائی تیز رفتار و رواں اردو ویٹ ماڈل)</option>
+            <option value="openai/gpt-oss-120b">openai/gpt-oss-120b (انتہائی طاقتور اور گہری بصیرت والا ماڈل)</option>
+            <option value="openai/gpt-oss-20b">openai/gpt-oss-20b (تیز رفتار اور ہلکا پھلکا)</option>
+            <option value="groq/compound-mini">groq/compound-mini (انتہائی تیز کمپاؤنڈ ماڈل)</option>
           </select>
         </div>
 
