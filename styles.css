@@ -1,0 +1,2309 @@
+/* 
+ * اسپِ شفا: گھوڑوں کا دیسی علاج
+ * Isp-e-Shifaa Premium Equestrian Design System
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Scheherazade+New:wght@400;600;700&display=swap');
+
+:root {
+  /* Emerald & Forest Palette */
+  --bg-dark: #03140e;
+  --bg-primary: #062017;
+  --bg-surface: #0a2d21;
+  --bg-surface-elevated: #0f3c2c;
+  --bg-glass: rgba(10, 45, 33, 0.72);
+  --bg-glass-strong: rgba(6, 32, 23, 0.9);
+  --border-glass: rgba(212, 175, 55, 0.22);
+  --border-glass-hover: rgba(212, 175, 55, 0.5);
+
+  /* Royal Gold & Amber */
+  --gold-300: #fae69e;
+  --gold-400: #f5d061;
+  --gold-500: #d4af37;
+  --gold-600: #b89222;
+  --gold-700: #8c6a0e;
+  --gold-gradient: linear-gradient(135deg, #f5d061 0%, #d4af37 50%, #9a720f 100%);
+  --gold-glow: 0 0 25px rgba(212, 175, 55, 0.25);
+  --gold-glow-intense: 0 0 35px rgba(212, 175, 55, 0.45);
+
+  /* Saddle Leather & Warm Earth */
+  --leather-500: #854d0e;
+  --leather-700: #451a03;
+
+  /* Status Colors */
+  --danger: #f43f5e;
+  --danger-surface: rgba(244, 63, 94, 0.15);
+  --danger-border: rgba(244, 63, 94, 0.4);
+  --success: #10b981;
+  --success-surface: rgba(16, 185, 129, 0.15);
+  --info: #38bdf8;
+  --info-surface: rgba(56, 189, 248, 0.15);
+
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #d1fae5;
+  --text-muted: #93c5b5;
+  --text-gold: #fde68a;
+
+  /* Fonts */
+  --font-urdu: 'Noto Nastaliq Urdu', 'Scheherazade New', serif;
+  --font-urdu-display: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+  --font-latin: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Dimensions & Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  --shadow-elevated: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-urdu);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 2.2;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(6, 32, 23, 0.5) 0%, var(--bg-dark) 100%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-600);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-400);
+}
+
+/* Typography Utilities */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-urdu-display);
+  font-weight: 700;
+  color: var(--gold-400);
+  line-height: 1.8;
+}
+
+.urdu-num {
+  font-family: var(--font-latin);
+  font-weight: 600;
+}
+
+/* Top App Header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-glass-strong);
+  border-bottom: 1px solid var(--border-glass);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.brand-logo-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid var(--gold-500);
+  object-fit: cover;
+  box-shadow: var(--gold-glow);
+  transition: transform 0.3s ease;
+}
+
+.brand-wrapper:hover .brand-logo-img {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: -0.3rem;
+  letter-spacing: -0.5px;
+}
+
+.brand-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-urdu);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-urdu);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+}
+
+.nav-tab-btn:hover {
+  color: var(--gold-300);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.nav-tab-btn.active {
+  color: var(--bg-dark);
+  background: var(--gold-gradient);
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
+  font-weight: 700;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass);
+  color: var(--gold-400);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-icon:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold-500);
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  max-width: 1400px;
+  margin: 1.5rem auto 2rem;
+  padding: 0 1.5rem;
+}
+
+.hero-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  padding: 2.5rem 3rem;
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-elevated);
+  background: linear-gradient(90deg, rgba(3, 20, 14, 0.95) 0%, rgba(3, 20, 14, 0.8) 50%, rgba(3, 20, 14, 0.4) 100%),
+              url('assets/hero.jpg') center/cover no-repeat;
+}
+
+.hero-content {
+  max-width: 680px;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid var(--gold-500);
+  color: var(--gold-300);
+  padding: 0.25rem 1rem;
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-size: 2.4rem;
+  color: #fff;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+
+.hero-title span {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 2.1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  background: rgba(10, 45, 33, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-glass);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.stat-icon {
+  font-size: 1.3rem;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-family: var(--font-latin);
+  font-weight: 700;
+  color: var(--gold-400);
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Main Layout Container */
+.main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+}
+
+/* Tab Content Panels */
+.tab-panel {
+  display: none;
+  animation: fadeIn 0.35s ease forwards;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ----------------------------------------------------
+   1. AI VET DOCTOR CHAT SECTION
+   ---------------------------------------------------- */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+  min-height: 650px;
+}
+
+/* Chat Sidebar */
+.chat-sidebar {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.sidebar-title {
+  font-size: 1.15rem;
+  color: var(--gold-400);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quick-prompts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-left: 0.25rem;
+}
+
+.quick-prompt-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  padding: 0.6rem 0.85rem;
+  font-family: var(--font-urdu);
+  font-size: 0.9rem;
+  text-align: right;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease;
+  line-height: 1.8;
+}
+
+.quick-prompt-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--gold-500);
+  color: var(--gold-300);
+  transform: translateX(-3px);
+}
+
+.doc-rules-box {
+  margin-top: auto;
+  background: rgba(6, 32, 23, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.doc-rules-box strong {
+  color: var(--gold-400);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Chat Main Window */
+.chat-window {
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  height: 720px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-glass);
+  background: rgba(4, 26, 19, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-doctor-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.doc-avatar-wrap {
+  position: relative;
+}
+
+.doc-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--gold-500);
+  object-fit: cover;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--success);
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.doc-meta h4 {
+  font-size: 1.15rem;
+  color: var(--gold-400);
+  margin-bottom: -0.2rem;
+}
+
+.doc-meta p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.chat-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-tool-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-urdu);
+  transition: all 0.2s ease;
+}
+
+.chat-tool-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold-300);
+  border-color: var(--gold-500);
+}
+
+/* Chat Messages Stream */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.message-row {
+  display: flex;
+  gap: 0.85rem;
+  max-width: 88%;
+  animation: messageSlide 0.3s ease;
+}
+
+@keyframes messageSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-row.user {
+  margin-right: auto;
+  flex-direction: row-reverse;
+}
+
+.message-row.bot {
+  margin-left: auto;
+}
+
+.msg-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-500);
+  flex-shrink: 0;
+}
+
+.msg-bubble {
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.4rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  font-size: 0.98rem;
+  line-height: 2.2;
+}
+
+.message-row.user .msg-bubble {
+  background: linear-gradient(135deg, #104e38 0%, #0d3d2c 100%);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #fff;
+  border-bottom-left-radius: 4px;
+}
+
+.message-row.bot .msg-bubble {
+  background: rgba(10, 45, 33, 0.95);
+  border-color: var(--border-glass);
+  border-bottom-right-radius: 4px;
+}
+
+/* Structured AI Prescription Formatting Inside Message Bubble */
+.prescription-card-box {
+  background: rgba(4, 26, 18, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 0.85rem 0;
+}
+
+.pres-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.pres-title {
+  color: var(--gold-400);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.pres-badge {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.ingredients-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.6rem 0;
+}
+
+.ing-pill {
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-300);
+  font-size: 0.85rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.step-item {
+  position: relative;
+  padding-right: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-item::before {
+  content: "•";
+  color: var(--gold-400);
+  font-size: 1.5rem;
+  position: absolute;
+  right: 0.2rem;
+  top: -0.2rem;
+}
+
+.rationale-box {
+  background: rgba(56, 189, 248, 0.08);
+  border-right: 3px solid var(--info);
+  padding: 0.6rem 0.85rem;
+  margin: 0.75rem 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.9rem;
+  color: #bae6fd;
+}
+
+.tent-pegging-tip {
+  background: rgba(212, 175, 55, 0.08);
+  border-right: 3px solid var(--gold-500);
+  padding: 0.6rem 0.85rem;
+  margin: 0.75rem 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.9rem;
+  color: var(--gold-300);
+}
+
+.mandatory-warning-box {
+  background: var(--danger-surface);
+  border: 1px solid var(--danger-border);
+  border-right: 4px solid var(--danger);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  color: #fecdd3;
+  line-height: 1.9;
+}
+
+.mandatory-warning-box strong {
+  color: #fda4af;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.msg-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  justify-content: flex-end;
+}
+
+.msg-action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+  font-family: var(--font-urdu);
+}
+
+.msg-action-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold-300);
+  border-color: var(--gold-500);
+}
+
+/* Chat Input Bar */
+.chat-input-container {
+  padding: 1rem 1.5rem;
+  background: rgba(4, 26, 19, 0.9);
+  border-top: 1px solid var(--border-glass);
+}
+
+.chat-input-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 0.4rem 0.6rem;
+  transition: border-color 0.25s ease;
+}
+
+.chat-input-form:focus-within {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.chat-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-urdu);
+  font-size: 1rem;
+  line-height: 1.8;
+  resize: none;
+  max-height: 120px;
+  padding: 0.5rem 0.5rem;
+  outline: none;
+  direction: rtl;
+}
+
+.chat-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-voice {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--gold-400);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.btn-voice:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-500);
+}
+
+.btn-voice.recording {
+  background: var(--danger);
+  color: #fff;
+  border-color: #fff;
+  animation: pulseRecording 1.2s infinite;
+}
+
+@keyframes pulseRecording {
+  0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(244, 63, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+}
+
+.btn-send {
+  background: var(--gold-gradient);
+  border: none;
+  color: var(--bg-dark);
+  font-family: var(--font-urdu);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-send:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+}
+
+.btn-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Typing Indicator */
+.typing-bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.25rem;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gold-400);
+  border-radius: 50%;
+  animation: bounceDot 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ----------------------------------------------------
+   2. REMEDIES LIBRARY SECTION
+   ---------------------------------------------------- */
+.section-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--gold-400);
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.library-controls {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-bar-wrap {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem 2.8rem 0.75rem 1.25rem;
+  color: #fff;
+  font-family: var(--font-urdu);
+  font-size: 1rem;
+  outline: none;
+  direction: rtl;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--gold-500);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold-400);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.category-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cat-filter-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-urdu);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cat-filter-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold-300);
+}
+
+.cat-filter-btn.active {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  font-weight: 700;
+  border-color: var(--gold-400);
+}
+
+.remedies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+.remedy-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.remedy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gold-gradient);
+  opacity: 0.8;
+}
+
+.remedy-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-500);
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.card-cat-badge {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--gold-300);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+}
+
+.card-title {
+  font-size: 1.35rem;
+  color: var(--gold-400);
+  margin-bottom: 0.35rem;
+  line-height: 1.6;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.card-ingredients-preview {
+  margin: 0.75rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-ing-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.card-footer-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-card-view {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold-500);
+  color: var(--gold-300);
+  font-family: var(--font-urdu);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 1.1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-card-view:hover {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+}
+
+/* ----------------------------------------------------
+   3. TENT PEGGING FEED & ENERGY CALCULATOR
+   ---------------------------------------------------- */
+.calc-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.calc-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1rem;
+  color: var(--gold-300);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-family: var(--font-urdu);
+  font-size: 1rem;
+  outline: none;
+  direction: rtl;
+  transition: border-color 0.2s;
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--gold-500);
+}
+
+.form-select option {
+  background: var(--bg-primary);
+  color: #fff;
+}
+
+.feed-results-card {
+  background: linear-gradient(145deg, rgba(10, 45, 33, 0.95) 0%, rgba(6, 32, 23, 0.98) 100%);
+  border: 1px solid var(--gold-500);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+}
+
+.feed-plan-header {
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feed-plan-title {
+  font-size: 1.4rem;
+  color: var(--gold-400);
+}
+
+.feed-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feed-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+}
+
+.feed-item-name {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feed-item-qty {
+  font-family: var(--font-latin);
+  font-weight: 700;
+  color: var(--gold-400);
+  font-size: 1rem;
+  direction: ltr;
+}
+
+.match-day-drink-box {
+  margin-top: 1.25rem;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--gold-300);
+  line-height: 2;
+}
+
+/* Nutrition Hub Sub-Tabs Navigation */
+.nutrition-sub-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem 1.25rem;
+  margin-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-500) var(--bg-surface);
+}
+
+.sub-tab-btn {
+  background: rgba(10, 45, 33, 0.65);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  font-family: var(--font-urdu);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+}
+
+.sub-tab-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold-400);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.sub-tab-btn.active {
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  border-color: var(--gold-400);
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+}
+
+.nutrition-sub-panel {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.nutrition-sub-panel.active {
+  display: block;
+}
+
+/* Equine Fuel USA Product Showcase */
+.efuel-hero-banner {
+  background: linear-gradient(135deg, rgba(15, 45, 65, 0.9) 0%, rgba(6, 32, 23, 0.95) 100%);
+  border: 2px solid #38bdf8;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.efuel-hero-banner::before {
+  content: "USA";
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  font-family: var(--font-latin);
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(56, 189, 248, 0.05);
+  pointer-events: none;
+}
+
+.efuel-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid #38bdf8;
+  color: #7dd3fc;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.efuel-banner-title {
+  font-size: 1.8rem;
+  color: #f0f9ff;
+  line-height: 1.5;
+}
+
+.efuel-banner-desc {
+  font-size: 1rem;
+  color: #bae6fd;
+  line-height: 2;
+  max-width: 850px;
+}
+
+.efuel-banner-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-efuel-youtube {
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  font-family: var(--font-urdu);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.btn-efuel-youtube:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.45);
+}
+
+.btn-efuel-web {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid #38bdf8;
+  color: #e0f2fe;
+  font-family: var(--font-urdu);
+  font-size: 0.95rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+}
+
+.btn-efuel-web:hover {
+  background: rgba(56, 189, 248, 0.3);
+  transform: translateY(-2px);
+}
+
+.efuel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.efuel-card {
+  background: var(--bg-glass);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.efuel-card:hover {
+  transform: translateY(-5px);
+  border-color: #38bdf8;
+  box-shadow: var(--shadow-elevated), 0 0 25px rgba(56, 189, 248, 0.2);
+}
+
+.efuel-card.featured-bluefuel {
+  border: 2px solid var(--gold-500);
+  background: linear-gradient(145deg, rgba(14, 46, 56, 0.85) 0%, rgba(6, 32, 23, 0.95) 100%);
+  box-shadow: var(--shadow-card), 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.efuel-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.efuel-badge {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold-500);
+  color: var(--gold-300);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.efuel-title {
+  font-size: 1.35rem;
+  color: #7dd3fc;
+  margin-bottom: 0.35rem;
+  line-height: 1.6;
+}
+
+.featured-bluefuel .efuel-title {
+  color: var(--gold-400);
+}
+
+.efuel-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.efuel-actives-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-right: 3px solid #38bdf8;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.85rem;
+  color: #e0f2fe;
+  margin-bottom: 1rem;
+}
+
+.featured-bluefuel .efuel-actives-box {
+  border-right-color: var(--gold-500);
+}
+
+.efuel-benefits-list {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.efuel-benefit-item {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  position: relative;
+  padding-right: 1.25rem;
+}
+
+.efuel-benefit-item::before {
+  content: "✓";
+  position: absolute;
+  right: 0;
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.featured-bluefuel .efuel-benefit-item::before {
+  color: var(--gold-400);
+}
+
+.efuel-dosage-badge {
+  margin-top: auto;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.efuel-card-footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+/* Daily Feed Mix Recipes Grid */
+.mix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.75rem;
+}
+
+.mix-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.mix-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-500);
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+}
+
+.mix-header {
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.25);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mix-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mix-title {
+  font-size: 1.25rem;
+  color: var(--gold-400);
+  line-height: 1.6;
+}
+
+.mix-icon {
+  font-size: 1.8rem;
+}
+
+.mix-target-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.mix-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 0.75rem 0 1rem;
+}
+
+.mix-ingredients-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.mix-ingredients-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mix-ingredients-table td {
+  padding: 0.45rem 0.25rem;
+  font-size: 0.88rem;
+}
+
+.mix-ing-name {
+  color: var(--text-primary);
+}
+
+.mix-ing-qty {
+  color: var(--gold-400);
+  font-weight: 700;
+  text-align: left;
+  direction: ltr;
+}
+
+.mix-ing-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.mix-time-badge {
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: var(--gold-300);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-top: auto;
+  margin-bottom: 0.75rem;
+}
+
+/* Fodder & Roughage Directory */
+.fodder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.fodder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 1.75rem;
+}
+
+.fodder-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.fodder-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-500);
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+}
+
+.fodder-card.card-warning {
+  border-color: var(--danger-border);
+  background: linear-gradient(145deg, rgba(60, 15, 20, 0.8) 0%, rgba(6, 32, 23, 0.95) 100%);
+}
+
+.fodder-card.card-warning:hover {
+  border-color: var(--danger);
+  box-shadow: var(--shadow-elevated), 0 0 25px rgba(244, 63, 94, 0.25);
+}
+
+.fodder-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.fodder-type-badge {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.card-warning .fodder-type-badge {
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
+  color: #fca5a5;
+}
+
+.fodder-name {
+  font-size: 1.35rem;
+  color: var(--gold-400);
+  margin-bottom: 0.35rem;
+}
+
+.card-warning .fodder-name {
+  color: #fca5a5;
+}
+
+.fodder-nutrition-meters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.65rem;
+  border-radius: var(--radius-md);
+  margin: 0.75rem 0 1rem;
+}
+
+.fodder-meter-item {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.fodder-meter-item strong {
+  color: #fff;
+  display: block;
+}
+
+.fodder-qty-box {
+  background: rgba(212, 175, 55, 0.1);
+  border-right: 3px solid var(--gold-500);
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.88rem;
+  color: var(--gold-300);
+  margin-bottom: 1rem;
+}
+
+/* Feed Ingredients & Benefits */
+.ingredients-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.ing-benefit-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.ing-benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-500);
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+}
+
+.ing-benefit-title {
+  font-size: 1.3rem;
+  color: var(--gold-400);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ing-prime-benefit-pill {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold-500);
+  color: var(--gold-300);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.ing-feeding-method-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-top: auto;
+}
+
+/* 24-Hour Feeding Schedule Timeline */
+.schedule-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  padding-right: 2rem;
+}
+
+.schedule-timeline::before {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--gold-500), #38bdf8, var(--gold-600));
+  border-radius: 2px;
+}
+
+.timeline-slot-card {
+  position: relative;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+}
+
+.timeline-slot-card::before {
+  content: '';
+  position: absolute;
+  right: -25px;
+  top: 25px;
+  width: 15px;
+  height: 15px;
+  background: var(--gold-400);
+  border: 3px solid var(--bg-dark);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--gold-400);
+}
+
+.timeline-slot-card:hover {
+  border-color: var(--gold-500);
+  transform: translateX(-5px);
+}
+
+.timeline-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--gold-gradient);
+  color: var(--bg-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
+
+.timeline-slot-title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-action {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-rationale {
+  background: rgba(56, 189, 248, 0.08);
+  border-right: 3px solid var(--info);
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.85rem;
+  color: #bae6fd;
+}
+
+/* Water & Hydration Guide */
+.water-needs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.water-card {
+  background: linear-gradient(145deg, rgba(14, 46, 56, 0.7) 0%, rgba(6, 32, 23, 0.9) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.water-card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.water-card-state {
+  font-size: 1.05rem;
+  color: #e0f2fe;
+  margin-bottom: 0.5rem;
+}
+
+.water-card-liters {
+  font-family: var(--font-latin);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #38bdf8;
+  margin-bottom: 0.25rem;
+}
+
+.water-card-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.ice-water-warning-card {
+  background: var(--danger-surface);
+  border: 2px solid var(--danger);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  color: #fecdd3;
+  line-height: 2;
+}
+
+.ice-water-warning-card strong {
+  color: #fda4af;
+  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.homemade-electrolyte-card {
+  background: linear-gradient(145deg, rgba(10, 45, 33, 0.9) 0%, rgba(212, 175, 55, 0.08) 100%);
+  border: 1px solid var(--gold-500);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card), var(--gold-glow);
+}
+
+/* ----------------------------------------------------
+   4. EMERGENCY & TRIAGE CHECKLIST
+   ---------------------------------------------------- */
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.vital-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.vital-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.vital-name {
+  font-size: 1.1rem;
+  color: var(--gold-400);
+}
+
+.vital-icon {
+  font-size: 1.5rem;
+}
+
+.vital-normal {
+  background: var(--success-surface);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.vital-danger {
+  background: var(--danger-surface);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #fda4af;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.emergency-redflags-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.redflag-card {
+  background: rgba(40, 10, 15, 0.8);
+  border: 1px solid var(--danger-border);
+  border-right: 5px solid var(--danger);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.redflag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.redflag-title {
+  color: #fda4af;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.redflag-urgency {
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.redflag-desc {
+  color: #fecdd3;
+  font-size: 0.95rem;
+}
+
+.redflag-action {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+/* ----------------------------------------------------
+   5. KITCHEN HERBS MATERIA MEDICA
+   ---------------------------------------------------- */
+.herbs-banner-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-glass);
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(90deg, rgba(3, 20, 14, 0.95) 0%, rgba(3, 20, 14, 0.7) 60%, rgba(3, 20, 14, 0.2) 100%),
+              url('assets/herbs.jpg') center/cover no-repeat;
+}
+
+.herbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.herb-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.herb-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-500);
+}
+
+.herb-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.herb-icon {
+  font-size: 2rem;
+}
+
+.herb-name {
+  font-size: 1.3rem;
+  color: var(--gold-400);
+}
+
+.herb-active {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold-300);
+  font-size: 0.8rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-latin);
+}
+
+.herb-prop {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.herb-dosage {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-gold);
+  margin-bottom: 0.5rem;
+}
+
+.herb-tip {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-right: 2px solid var(--gold-500);
+  padding-right: 0.5rem;
+}
+
+/* ----------------------------------------------------
+   MODALS (Remedy Detail, API Settings, Prescription Pad)
+   ---------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-overlay.open {
+  display: flex;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass-hover);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-elevated), var(--gold-glow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(4, 26, 18, 0.9);
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  color: var(--gold-400);
+}
+
+.btn-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-modal-close:hover {
+  color: var(--danger);
+}
+
+.modal-body {
+  padding: 1.75rem;
+  line-height: 2.1;
+}
+
+/* Prescription Pad Print Styling */
+.rx-pad {
+  background: #fdfbf7;
+  color: #1c1917;
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid #b45309;
+  font-family: var(--font-urdu);
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+.rx-header {
+  border-bottom: 2px solid #78350f;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rx-clinic-name {
+  font-size: 1.8rem;
+  color: #064e3b;
+  font-weight: 700;
+}
+
+.rx-sub {
+  font-size: 0.9rem;
+  color: #78350f;
+}
+
+.rx-body {
+  font-size: 1rem;
+  line-height: 2.2;
+}
+
+.rx-body h4 {
+  color: #78350f;
+  margin-top: 1rem;
+  border-bottom: 1px dashed #d97706;
+  padding-bottom: 0.25rem;
+}
+
+.rx-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d97706;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #92400e;
+}
+
+/* Mobile Bottom Navigation Bar */
+.mobile-nav-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-glass);
+  padding: 0.5rem 0.75rem;
+  z-index: 99;
+  justify-content: space-around;
+}
+
+.mobile-nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: var(--font-urdu);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.mobile-nav-btn.active {
+  color: var(--gold-400);
+}
+
+.mobile-nav-btn span.icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+  .chat-layout {
+    grid-template-columns: 1fr;
+  }
+  .chat-sidebar {
+    display: none;
+  }
+  .calc-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-card {
+    padding: 2rem 1.5rem;
+  }
+  .hero-title {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-tabs {
+    display: none;
+  }
+  .mobile-nav-bar {
+    display: flex;
+  }
+  .remedies-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  .chat-window {
+    height: 600px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-rx-modal, #printable-rx-modal * {
+    visibility: visible;
+  }
+  #printable-rx-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: transparent;
+  }
+}

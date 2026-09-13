@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اسپِ شفا | گھوڑوں کا دیسی علاج اور نیزہ بازی ویٹرنری گائیڈ</title>
+  <meta name="description" content="نیزہ بازی کے گھوڑوں کی عام بیماریوں، پٹھوں کے کھچاؤ، چوٹ، سوجن اور فٹنس کے لیے کچن کی قدرتی اشیاء سے مستند اور فوری دیسی ٹوٹکے مع لائیو اے آئی ویٹرنری ڈاکٹر۔">
+  <meta name="keywords" content="اسپ شفا, گھوڑوں کا دیسی علاج, نیزہ بازی گھوڑے, گھوڑوں کی بیماریاں, دیسی ٹوٹکے, ہلدی سرسوں لیپ, ویٹرنری ڈاکٹر, tent pegging horse care">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="اسپِ شفا: گھوڑوں کا دیسی علاج">
+  <meta property="og:description" content="نیزہ بازی کے گھوڑوں کی صحت، چوٹوں اور خوراک کے لیے مستند دیسی نسخہ جات اور لائیو اے آئی ڈاکٹر۔">
+  <meta property="og:image" content="assets/logo.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-wrapper" data-nav-target="chat-tab">
+        <img src="assets/logo.jpg" alt="اسپِ شفا لوگو" class="brand-logo-img">
+        <div class="brand-titles">
+          <span class="brand-title">اسپِ شفا</span>
+          <span class="brand-tagline">نیزہ بازی و گھوڑوں کا دیسی شفا خانہ</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Tabs -->
+      <nav class="nav-tabs" aria-label="مین نیویگیشن">
+        <button class="nav-tab-btn active" data-tab="chat-tab">
+          <span>💬 اے آئی ڈاکٹر</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="remedies-tab">
+          <span>📚 دیسی نسخہ جات</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="calculator-tab">
+          <span>🌾 خوراک، چارہ و ایکوائن فیول</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="emergency-tab">
+          <span>🚑 ایمرجنسی گائیڈ</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="herbs-tab">
+          <span>🌿 کچن اشیاء</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-icon" id="settings-btn" title="سیٹنگز اور اے پی آئی کی" aria-label="سیٹنگز">
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-card">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>🐎 نیزہ بازی و اصطبل اسپیشل</span>
+        </div>
+        <h1 class="hero-title">
+          گھوڑوں کا <span>مستند دیسی علاج</span> و ویٹرنری رہنمائی
+        </h1>
+        <p class="hero-desc">
+          کچن میں موجود قدرتی اشیاء (ہلدی، سرسوں، اجوائن، گڑ، لہسن اور سونف) سے نیزہ بازی کے گھوڑوں کے پٹھوں کا کھچاؤ، چوٹ، موچ، ہاضمہ اور فٹنس کے فوری محفوظ نسخے۔
+        </p>
+        <div class="hero-stats">
+          <div class="stat-chip" data-nav-target="chat-tab" style="cursor: pointer;">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-info">
+              <span class="stat-number">Groq LLaMA 3.3</span>
+              <span class="stat-label">لائیو اے آئی ویٹ کنسلٹیشن</span>
+            </div>
+          </div>
+          <div class="stat-chip" data-nav-target="remedies-tab" style="cursor: pointer;">
+            <span class="stat-icon">📜</span>
+            <div class="stat-info">
+              <span class="stat-number">20+ نسخے</span>
+              <span class="stat-label">آزمودہ دیسی ٹوٹکے</span>
+            </div>
+          </div>
+          <div class="stat-chip" data-nav-target="calculator-tab" style="cursor: pointer;">
+            <span class="stat-icon">🌾</span>
+            <div class="stat-info">
+              <span class="stat-number">مکس راشن و فیول</span>
+              <span class="stat-label">خوراک، چارہ، اوقات و کیلشیم</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Panels -->
+  <main class="main-container">
+
+    <!-- 1. AI VET DOCTOR CHAT PANEL -->
+    <div class="tab-panel active" id="chat-tab">
+      <div class="chat-layout">
+        
+        <!-- Sidebar with Quick Prompts & Rules -->
+        <aside class="chat-sidebar">
+          <h3 class="sidebar-title">
+            <span>⚡ فوری سوالات و علامات</span>
+          </h3>
+          <div class="quick-prompts-grid">
+            <button class="quick-prompt-btn" data-prompt="نیزہ بازی کے بعد گھوڑے کے پٹھوں میں شدید کچھاؤ اور تھکاوٹ ہے، کچن کی اشیاء سے فوری دیسی علاج بتائیں۔">
+              <span>🏇 نیزہ بازی کے بعد پٹھوں کا کھچاؤ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے کے پچھلے جوڑ اور کھر کے اوپر موچ اور سوجن آ گئی ہے، فوری لیپ بتائیں۔">
+              <span>🩹 ٹانگ یا جوڑ کی موچ و سوجن</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑا پیٹ کے بل بار بار دیکھ رہا ہے اور ہلکا درد معلوم ہو رہا ہے، کچن سے فوری ہاضم کاڑھا بتائیں۔">
+              <span>🩺 پیٹ کا درد، گیس اور اپھارہ</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="نیزہ بازی مقابلے کے سیزن میں گھوڑے کے اسٹیمنا اور دم کو بڑھانے کے لیے شاہی ونڈے کا دیسی نسخہ بتائیں۔">
+              <span>🌾 نیزہ بازی مقوی ونڈا و اسٹیمنا</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے کو زین کی رگڑ یا کھرچ کا زخم لگ گیا ہے، کچن کا اینٹی سیپٹک مرہم بتائیں۔">
+              <span>🌿 سطحی زخم اور کھرچ کا مرہم</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے کا دوڑتے وقت سانس پھول جاتا ہے اور گلے میں خرخراہٹ ہے، السی اور گڑ کا نسخہ بتائیں۔">
+              <span>🫁 سانس کی نالی اور پھیپھڑوں کا دم</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="کھروں میں خشکی اور چٹخنے کا دیسی تیل اور پالش بنانے کا طریقہ بتائیں۔">
+              <span>🐎 کھروں کی سختی اور چمک کا تیل</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="گھوڑے کو امریکن ایکوائن فیول بلیو فیول (Blue Fuel Calcium) دینے کے کیا فوائد ہیں اور راشن میں کتنی مقدار شامل کریں؟">
+              <span>💎 ایکوائن فیول بلیو فیول و کیلشیم</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="نیزہ بازی کے گھوڑے کے لیے روزانہ صبح، دوپہر، شام اور رات کا مکمل فیڈنگ اور پانی کا ٹائم ٹیبل بتائیں۔">
+              <span>⏰ اوقاتِ خوراک و پانی کا شیڈول</span>
+            </button>
+            <button class="quick-prompt-btn" data-prompt="لوسرن، برسیم اور روڈس گراس میں سے نیزہ بازی کے گھوڑے کے لیے کون سا چارہ کس مقدار میں دینا چاہیے؟">
+              <span>🌿 چارہ جات کی تحقیق و فوائد</span>
+            </button>
+          </div>
+
+          <div class="doc-rules-box">
+            <strong>📋 ویٹرنری ڈاکٹر کے بنیادی اصول:</strong>
+            <p>ہر نسخے میں کچن اشیاء کی درست مقدار، تیاری کا مرحلہ وار طریقہ، سائنسی افادیت اور نیزہ بازی کی ضروری احتیاطی تدابیر شامل ہیں۔</p>
+          </div>
+        </aside>
+
+        <!-- Chat Window -->
+        <div class="chat-window">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="chat-doctor-profile">
+              <div class="doc-avatar-wrap">
+                <img src="assets/logo.jpg" alt="ڈاکٹر اوتار" class="doc-avatar">
+                <span class="online-indicator" title="لائیو دستیاب"></span>
+              </div>
+              <div class="doc-meta">
+                <h4>اسپِ شفا اے آئی ڈاکٹر</h4>
+                <p>ماہر امراض و خوراک برائے نیزہ بازی گھوڑے</p>
+              </div>
+            </div>
+
+            <div class="chat-tools">
+              <button class="chat-tool-btn" id="clear-chat-btn" title="گفتگو صاف کریں">
+                <span>🗑️ چیٹ صاف کریں</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Messages Container -->
+          <div class="chat-messages" id="chat-messages">
+            <div class="message-row bot">
+              <img src="assets/logo.jpg" alt="ڈاکٹر" class="msg-avatar">
+              <div class="msg-bubble">
+                <p><strong>السلام علیکم و رحمتہ اللہ!</strong></p>
+                <p>میں <strong>اسپِ شفا</strong> کا اے آئی ویٹرنری ڈاکٹر ہوں۔ نیزہ بازی اور گھوڑوں کی صحت، بیماریوں، پٹھوں کے کھچاؤ، چوٹ، سوجن، خوراک یا کچن کی قدرتی اشیاء (ہلدی، اجوائن، سرسوں کا تیل، گڑ، لہسن وغیرہ) کے نسخوں کے متعلق اپنا سوال پوچھیں، میں فوری قدم بہ قدم رہنمائی فراہم کروں گا۔</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Form -->
+          <div class="chat-input-container">
+            <form class="chat-input-form" id="chat-form">
+              <textarea 
+                class="chat-textarea" 
+                id="chat-input" 
+                rows="1" 
+                placeholder="اپنے گھوڑے کی علامت، چوٹ، خوراک یا مسئلہ یہاں بیان کریں..." 
+                required></textarea>
+              
+              <div class="input-actions">
+                <button type="button" class="btn-voice" id="voice-btn" title="اردو میں بولیں (وائس ڈکٹیشن)">
+                  🎤
+                </button>
+                <button type="submit" class="btn-send" id="send-btn">
+                  <span>مشورہ لیں</span> 🚀
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. REMEDIES LIBRARY PANEL -->
+    <div class="tab-panel" id="remedies-tab">
+      <div class="section-header-wrap">
+        <div>
+          <h2 class="section-title">📚 مستند دیسی نسخہ جات انسائیکلوپیڈیا</h2>
+          <p class="section-subtitle">روایتی اصطبل و جدید ویٹرنری حکمت پر مبنی آزمودہ دیسی ٹوٹکے</p>
+        </div>
+      </div>
+
+      <div class="library-controls">
+        <div class="search-bar-wrap">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="remedies-search" 
+            class="search-input" 
+            placeholder="بیماری، علامت یا جزو کا نام لکھیں (مثلاً: ہلدی، موچ، گیس، السی، کھر، ونڈا)...">
+        </div>
+
+        <div class="category-filter-chips">
+          <button class="cat-filter-btn active" data-category="all">تمام نسخے</button>
+          <button class="cat-filter-btn" data-category="injury">🩹 چوٹ و موچ</button>
+          <button class="cat-filter-btn" data-category="digestion">🫕 ہاضمہ و پیٹ درد</button>
+          <button class="cat-filter-btn" data-category="fitness">🏇 نیزہ بازی طاقت و دم</button>
+          <button class="cat-filter-btn" data-category="hoof">🐎 کھر و ہڈیاں</button>
+          <button class="cat-filter-btn" data-category="respiratory">🫁 سانس و کھانسی</button>
+          <button class="cat-filter-btn" data-category="wounds">🌿 زخم و جلدی امراض</button>
+        </div>
+      </div>
+
+      <div class="remedies-grid" id="remedies-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- 3. FEED, FORAGE & EQUINE FUEL CENTER -->
+    <div class="tab-panel" id="calculator-tab">
+      <div class="section-header-wrap">
+        <div>
+          <h2 class="section-title">🌾 گھوڑوں کی خوراک، چارہ جات و ایکوائن فیول سینٹر</h2>
+          <p class="section-subtitle">روزمرہ مکس راشن، فیڈنگ ٹائم ٹیبل، پانی کی ضرورت، چارہ جات کی تحقیق اور امریکن ایکوائن فیول سپلیمنٹس</p>
+        </div>
+      </div>
+
+      <!-- Sub-Tabs Bar -->
+      <div class="nutrition-sub-tabs" role="tablist" aria-label="خوراک کے ذیلی شعبے">
+        <button class="sub-tab-btn active" data-subtab="calc-subpanel">
+          <span>🧮 راشن و پانی کیلکولیٹر</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="efuel-subpanel">
+          <span>⚡ ایکوائن فیول USA (کیلشیم)</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="mixes-subpanel">
+          <span>🍲 روزمرہ مکس راشن</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="fodder-subpanel">
+          <span>🌿 چارہ جات ڈائریکٹری</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="benefits-subpanel">
+          <span>🌾 اجزاء اور طبی فوائد</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="schedule-subpanel">
+          <span>⏰ اوقات و ٹائم ٹیبل</span>
+        </button>
+        <button class="sub-tab-btn" data-subtab="hydration-subpanel">
+          <span>💧 پانی اور ہائیڈریشن</span>
+        </button>
+      </div>
+
+      <!-- 3.1 CALCULATOR SUB-PANEL -->
+      <div class="nutrition-sub-panel active" id="calc-subpanel">
+        <div class="calc-layout">
+          <!-- Calculator Inputs -->
+          <div class="calc-card">
+            <h3 style="color: var(--gold-400); margin-bottom: 1.25rem;">⚙️ گھوڑے کی تفصیلات درج کریں</h3>
+            
+            <div class="form-group">
+              <label class="form-label" for="horse-weight">گھوڑے کا وزن / جسامت کا زمرہ:</label>
+              <select id="horse-weight" class="form-select">
+                <option value="light">ہلکا / نوجوان گھوڑا (350 تا 400 کلوگرام)</option>
+                <option value="medium" selected>درمیانہ نیزہ بازی گھوڑا (400 تا 480 کلوگرام)</option>
+                <option value="heavy">بھاری / لمبا قد گھوڑا (480 تا 550+ کلوگرام)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="work-intensity">مشق و ٹریننگ کا مرحلہ:</label>
+              <select id="work-intensity" class="form-select">
+                <option value="rest">آرام / ہلکی واک (Rest & Light Routine)</option>
+                <option value="training" selected>روٹین ٹریننگ و مشق (Daily Tent-Pegging Practice)</option>
+                <option value="tournament">مقابلہ / ٹورنامنٹ کا ہفتہ (Match & Peak Performance)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="current-season">موجودہ موسم:</label>
+              <select id="current-season" class="form-select">
+                <option value="winter" selected>موسمِ سرما (سردیاں - گرم تاثیر راشن مطلوب)</option>
+                <option value="summer">موسمِ گرما (گرمیاں - ٹھنڈی تاثیر راشن مطلوب)</option>
+              </select>
+            </div>
+
+            <!-- Dynamic Water Intake Badge -->
+            <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: var(--radius-md); padding: 1rem; margin-top: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="color: #7dd3fc; font-weight: 600;">💧 متوقع یومیہ پانی کی ضرورت:</span>
+                <span id="calculated-water-liters" style="font-family: var(--font-latin); font-weight: 800; color: #38bdf8; font-size: 1.2rem;">35 تا 45 لیٹر</span>
+              </div>
+              <small style="color: var(--text-muted); display: block; margin-top: 0.35rem;">پانی ہمیشہ تازہ اور صاف ہونا چاہیے؛ دوڑ کے بعد نیم گرم دیں۔</small>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.08); border-right: 3px solid var(--gold-500); padding: 0.85rem; border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-secondary); margin-top: 1.25rem;">
+              💡 <strong>ویٹرنری اصول:</strong> راشن میں خشک چارے (Roughage) کا تناسب کم از کم 60% اور دانے (Grain) کا تناسب زیادہ سے زیادہ 40% ہونا چاہیے تاکہ قولنج سے بچاؤ رہے۔
+            </div>
+          </div>
+
+          <!-- Calculated Results -->
+          <div class="feed-results-card">
+            <div class="feed-plan-header">
+              <h3 class="feed-plan-title">📊 تجویز کردہ یومیہ دیسی ونڈا و چارہ</h3>
+              <span class="pres-badge">مستند راشن</span>
+            </div>
+
+            <div class="feed-items-list">
+              <div class="feed-item-row">
+                <span class="feed-item-name">🫘 دیسی چنے (رات بھر بھگو کر):</span>
+                <span class="feed-item-qty" id="feed-chana-qty">2.0 کلوگرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🌾 جَو کا دلیہ (پکا ہوا):</span>
+                <span class="feed-item-qty" id="feed-barley-qty">1.0 کلوگرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🍞 گندم کا چوکر (نم کر کے):</span>
+                <span class="feed-item-qty" id="feed-bran-qty">1.0 کلوگرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🟫 پرانا دیسی گڑ:</span>
+                <span class="feed-item-qty" id="feed-gur-qty">300 گرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🧈 خالص دیسی گھی / السی تیل:</span>
+                <span class="feed-item-qty" id="feed-ghee-qty">120 گرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">💎 ایکوائن فیول بلیو فیول (کیلشیم):</span>
+                <span class="feed-item-qty" id="feed-bluefuel-qty">40 گرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🌿 خشک گھاس / روڈس گراس ہے:</span>
+                <span class="feed-item-qty" id="feed-hay-qty">8.0 کلوگرام</span>
+              </div>
+              <div class="feed-item-row">
+                <span class="feed-item-name">🌱 تازہ سبز چارہ (لوسرن / برسیم):</span>
+                <span class="feed-item-qty" id="feed-green-qty">15.0 کلوگرام</span>
+              </div>
+            </div>
+
+            <div class="match-day-drink-box">
+              <strong>🥤 مقابلے کے دن کا خصوصی دیسی انرجی ٹونک:</strong>
+              <p>نیزہ بازی کے رن سے 1.5 گھنٹہ قبل 100 گرام پرانا گڑ، 5 گرام کالا نمک اور 1 چمچ تخم ملنگا 4 لیٹر تازہ پانی میں گھول کر پلائیں۔ رن کے بعد جب سانس بحال ہو جائے تو ہلکا نیم گرم پانی پلائیں۔</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.2 EQUINE FUEL USA SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="efuel-subpanel">
+        <div class="efuel-hero-banner">
+          <div class="efuel-banner-badge">🇺🇸 Made in USA | Premium Equine Growth & Wellness</div>
+          <h3 class="efuel-banner-title">ایکوائن فیول (Equine Fuel USA) - پریمیم ہارس سپلیمنٹس و کیلشیم</h3>
+          <p class="efuel-banner-desc">
+            امریکہ کے سائنسی فارمولے پر تیار کردہ مستند ایکوائن سپلیمنٹس جو گھوڑوں اور بچھڑوں کی تیز رفتار گروتھ، فولادی ہڈیوں، پٹھوں کی طاقت اور نیزہ بازی کی اعلیٰ پرفارمنس کے لیے دنیا بھر میں مانے جاتے ہیں۔ گھڑ سواروں کا آزمودہ اور بے مثال نتائج کا حامل فارمولا۔
+          </p>
+          <div class="efuel-banner-actions">
+            <a href="https://www.youtube.com/@Equine-fuel/videos" target="_blank" rel="noopener" class="btn-efuel-youtube">
+              <span>▶️ یوٹیوب ویڈیوز و ٹرانسفارمیشن دیکھیں</span>
+            </a>
+            <a href="https://www.equinefuelusa.com" target="_blank" rel="noopener" class="btn-efuel-web">
+              <span>🌐 وزٹ آفیشل ویب سائٹ (equinefuelusa.com)</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="efuel-grid" id="efuel-products-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+      </div>
+
+      <!-- 3.3 DAILY FEED MIX RECIPES SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="mixes-subpanel">
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="color: var(--gold-400); font-size: 1.4rem; margin-bottom: 0.35rem;">🍲 آزمودہ روزمرہ مکس راشن فارمولے</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">نیزہ بازی ٹورنامنٹ، روزانہ مشق، کمزور گھوڑے کا وزن بڑھانے، اور گرمی و سردی کے لیے الگ الگ متوازن دیسی ترکیبیں</p>
+        </div>
+        <div class="mix-grid" id="feed-mixes-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+      </div>
+
+      <!-- 3.4 FODDER & ROUGHAGE ENCYCLOPEDIA SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="fodder-subpanel">
+        <div class="fodder-controls">
+          <div>
+            <h3 style="color: var(--gold-400); font-size: 1.4rem; margin-bottom: 0.35rem;">🌿 چارہ جات انسائیکلوپیڈیا و ریسرچ گائیڈ</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">سبز چارے اور خشک گھاس کی غذائی اقدار، کلوگرام مقدار، کٹائی کا وقت اور احتیاطی تدابیر</p>
+          </div>
+          <div class="search-bar-wrap">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="fodder-search-input" 
+              class="search-input" 
+              placeholder="چارے کا نام تلاش کریں (مثلاً: لوسرن، الفالفا، روڈس گراس، برسیم، جئی، توڑی)...">
+          </div>
+          <div class="category-filter-chips" id="fodder-filter-chips">
+            <button class="cat-filter-btn active" data-fodder-filter="all">تمام چارہ جات</button>
+            <button class="cat-filter-btn" data-fodder-filter="green">🌱 سبز چارے</button>
+            <button class="cat-filter-btn" data-fodder-filter="dry">🌾 خشک گھاس و ہے (Hay)</button>
+            <button class="cat-filter-btn" data-fodder-filter="warning">⚠️ احتیاطی انتباہ</button>
+          </div>
+        </div>
+
+        <div class="fodder-grid" id="fodder-grid-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+      </div>
+
+      <!-- 3.5 FEED INGREDIENTS & BENEFITS SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="benefits-subpanel">
+        <div class="fodder-controls">
+          <div>
+            <h3 style="color: var(--gold-400); font-size: 1.4rem; margin-bottom: 0.35rem;">🌾 کون سی خوراک کون سا فائدہ دے گی؟</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">ہر اناج، دال، تیل اور سپلیمنٹ کی افادیت، مسلز، سانس اور کھروں پر اس کے اثرات اور طریقہ استعمال</p>
+          </div>
+          <div class="search-bar-wrap">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="ingredients-search-input" 
+              class="search-input" 
+              placeholder="خوراک کا نام تلاش کریں (مثلاً: چنے، جَو، گڑ، گھی، السی، کالا نمک، میتھی)...">
+          </div>
+        </div>
+
+        <div class="ingredients-benefits-grid" id="ingredients-grid-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+      </div>
+
+      <!-- 3.6 DAILY FEEDING SCHEDULE & TIMELINE SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="schedule-subpanel">
+        <div style="background: rgba(10, 45, 33, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-xl); padding: 1.75rem; margin-bottom: 2rem;">
+          <h3 style="color: var(--gold-400); font-size: 1.4rem; margin-bottom: 0.75rem;">⏰ 24 گھنٹے کا گھڑ سوار فیڈنگ ٹائم ٹیبل</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 2;" id="schedule-overview-text">
+            گھوڑے کا معدہ چھوٹا ہوتا ہے اس لیے دن میں تھوڑی تھوڑی خوراک 3 سے 4 بار دینا اور چارہ ہمہ وقت میسر رکھنا ہاضمے کا بنیادی اصول ہے۔
+          </p>
+        </div>
+
+        <div class="schedule-timeline" id="schedule-timeline-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+
+        <div style="margin-top: 2rem; background: rgba(212, 175, 55, 0.08); border: 1px solid var(--gold-500); border-radius: var(--radius-xl); padding: 1.5rem;" id="golden-rules-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+      </div>
+
+      <!-- 3.7 WATER & HYDRATION SUB-PANEL -->
+      <div class="nutrition-sub-panel" id="hydration-subpanel">
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="color: #38bdf8; font-size: 1.4rem; margin-bottom: 0.35rem;">💧 پانی اور ہائیڈریشن گائیڈ برائے گھوڑے</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">موسم، محنت اور وزن کے مطابق یومیہ پانی کی مقدار اور گرم گھوڑے کو پانی پلانے کا سائنسی پروٹوکول</p>
+        </div>
+
+        <div class="water-needs-grid" id="water-needs-container">
+          <!-- Injected via feed-data.js & app.js -->
+        </div>
+
+        <div class="ice-water-warning-card">
+          <strong>🚨 شدید ویٹرنری انتباہ: گرم گھوڑے کو ٹھنڈا برف والا پانی ہرگز نہ پلائیں!</strong>
+          <p>
+            نیزہ بازی کی دوڑ یا سخت مشق کے فوری بعد جب گھوڑے کا جسم گرم اور پسینے سے تر ہو، اسے یخ ٹھنڈا پانی پلانا جان لیوا ثابت ہو سکتا ہے۔ اس سے معدے کی نسیں سکڑ جاتی ہیں، شدید قولنج (Spasmodic Colic) ہو سکتا ہے یا دونوں اگلے کھروں میں خون جم کر دائمی لنگڑاہٹ (Founder / Laminitis) پیدا ہو جاتی ہے۔ ہمیشہ پہلے 30 سے 45 منٹ واک کروائیں، پسینہ سکھائیں اور نیم گرم تازہ پانی پلائیں۔
+          </p>
+        </div>
+
+        <div class="calc-layout" style="margin-bottom: 2rem;">
+          <div class="calc-card">
+            <h4 style="color: var(--gold-400); margin-bottom: 1rem;">🐎 مشق کے بعد کول ڈاؤن واک کا مرحلہ وار پروٹوکول:</h4>
+            <div class="step-item"><strong>مرحلہ 1:</strong> نیزہ بازی کے بعد فوری زین کھولیں اور گھوڑے کو 15 سے 20 منٹ کھلی فضا میں سیدھی واک کروائیں۔</div>
+            <div class="step-item"><strong>مرحلہ 2:</strong> سینے اور پچھلی ٹانگوں پر ہلکا تازہ پانی ڈال کر وائپر سے فوراً نچوڑیں تاکہ پانی جلد پر گرم نہ ہو۔</div>
+            <div class="step-item"><strong>مرحلہ 3:</strong> 40 منٹ بعد جب نتھنے نارمل ہو جائیں تو 2 سے 3 گھونٹ نیم گرم پانی دیں؛ 10 منٹ بعد حسبِ خواہش پینے دیں۔</div>
+          </div>
+
+          <div class="homemade-electrolyte-card" id="homemade-electrolyte-container">
+            <!-- Injected via feed-data.js & app.js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. EMERGENCY & TRIAGE PANEL -->
+    <div class="tab-panel" id="emergency-tab">
+      <div class="section-header-wrap">
+        <div>
+          <h2 class="section-title">🚑 ایمرجنسی فرسٹ ایڈ و خطرناک علامات</h2>
+          <p class="section-subtitle">کب دیسی علاج کافی ہے اور کب فوراً مستند ویٹرنری ڈاکٹر کو بلانا ضروری ہے</p>
+        </div>
+      </div>
+
+      <!-- Equine Vitals Guide -->
+      <h3 style="color: var(--gold-400); margin-bottom: 1rem;">🩺 گھوڑے کے نارمل وائٹل سائنز (Equine Vital Signs)</h3>
+      <div class="vitals-grid" id="vitals-grid-container">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Red Flags List -->
+      <h3 style="color: #fda4af; margin: 1.5rem 0 1rem;">🚨 خطرناک علامات جن پر فوری ڈاکٹر کو بلائیں (Red Flags)</h3>
+      <div class="emergency-redflags-list" id="redflags-container">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- 5. KITCHEN HERBS MATERIA MEDICA PANEL -->
+    <div class="tab-panel" id="herbs-tab">
+      <div class="herbs-banner-card">
+        <div style="max-width: 600px; z-index: 2;">
+          <h2 class="section-title" style="font-size: 2.2rem;">🌿 کچن اشیاء کی طبی ڈائریکٹری</h2>
+          <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 2;">
+            کچن میں موجود قدرتی مصالحہ جات اور جڑی بوٹیوں کی سائنسی افادیت، فعال اجزاء اور گھوڑوں کے لیے محفوظ ترین مقداریں۔
+          </p>
+        </div>
+      </div>
+
+      <div class="herbs-grid" id="herbs-grid-container">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar" aria-label="موبائل نیویگیشن">
+    <button class="mobile-nav-btn active" data-tab="chat-tab">
+      <span class="icon">💬</span>
+      <span>اے آئی ڈاکٹر</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="remedies-tab">
+      <span class="icon">📚</span>
+      <span>دیسی نسخے</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="calculator-tab">
+      <span class="icon">🌾</span>
+      <span>خوراک و چارہ</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="emergency-tab">
+      <span class="icon">🚑</span>
+      <span>ایمرجنسی</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="herbs-tab">
+      <span class="icon">🌿</span>
+      <span>کچن اشیاء</span>
+    </button>
+  </nav>
+
+  <!-- Modals -->
+
+  <!-- Remedy Detail Modal -->
+  <div class="modal-overlay" id="remedy-detail-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="remedy-modal-title">تفصیلِ نسخہ</h3>
+        <button class="btn-modal-close" aria-label="بند کریں">&times;</button>
+      </div>
+      <div class="modal-body" id="remedy-modal-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Prescription Modal -->
+  <div class="modal-overlay" id="printable-rx-modal">
+    <div class="modal-card" style="max-width: 760px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🖨️ مستند ویٹرنری نسخہ کارڈ</h3>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button class="btn-send" id="rx-print-action-btn" style="padding: 0.35rem 1rem;">
+            <span>پرنٹ کریں</span> 🖨️
+          </button>
+          <button class="btn-modal-close" aria-label="بند کریں">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="rx-pad-content">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ سیٹنگز و Groq API</h3>
+        <button class="btn-modal-close" aria-label="بند کریں">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="api-key-input">Groq API Key:</label>
+          <input 
+            type="password" 
+            id="api-key-input" 
+            class="form-input" 
+            placeholder="gsk_..." 
+            style="direction: ltr; font-family: monospace;">
+          <small style="color: var(--text-muted); display: block; margin-top: 0.35rem;">
+            ڈیفالٹ کی پہلے سے فعال ہے۔ اگر آپ اپنی نجی کی لگانا چاہیں تو یہاں تبدیل کر سکتے ہیں۔
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="model-select">AI ماڈل کا انتخاب:</label>
+          <select id="model-select" class="form-select" style="direction: ltr;">
+            <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (تجویز کردہ - ذہین اور تیز ترین)</option>
+            <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (انتہائی تیز رفتار)</option>
+            <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn-card-view" id="reset-settings-btn">
+            ڈیفالٹ پر لائیں
+          </button>
+          <button type="button" class="btn-send" id="save-settings-btn">
+            محفوظ کریں
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="remedies-data.js"></script>
+  <script src="feed-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
