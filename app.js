@@ -7,7 +7,7 @@
 const DEFAULT_GROQ_KEY = "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";
 const DEFAULT_MODEL = "llama-3.3-70b-versatile";
 
-const SYSTEM_PROMPT = `آپ "اسپِ شفا" کے ایک مستند، ماہر اور انتہائی تجربہ کار ویٹرنری ڈاکٹر (Veterinary Doctor) ہیں جنہیں نیزہ بازی (Tent Pegging) میں استعمال ہونے والے گھوڑوں کی صحت، خوراک، چارہ جات، بیماریوں، پٹھوں کی فٹنس، دیسی علاج اور پریمیم سپلیمنٹس (بالخصوص Equine Fuel USA اور کیلشیم) کا وسیع تجربہ ہے۔ آپ کا کام گھوڑوں کی بیماریوں، پٹھوں کے کھچاؤ، چوٹوں، تھکاوٹ، خوراک و راشن اور فٹنس کے لیے بہترین مشورہ دینا ہے۔
+const SYSTEM_PROMPT = `آپ "اسپِ شفا" کے ایک مستند، ماہر اور انتہائی تجربہ کار ویٹرنری ڈاکٹر (Veterinary Doctor) ہیں جسے "فہیم غیاث محمود" (Fahim Ghias Mahmood) اور "غیاث فارم ہاؤس" (Ghias Farm House) نے نیزہ بازی، اصطبل اور گھوڑوں کی صحت و غذائیت کے لیے خصوصی طور پر ڈیزائن کیا ہے۔ آپ کا کام نیزہ بازی کے گھوڑوں کی بیماریوں، پٹھوں کے کھچاؤ، چوٹوں، تھکاوٹ، متوازن خوراک و راشن اور فٹنس کے لیے بہترین مشورہ دینا ہے۔
 
 جب بھی آپ سے کسی گھوڑے کے مسئلے، خوراک، چارے، پانی یا سپلیمنٹ کے بارے میں پوچھا جائے تو درج ذیل اصولوں پر عمل کریں:
 1. دیسی علاج کے لیے کچن کی قدرتی اشیاء (ہلدی، اجوائن، سرسوں کا تیل، گڑ، لہسن، سونف، السی، پھٹکری وغیرہ) کے مستند نسخے بتائیں۔
@@ -495,8 +495,8 @@ window.openPrintModalFromMsg = function(btn) {
     <div class="rx-pad">
       <div class="rx-header">
         <div>
-          <div class="rx-clinic-name">اسپِ شفا - دیسی ویٹرنری شفا خانہ</div>
-          <div class="rx-sub">ماہر نیزہ بازی و روایتی گھریلو ٹوٹکے برائے گھوڑے</div>
+          <div class="rx-clinic-name">اسپِ شفا - غیاث فارم ہاؤس (Ghias Farm House)</div>
+          <div class="rx-sub">پیشکش و ڈیزائن: فہیم غیاث محمود | دیسی ویٹرنری شفا خانہ برائے نیزہ بازی</div>
         </div>
         <div style="text-align: left;">
           <div><strong>تاریخ:</strong> ${currentDate}</div>
@@ -509,7 +509,7 @@ window.openPrintModalFromMsg = function(btn) {
       </div>
       <div class="rx-footer">
         <div>⚠️ یہ ایک ابتدائی دیسی علاج ہے۔ سنگین صورت میں فوری قریبی ویٹرنری ڈاکٹر سے رابطہ کریں۔</div>
-        <div>دستخط / مہر: اسپِ شفا 🐎</div>
+        <div>مہر / دستخط: غیاث فارم ہاؤس 🐎 فہیم غیاث محمود</div>
       </div>
     </div>
   `;
@@ -670,8 +670,8 @@ window.printRemedyDirectly = function(remedyId) {
     <div class="rx-pad">
       <div class="rx-header">
         <div>
-          <div class="rx-clinic-name">اسپِ شفا - مستند دیسی نسخہ</div>
-          <div class="rx-sub">${remedy.title}</div>
+          <div class="rx-clinic-name">اسپِ شفا - غیاث فارم ہاؤس (Ghias Farm House)</div>
+          <div class="rx-sub">${remedy.title} | زیرِ اہتمام: فہیم غیاث محمود</div>
         </div>
         <div style="text-align: left;">
           <div><strong>تاریخ:</strong> ${currentDate}</div>
@@ -697,7 +697,7 @@ window.printRemedyDirectly = function(remedyId) {
       </div>
       <div class="rx-footer">
         <div>⚠️ ${remedy.warning}</div>
-        <div>دستخط: اسپِ شفا 🐎</div>
+        <div>دستخط و مہر: غیاث فارم ہاؤس 🐎 فہیم غیاث محمود</div>
       </div>
     </div>
   `;
