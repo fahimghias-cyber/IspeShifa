@@ -2,7 +2,7 @@
 <html lang="ur" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>اسپِ شفا | گھوڑوں کا دیسی علاج اور نیزہ بازی ویٹرنری گائیڈ</title>
   <meta name="description" content="نیزہ بازی کے گھوڑوں کی عام بیماریوں، پٹھوں کے کھچاؤ، چوٹ، سوجن اور فٹنس کے لیے کچن کی قدرتی اشیاء سے مستند اور فوری دیسی ٹوٹکے مع لائیو اے آئی ویٹرنری ڈاکٹر۔">
   <meta name="keywords" content="اسپ شفا, گھوڑوں کا دیسی علاج, نیزہ بازی گھوڑے, گھوڑوں کی بیماریاں, دیسی ٹوٹکے, ہلدی سرسوں لیپ, ویٹرنری ڈاکٹر, tent pegging horse care">
@@ -275,20 +275,8 @@
 
           <!-- Input Form -->
           <div class="chat-input-container">
-            <!-- Mobile Quick Action Strip (Prominent Options for Mobile) -->
-            <div class="mobile-action-strip" id="mobile-action-strip">
-              <button type="button" class="action-strip-btn btn-action-camera" id="action-strip-camera-btn">
-                <span class="action-icon">📸</span>
-                <span class="action-label">تصویر یا ویڈیو بھیجیں</span>
-              </button>
-              <button type="button" class="action-strip-btn btn-action-voice" id="action-strip-voice-btn">
-                <span class="action-icon">🎤</span>
-                <span class="action-label">آواز میں بولیں</span>
-              </button>
-              <button type="button" class="action-strip-btn btn-action-prompts" id="action-strip-prompts-btn">
-                <span class="action-icon">⚡</span>
-                <span class="action-label">فوری نسخے</span>
-              </button>
+            <div class="chat-input-guide-title">
+              <span>🐎 گھوڑے کی بیماری، علامت یا راشن کا سوال پوچھیں:</span>
             </div>
 
             <!-- Image Attachment Preview Bar -->
@@ -325,18 +313,21 @@
               <textarea 
                 class="chat-textarea" 
                 id="chat-input" 
-                rows="1" 
-                placeholder="یا یہاں اپنا سوال لکھیں..."></textarea>
+                rows="2" 
+                placeholder="یہاں اپنا سوال لکھیں، مثلاً: گھوڑے کے پٹھے کھچ گئے ہیں، پیٹ میں مروڑ ہے، یا موٹا کرنے کا نسخہ بتائیں..."></textarea>
               
-              <div class="input-actions">
-                <button type="button" class="btn-camera" id="camera-btn" title="گھوڑے کی بیماری، چوٹ یا کھر کی تصویر/ویڈیو بھیجیں">
-                  📷
+              <div class="chat-input-actions-bar">
+                <button type="button" class="btn-chat-action btn-action-camera" id="camera-btn" title="گھوڑے کی بیماری یا کھر کی تصویر/ویڈیو بھیجیں">
+                  <span class="action-icon">📸</span>
+                  <span class="action-text">تصویر بھیجیں</span>
                 </button>
-                <button type="button" class="btn-voice" id="voice-btn" title="پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)">
-                  🎤
+                <button type="button" class="btn-chat-action btn-action-voice" id="voice-btn" title="پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)">
+                  <span class="action-icon">🎤</span>
+                  <span class="action-text">بول کر بتائیں</span>
                 </button>
-                <button type="submit" class="btn-send" id="send-btn" title="مشورہ لیں">
-                  <span>مشورہ لیں</span> 🚀
+                <button type="submit" class="btn-chat-submit" id="send-btn" title="ڈاکٹر سے فوری مشورہ لیں">
+                  <span class="submit-text">مشورہ لیں</span>
+                  <span class="submit-icon">🚀</span>
                 </button>
               </div>
             </form>
@@ -773,7 +764,10 @@
       <div class="modal-body" id="rx-pad-content">
         <!-- Injected via JS -->
       </div>
-    <!-- Mobile Quick Prompts Bottom Sheet Modal -->
+    </div>
+  </div>
+
+  <!-- Mobile Quick Prompts Bottom Sheet Modal -->
   <div class="modal-overlay mobile-prompts-overlay" id="mobile-prompts-modal">
     <div class="modal-card mobile-prompts-sheet">
       <div class="mobile-sheet-drag-handle"></div>

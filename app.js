@@ -1004,7 +1004,12 @@ function removeTypingIndicator() {
 
 function scrollToBottom() {
   const chatMessages = document.getElementById("chat-messages");
+  if (!chatMessages) return;
   chatMessages.scrollTop = chatMessages.scrollHeight;
+  const lastMsg = chatMessages.lastElementChild;
+  if (lastMsg && window.innerWidth <= 768) {
+    lastMsg.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }
 
 function renderHistoryMessages() {
@@ -1101,7 +1106,7 @@ function initVoiceRecognition() {
     isRecording = true;
     if (voiceBtn) {
       voiceBtn.classList.add("recording");
-      voiceBtn.innerHTML = "🔴";
+      voiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-text">روکیں</span>`;
       voiceBtn.title = "ریکارڈنگ جاری ہے... بولتے رہیں (روکنے کے لیے دوبارہ کلک کریں)";
     }
     if (actionStripVoiceBtn) {
@@ -1126,17 +1131,17 @@ function initVoiceRecognition() {
     isRecording = false;
     if (voiceBtn) {
       voiceBtn.classList.remove("recording");
-      voiceBtn.innerHTML = "🎤";
+      voiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-text">بول کر بتائیں</span>`;
       voiceBtn.title = "پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)";
     }
     if (actionStripVoiceBtn) {
       actionStripVoiceBtn.classList.remove("recording");
-      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-label">آواز میں بولیں</span>`;
+      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-label">بول کر بتائیں</span>`;
     }
     if (voiceNotice) {
       voiceNotice.classList.add("hidden");
     }
-    chatInput.placeholder = "یا یہاں اپنا سوال لکھیں...";
+    chatInput.placeholder = "یہاں اپنا سوال لکھیں، مثلاً: گھوڑے کے پٹھے کھچ گئے ہیں، پیٹ میں مروڑ ہے، یا موٹا کرنے کا نسخہ بتائیں...";
     if (autoStopTimer) clearTimeout(autoStopTimer);
   }
 
