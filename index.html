@@ -283,50 +283,61 @@
             <div id="image-preview-bar" class="image-preview-bar hidden">
               <div class="preview-thumb-wrap">
                 <img id="image-preview-img" src="" alt="پیشگی تصویر">
-                <span class="preview-badge">📷 تصویر منسلک</span>
+                <span class="preview-badge">📷 تصویر</span>
               </div>
               <div class="preview-info">
                 <span id="preview-filename">horse_photo.jpg</span>
                 <small>ویٹرنری معائنے کے لیے تیار</small>
               </div>
               <button type="button" id="preview-direct-send-btn" class="btn-preview-send" title="ڈاکٹر سے فوری معائنہ کرائیں">
-                🚀 معائنہ کرائیں
+                🚀 معائنہ
               </button>
               <button type="button" id="remove-image-btn" class="btn-remove-preview" title="تصویر ہٹائیں">✕</button>
             </div>
 
-            <!-- Voice Recording Notice -->
+            <!-- Voice Recording Live Notice / Bar -->
             <div id="voice-recording-notice" class="voice-recording-notice hidden">
               <div class="recording-indicator-left">
-                <span class="recording-dot"></span>
-                <span class="recording-text">🔴 لائیو آواز سنی جا رہی ہے... بولتے رہیں</span>
+                <span class="recording-pulse-dot"></span>
+                <div class="voice-wave-anim">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="recording-timer" id="voice-timer">00:00</span>
+                <span class="recording-text" id="voice-status-text">🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولتے رہیں</span>
               </div>
-              <button type="button" id="stop-voice-btn" class="btn-stop-voice" title="ریکارڈنگ روکیں">
-                روکیں ⏹️
-              </button>
+              <div class="recording-actions-right">
+                <button type="button" id="stop-voice-btn" class="btn-stop-voice" title="ریکارڈنگ مکمل کریں اور سوال پوچھیں">
+                  <span>⏹️ مکمل کریں</span>
+                </button>
+                <button type="button" id="cancel-voice-btn" class="btn-cancel-voice" title="منسوخ کریں">✕</button>
+              </div>
             </div>
 
             <!-- Hidden File and Camera Inputs -->
             <input type="file" id="image-upload-input" accept="image/*,video/*" style="display: none;">
 
             <form class="chat-input-form" id="chat-form">
+              <!-- Media / Camera Button -->
+              <button type="button" class="btn-chat-action btn-action-camera" id="camera-btn" title="گھوڑے کی تصویر یا ویڈیو منسلک کریں">
+                <span class="action-icon">📸</span>
+                <span class="action-text">تصویر</span>
+              </button>
+
+              <!-- Text Input -->
               <textarea 
                 class="chat-textarea" 
                 id="chat-input" 
-                rows="2" 
-                placeholder="یہاں اپنا سوال لکھیں، مثلاً: گھوڑے کے پٹھے کھچ گئے ہیں، پیٹ میں مروڑ ہے، یا موٹا کرنے کا نسخہ بتائیں..."></textarea>
+                rows="1" 
+                placeholder="اپنا سوال لکھیں یا 🎤 مائیک دبا کر بولیں..."></textarea>
               
-              <div class="chat-input-actions-bar">
-                <button type="button" class="btn-chat-action btn-action-camera" id="camera-btn" title="گھوڑے کی بیماری یا کھر کی تصویر/ویڈیو بھیجیں">
-                  <span class="action-icon">📸</span>
-                  <span class="action-text">تصویر بھیجیں</span>
-                </button>
-                <button type="button" class="btn-chat-action btn-action-voice" id="voice-btn" title="پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)">
+              <!-- Voice Mic and Submit Actions -->
+              <div class="chat-input-actions-group">
+                <button type="button" class="btn-chat-action btn-action-voice" id="voice-btn" title="پنجابی یا اردو میں بولیں (مائیک دبائیں)">
                   <span class="action-icon">🎤</span>
-                  <span class="action-text">بول کر بتائیں</span>
+                  <span class="action-text">بولیں</span>
                 </button>
                 <button type="submit" class="btn-chat-submit" id="send-btn" title="ڈاکٹر سے فوری مشورہ لیں">
-                  <span class="submit-text">مشورہ لیں</span>
+                  <span class="submit-text">مشورہ</span>
                   <span class="submit-icon">🚀</span>
                 </button>
               </div>

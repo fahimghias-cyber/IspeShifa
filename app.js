@@ -7,27 +7,57 @@
 // Default Configuration
 const DEFAULT_GROQ_KEY = "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";
 const DEFAULT_MODEL = "qwen/qwen3.8-27b";
-const VISION_MODEL = "llama-3.2-11b-vision-preview";
+const VISION_MODEL = "qwen/qwen3.8-27b";
+const WHISPER_MODEL = "whisper-large-v3";
+
+function getApiKey() {
+  const saved = localStorage.getItem("ispeshifaa_groq_key");
+  if (saved && saved.trim().startsWith("gsk_")) {
+    return saved.trim();
+  }
+  return DEFAULT_GROQ_KEY;
+}
 
 const SYSTEM_PROMPT = `You are "اسپِ شفا" (Isp-e-Shifaa) - a world-class Senior Equine Veterinarian, Tent Pegging Specialist & Master of Global & Desi Natural Remedies, patronized by "فہیم غیاث محمود" (Fahim Ghias Mahmood) and "غیاث فارم ہاؤس" (Ghias Farm House).
 
 CRITICAL MULTILINGUAL & CULTURAL RULES:
 1. TRILINGUAL FLUENCY: You are deeply fluent in Punjabi (Shahmukhi / Urdu script), Urdu, and English.
 2. AUTOMATIC LANGUAGE DETECTION:
-   - If the user writes or speaks in PUNJABI (e.g. "گھوڑا رَج کے نئیں کھاندا", "پٹھے کھچے گئے نے لتاں اکڑ گئیاں", "پیٹ چ ول پے گئے نے", "کھر پات گئے نے", "نال لانا", "پتھے تے توڑی", "گھوڑا سوکھ گیا اے موٹا کرنا اے", "چھولے تے دلیہ"):
+   - If the user writes or speaks in PUNJABI (e.g. "گھوڑا رَج کے نئیں کھاندا", "پٹھے کھچے گئے نے لتاں اکڑ گئیاں", "پیٹ چ ول پے گئے نے", "کھر پات گئے نے", "نال لانا", "پتھے تے توڑی", "گھوڑا سوکھ گیا اے موٹا کرنا اے", "چھولے تے دلیہ", "مہینے دا ونڈا حساب کرو"):
      -> YOU MUST RESPOND IN AUTHENTIC, WARM, RESPECTFUL, AND CLEAR PUNJABI written in Urdu/Shahmukhi script! Address the user respectfully (e.g. "محترم ویر جی / گھوڑ سوار بھائی / نیزہ باز سجنو"). Explain everything in simple Punjabi steps.
    - If the user writes or speaks in URDU:
      -> Respond in fluent, professional, and elegant Urdu.
    - If the user writes or speaks in ENGLISH:
      -> Respond in professional, fluent English.
 
-3. WORLDWIDE NATURAL & HERBAL WISDOM (پوری دنیا دے دیسی تے قدرتی نسخے):
+3. EQUINE NUTRITION, RATION & WANDA FORMULATION MATHEMATICS (غذائی حساب کتاب و راشن فارمولا):
+   - You are a world authority on Equine Nutrition and Wanda (Concentrate feed) formulation for Tent Pegging (نیزہ بازی), Thoroughbred, Arabian, and Country-bred horses.
+   - When the user asks for a DAILY, WEEKLY, or 1-MONTH (30 DAYS) or 2-MONTH (60 DAYS) WANDA CALCULATION (e.g. "پورے مہینے کا ونڈا کیلکولیٹ کر کے دیں جو ایک دن کا نسخہ بتا رہے ہیں"):
+     • You MUST calculate exact mathematical totals for every single ingredient based on the requested duration (multiply daily amount × 30 days)!
+     • Example Standard Daily Muscle & Conditioning Wanda (گھوڑے کا روزانہ ونڈا) and 30-Day Monthly Totals:
+       1. Boiled Barley / Jowar (ابلا جَو / دلیہ): 2 kg to 2.5 kg/day -> 30 دن کی کل مقدار = 60 کلو تا 75 کلو۔
+       2. Soaked Black Chickpeas (دیسی کالے چنے): 1.25 kg/day -> 30 دن کی کل مقدار = 37.5 کلو (یا 1 سے 1.5 کلو کے مطابق 30 تا 45 کلو)۔
+       3. Wheat Bran (گندم کا میٹھا چوکر): 1.5 kg/day -> 30 دن کی کل مقدار = 45 کلو۔
+       4. Flaxseed Jelly (السی کا قوام): 150g to 200g/day -> 30 دن کی کل مقدار = 4.5 کلو تا 6 کلو۔
+       5. Pure Desi Ghee or Mustard Oil (خالص دیسی گھی یا سرسوں دا تیل): 100g to 150g/day -> 30 دن کی کل مقدار = 3 کلو تا 4.5 کلو۔
+       6. Old Jaggery (پرانا کالا گُڑ): 200g to 250g/day -> 30 دن کی کل مقدار = 6 کلو تا 7.5 کلو۔
+       7. Equine Fuel Blue Fuel (امریکن کیلشیم و بائیو منرلز): 50g/day -> 30 دن کی کل مقدار = 1.5 کلو۔
+       8. Lucerne Hay / Rhodes Grass (لوسرن ہے یا روڈس گھاس): 6 تا 8 کلو روزانہ -> 30 دن کی کل مقدار = 180 کلو تا 240 کلو۔
+       9. Common Salt / Electro Fuel: 30g/day -> 30 دن کی کل مقدار = 900 گرام (~1 کلو)۔
+     • Always present the calculations in a clear, well-structured table or numbered breakdown:
+       - 📋 روزانہ خوراک (Daily Quantity)
+       - 📦 30 دن کی کل خوراک (30-Day Bulk Quantity)
+       - ⏰ کھلانے کے اوقات و طریقہ (Feeding Schedule & Prep Instructions: morning daliya + chokar; evening soaked chane + alsi + ghee + gur)
+       - ⚠️ لازمی ہدایات و پرہیز (Drinking water 40-60L, avoid dry todi impaction, dental rasping, deworming)
+     • If the user specifies their own daily recipe (e.g. "2 kg barley, 1 kg oats"), calculate the 30-day requirement accurately according to their specific ingredients!
+
+4. WORLDWIDE NATURAL & HERBAL WISDOM (پوری دنیا دے دیسی تے قدرتی نسخے):
    - Traditional Indo-Pak Desi Ayurvedic & Unani: Haldi (Turmeric) & mustard oil warm poultice (لیپ), Alsi (Flaxseed) jelly decoction, Gur (Old Jaggery) & Desi Ghee energy balls, Ajwain, Saunf, Hing & Kala Namak digestive tonic, Garlic, Alum (پھٹکری), Copper sulfate (نیلا تھوتھا), Tara mira oil, Fenugreek (میتھی).
    - Arab & Bedouin Equestrian Traditions: Dates, Nigella sativa (کلونجی), Camel milk for recovery, herbal hoof conditioners.
    - Western & Global Equine Herbalism: Apple cider vinegar for digestion & joint stiffness, Chamomile & Peppermint for gut colic spasms, Linseed hot mash, Epsom salt soaks for hoof abscesses, Bentonite clay poultices, Arnica for bruising.
    - Equine Fuel USA: Blue Fuel (Calcium & bio-minerals for bone density and frame), Electro Fuel (B-vitamins & electrolytes for summer hydration), Calm Fuel (chelated magnesium for mental focus), Hoof Fuel (biotin, zinc, methionine). YouTube: https://www.youtube.com/@Equine-fuel/videos
 
-4. BALANCED MODERN MEDICAL VETERINARY GUIDANCE (جدید میڈیکل ویٹرنری رائے):
+5. BALANCED MODERN MEDICAL VETERINARY GUIDANCE (جدید میڈیکل ویٹرنری رائے):
    - In addition to natural herbs, provide sound modern medical veterinary guidance where necessary for the horse's safety:
      • Colic emergencies: Recommend Flunixin Meglumine (Banamine) IV/IM or Hyoscine/Buscopan for severe visceral spasm, listening for gut sounds (Borborygmi), heart rate monitoring, nasogastric tube decompression by vet.
      • Equine Gastric Ulcer Syndrome (EGUS): Omeprazole (GastroGard) 4mg/kg, frequent forage, buffering with alfalfa.
@@ -36,7 +66,7 @@ CRITICAL MULTILINGUAL & CULTURAL RULES:
      • Laminitis / Founder: Emergency cryotherapy (ice boots), soft bedding, low-starch diet.
      • Wound management: Povidone-iodine wash, antiseptic sprays, tetanus toxoid prophylaxis.
 
-5. PHOTO & VIDEO VISUAL INSPECTION (تصویر و کیمرہ معائنہ):
+6. PHOTO & VIDEO VISUAL INSPECTION (تصویر و کیمرہ معائنہ):
    - When an image or video is provided by the user:
      • Carefully inspect the visible anatomy (hoof, fetlock, knee, hock, tendons, withers, back, skin, eye).
      • Provide a structured report:
@@ -499,7 +529,7 @@ function initChat() {
 function getSelectedModel() {
   const saved = localStorage.getItem("ispeshifaa_groq_model");
   // Auto-migrate if saved model is obsolete or unavailable on Groq
-  if (!saved || saved.includes("llama-3.3-70b") || saved.includes("mixtral")) {
+  if (!saved || saved.includes("llama-3.3-70b") || saved.includes("mixtral") || saved.includes("llama-3.2-11b") || saved.includes("llama3-70b")) {
     return DEFAULT_MODEL;
   }
   return saved;
@@ -657,6 +687,46 @@ Thank you for providing the visual media. Here is the clinical veterinary evalua
   // CASE B: PUNJABI LANGUAGE TEXT QUERIES (خالص پنجابی جوابات)
   // -------------------------------------------------------------
   if (lang === "pa") {
+    // 0. Monthly Wanda / Ration Calculation (30 دن دا ونڈا حساب)
+    if (q.includes("مہینے") || q.includes("30 دن") || q.includes("مہینہ") || (q.includes("ونڈا") && (q.includes("حساب") || q.includes("کیلکولیٹ") || q.includes("کتنا") || q.includes("روزانہ")))) {
+      const reply = `**🌾 گھوڑے لئی 1 مہینے (30 دن) دے دیسی ونڈے دا مکمل حساب کتاب**
+*(فہیم غیاث محمود - غیاث فارم ہاؤس دی مستند فیلڈ رہنمائی)*
+
+ویر جی! تہاڈے گھوڑے دے روزانہ دے شاہی نسخے نوں 30 دن (1 مہینے) لئی ضرب دے کے پورا سٹاک تے حساب تیار کیتا گیا اے:
+
+---
+
+### **📋 1. روزانہ خوراک بمقابلہ 30 دن (1 مہینے) دا کل ونڈا:**
+
+| نمبر | خوراک دا جزو | روزانہ مقدار (فی گھوڑا) | 30 دن دی کل مقدار (1 مہینہ) | دینے دا وقت و طریقہ |
+|:---:|:---|:---:|:---:|:---|
+| 1 | **ابلا ہویا جَو (دلیہ)** | 2.0 کلو | **60 کلو** (ڈیڑھ من) | سویرے ابال کے ٹھنڈا کر کے دوو |
+| 2 | **دیسی کالے چھولے (چنے)** | 1.25 کلو | **37.5 کلو** (لگ بھگ 1 من) | رات بھر بھگو کے شام نوں ہلکا ابال کے |
+| 3 | **گندم دا مٹھا چوکر** | 1.5 کلو | **45 کلو** | دلیے چ ملا کے آنتاں دی صفائی لئی |
+| 4 | **السی دا قوام (لعاب)** | 150 تا 200 گرام | **4.5 تا 6 کلو** | رات نوں پکا کے لیس بنا کے |
+| 5 | **خالص دیسی گھی** | 100 تا 150 گرام | **3 تا 4.5 کلو** | نیم گرم کر کے گُڑ چ رلا کے شام نوں |
+| 6 | **پرانا کالا گُڑ** | 200 تا 250 گرام | **6 تا 7.5 کلو** | تھکن تے سستی دور کرن لئی |
+| 7 | **امریکن ایکوائن فیول (Blue Fuel)** | 50 گرام | **1.5 کلو** (1 ڈبہ) | ہڈیاں، کھر تے فریم لئی روزانہ ونڈے چ |
+| 8 | **لوسرن ہے یا روڈس گھاس** | 6 تا 8 کلو | **180 تا 240 کلو** | 24 گھنٹے صاف ستھرا پاؤ |
+| 9 | **لاہوری نمک / Electro Fuel** | 30 گرام | **900 گرام (~1 کلو)** | پینے دے پانی یا دانے چ |
+
+---
+
+### **⏰ 2. کھلانے دا روزانہ دا پکا ٹائم ٹیبل:**
+• **🌅 سویرے 6:00 تا 7:00 بجے:** ابلا ہویا جَو دا دلیہ + گندم دا چوکر + 50 گرام بلیو فیول۔
+• **☀️ دوپہرے 1:00 بجے:** تازہ مٹھا پانی (رَج کے پیاؤ) تے 3 کلو لوسرن ہے / روڈس گھاس۔
+• **🌙 شام 6:00 تا 7:00 بجے:** بھیگے تے ہلکیاں ابلیاں کالے چنے + السی دا قوام + نیم گرم دیسی گھی تے کالا گُڑ۔ رات لئی بچی ہوئی گھاس لگی رہوے۔
+
+---
+
+### **⚠️ 3. ضروری اصطبل ہدایات:**
+1. **ڈی ورمنگ (کیڑیاں دی دوائی):** ونڈا شروع کرن توں پہلاں خالی پیٹ **Ivermectin** پیسٹ دیو۔
+2. **دنداں دی ریتائی:** جے گھوڑا دانا چبا نئیں رہیا تے لید چ نکل رہیا اے تاں ڈاکٹر توں داڑھاں چیک کراؤ۔
+3. **پانی دا بندوبست:** روزانہ 45 توں 60 لیٹر تازہ پانی لازمی پلاؤ۔ سکی توڑی مت پاؤ تاکہ پیٹ چ ول (کولک) نہ پوے۔`;
+      conversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
     // 1. Weight Gain / موٹا کرنا
     if (q.includes("موٹا") || q.includes("وزن") || q.includes("کمزور") || q.includes("تگڑا") || q.includes("لیسا") || q.includes("سوکھا") || q.includes("پسلیاں") || q.includes("ہڈیاں") || q.includes("طاقت")) {
       const reply = `**🐎 گھوڑے نوں موٹا، فربہ تے تگڑا کرن دا شاہی نسخہ**
@@ -836,6 +906,46 @@ Feel free to attach a 📷 photo or use the 🎤 mic anytime for step-by-step gu
   // -------------------------------------------------------------
   // CASE D: URDU LANGUAGE TEXT QUERIES (مفصل اردو جوابات)
   // -------------------------------------------------------------
+  // 0. Monthly Wanda / Ration Calculation (پورے مہینے کا ونڈا حساب)
+  if (q.includes("مہینے") || q.includes("30 دن") || q.includes("مہینہ") || (q.includes("ونڈا") && (q.includes("حساب") || q.includes("کیلکولیٹ") || q.includes("کتنا") || q.includes("روزانہ")))) {
+    const reply = `**🌾 گھوڑے کے 1 ماہ (30 دن) کے ونڈے و راشن کا مکمل حسابی جدول**
+*(فہیم غیاث محمود - غیاث فارم ہاؤس کی مستند غذائی رہنمائی)*
+
+محترم گھوڑ سوار! آپ کے گھوڑے کے روزانہ متوازن راشن کو 30 دنوں (ایک مہینے) کے لیے ضرب دے کر مکمل اسٹاک کا حساب درج ذیل ہے:
+
+---
+
+### **📋 روزانہ بمقابلہ 30 دن (1 مہینے) کا کل حسابی جدول:**
+
+| شمار | غذائی جزو | روزانہ مقدار (1 دن) | 30 دن کی کل مقدار (1 مہینہ) | دینے کا وقت و طریقہ |
+|:---:|:---|:---:|:---:|:---|
+| 1 | **ابلا ہوا جَو کا دلیہ** | 2.0 تا 2.5 کلوگرام | **60 تا 75 کلوگرام** | صبح ہلکا ابال کر ٹھنڈا کر کے کھلائیں |
+| 2 | **دیسی کالے چنے** | 1.25 کلوگرام | **37.5 کلوگرام** (~1 من) | رات بھر بھگو کر شام کو ہلکا ابال کر دیں |
+| 3 | **گندم کا میٹھا چوکر** | 1.5 کلوگرام | **45 کلوگرام** | ہاضمہ متحرک رکھنے اور پیٹ ٹھیک رکھنے کے لیے |
+| 4 | **السی کا قوام (لعاب)** | 150 تا 200 گرام | **4.5 تا 6 کلوگرام** | پکا کر لعاب بنا کر کھلائیں، چمک و پسلیوں کے لیے |
+| 5 | **خالص دیسی گھی** | 100 تا 150 گرام | **3 تا 4.5 کلوگرام** | نیم گرم گھی گڑ میں ملا کر شام کو دیں |
+| 6 | **پرانا کالا گُڑ** | 200 تا 250 گرام | **6 تا 7.5 کلوگرام** | توانائی اور تھکن اتارنے کے لیے |
+| 7 | **امریکن ایکوائن فیول (Blue Fuel)** | 50 گرام | **1.5 کلوگرام** (1 پیک) | ہڈیوں کی مضبوطی، کھر اور قد و فریم کے لیے |
+| 8 | **لوسرن ہے یا روڈس گھاس** | 6 تا 8 کلوگرام | **180 تا 240 کلوگرام** | اعلٰی کوالٹی سوکھا چارہ 24 گھنٹے میسر رکھیں |
+| 9 | **لاہوری نمک / Electro Fuel** | 30 گرام | **900 گرام (~1 کلو)** | پینے کے تازہ پانی یا ونڈے میں |
+
+---
+
+### **⏰ روزانہ کھلانے کا شیڈول (Feeding Schedule):**
+• **🌅 صبح (6:00 تا 7:00 بجے):** ابلا ہوا جَو کا دلیہ + گندم کا چوکر + 50 گرام بلیو فیول۔
+• **☀️ دوپہر (1:00 بجے):** وافر تازہ میٹھا پانی + 3 تا 4 کلو لوسرن ہے / روڈس گھاس۔
+• **🌙 شام (6:00 تا 7:00 بجے):** بھیگے و ابلے دیسی چنے + السی کا قوام + نیم گرم دیسی گھی اور گڑ۔ رات کے لیے باقی چارہ لگا دیں۔
+
+---
+
+### **⚠️ اصطبل و خوراک کی احتیاطیں:**
+1. **ڈی ورمنگ (کیڑوں کا خاتمہ):** ونڈا کھلانے سے پہلے خالی پیٹ **Ivermectin** پیسٹ لازمی دیں۔
+2. **دانتوں کی ریتائی:** اگر گھوڑا دانہ چبائے بغیر لید میں نکال رہا ہو تو ویٹرنری ڈاکٹر سے داڑھ چیک کروائیں۔
+3. **پانی کی فراہمی:** روزانہ 40 سے 60 لیٹر تازہ صاف پانی یقینی بنائیں۔ تنہا سوکھی توڑی کھلانے سے پرہیز کریں۔`;
+    conversationHistory.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
   // 1. Weight Gain / Fattening / Weakness (موٹا کرنے کا نسخہ و راشن)
   if (q.includes("موٹا") || q.includes("وزن") || q.includes("کمزور") || q.includes("فربہ") || q.includes("پتلا") || q.includes("ہڈیاں") || q.includes("جسم") || q.includes("سوکھا") || q.includes("طاقتور") || q.includes("کمزوری") || q.includes("قد")) {
     const reply = `**🐎 گھوڑے کو موٹا، فربہ اور تندرست بنانے کا مستند شاہی نسخہ**
@@ -1079,140 +1189,276 @@ function updateSpeechRecognitionLang() {
   }
 }
 
+let mediaRecorder = null;
+let audioChunks = [];
+let audioStream = null;
+let voiceTimerInterval = null;
+let recordingSeconds = 0;
+let isVoiceProcessing = false;
+let shouldDiscardAudio = false;
+
 function initVoiceRecognition() {
   const voiceBtn = document.getElementById("voice-btn");
-  const actionStripVoiceBtn = document.getElementById("action-strip-voice-btn");
   const stopVoiceBtn = document.getElementById("stop-voice-btn");
+  const cancelVoiceBtn = document.getElementById("cancel-voice-btn");
   const voiceNotice = document.getElementById("voice-recording-notice");
+  const voiceTimer = document.getElementById("voice-timer");
+  const voiceStatusText = document.getElementById("voice-status-text");
   const chatInput = document.getElementById("chat-input");
+  const chatForm = document.getElementById("chat-form");
 
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    if (voiceBtn) voiceBtn.style.display = "none";
-    if (actionStripVoiceBtn) actionStripVoiceBtn.style.display = "none";
+  const hasMediaDevices = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const hasSpeechRec = ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window);
+
+  if (!hasMediaDevices && !hasSpeechRec) {
+    if (voiceBtn) {
+      voiceBtn.title = "آپ کے براؤزر میں مائیکروفون کی سہولت دستیاب نہیں ہے";
+      voiceBtn.style.opacity = "0.5";
+    }
     return;
   }
 
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  updateSpeechRecognitionLang();
-
-  let accumulatedTranscript = "";
-  let currentSessionFinal = "";
-  let autoStopTimer = null;
-
-  function startRecordingUI() {
-    isRecording = true;
+  function updateVoiceUIState(recording) {
+    isRecording = recording;
     if (voiceBtn) {
-      voiceBtn.classList.add("recording");
-      voiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-text">روکیں</span>`;
-      voiceBtn.title = "ریکارڈنگ جاری ہے... بولتے رہیں (روکنے کے لیے دوبارہ کلک کریں)";
-    }
-    if (actionStripVoiceBtn) {
-      actionStripVoiceBtn.classList.add("recording");
-      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-label">روکیں (سن رہا ہوں)</span>`;
-    }
-    if (voiceNotice) {
-      voiceNotice.classList.remove("hidden");
-    }
-    chatInput.placeholder = "🔴 آپ کی آواز سنی جا رہی ہے... بولتے رہیں...";
-
-    // Safety timeout: 90 seconds continuous recording max
-    if (autoStopTimer) clearTimeout(autoStopTimer);
-    autoStopTimer = setTimeout(() => {
-      if (isRecording && recognition) {
-        try { recognition.stop(); } catch (e) {}
-      }
-    }, 90000);
-  }
-
-  function stopRecordingUI() {
-    isRecording = false;
-    if (voiceBtn) {
-      voiceBtn.classList.remove("recording");
-      voiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-text">بول کر بتائیں</span>`;
-      voiceBtn.title = "پنجابی یا اردو میں بولیں (وائس ڈکٹیشن)";
-    }
-    if (actionStripVoiceBtn) {
-      actionStripVoiceBtn.classList.remove("recording");
-      actionStripVoiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-label">بول کر بتائیں</span>`;
-    }
-    if (voiceNotice) {
-      voiceNotice.classList.add("hidden");
-    }
-    chatInput.placeholder = "یہاں اپنا سوال لکھیں، مثلاً: گھوڑے کے پٹھے کھچ گئے ہیں، پیٹ میں مروڑ ہے، یا موٹا کرنے کا نسخہ بتائیں...";
-    if (autoStopTimer) clearTimeout(autoStopTimer);
-  }
-
-  recognition.onstart = () => {
-    startRecordingUI();
-  };
-
-  recognition.onresult = (event) => {
-    let interimTranscript = "";
-    for (let i = event.resultIndex; i < event.results.length; ++i) {
-      const transcriptPiece = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        currentSessionFinal += transcriptPiece + " ";
+      voiceBtn.classList.toggle("recording", recording);
+      if (recording) {
+        voiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-text">روکیں</span>`;
+        voiceBtn.title = "ریکارڈنگ جاری ہے... مکمل کرنے کے لیے کلک کریں";
       } else {
-        interimTranscript += transcriptPiece;
+        voiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-text">بولیں</span>`;
+        voiceBtn.title = "پنجابی یا اردو میں بولیں (مائیک دبائیں)";
       }
     }
-    const fullText = (accumulatedTranscript + currentSessionFinal + interimTranscript).trim();
-    chatInput.value = fullText;
-    chatInput.style.height = "auto";
-    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
-  };
+    if (voiceNotice) {
+      if (recording) {
+        voiceNotice.classList.remove("hidden");
+        if (voiceStatusText) voiceStatusText.textContent = "🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولتے رہیں";
+      } else if (!isVoiceProcessing) {
+        voiceNotice.classList.add("hidden");
+      }
+    }
+    if (recording) {
+      chatInput.placeholder = "🔴 آپ کی آواز ریکارڈ ہو رہی ہے... بولتے رہیں...";
+    } else {
+      chatInput.placeholder = "اپنا سوال لکھیں یا 🎤 مائیک دبا کر بولیں...";
+    }
+  }
 
-  recognition.onerror = (event) => {
-    console.warn("Speech recognition event:", event.error);
-    if (event.error === "language-not-supported" && recognition.lang === 'pa-PK') {
-      // Fallback Punjabi to Urdu engine if browser lacks pa-PK model
-      console.log("pa-PK not supported, falling back to ur-PK");
-      recognition.lang = 'ur-PK';
-      try { recognition.start(); } catch (e) {}
+  async function startAudioRecording() {
+    if (isVoiceProcessing) return;
+
+    if (hasMediaDevices && window.MediaRecorder) {
+      try {
+        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        shouldDiscardAudio = false;
+
+        let options = {};
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+          options = { mimeType: "audio/webm;codecs=opus" };
+        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+          options = { mimeType: "audio/webm" };
+        } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
+          options = { mimeType: "audio/mp4" };
+        }
+
+        mediaRecorder = new MediaRecorder(audioStream, options);
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) {
+            audioChunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = async () => {
+          if (audioStream) {
+            audioStream.getTracks().forEach(t => t.stop());
+            audioStream = null;
+          }
+          if (voiceTimerInterval) {
+            clearInterval(voiceTimerInterval);
+            voiceTimerInterval = null;
+          }
+
+          if (shouldDiscardAudio || audioChunks.length === 0) {
+            shouldDiscardAudio = false;
+            updateVoiceUIState(false);
+            return;
+          }
+
+          const mime = mediaRecorder.mimeType || "audio/webm";
+          const audioBlob = new Blob(audioChunks, { type: mime });
+          await processVoiceWithGroqWhisper(audioBlob);
+        };
+
+        mediaRecorder.start(250);
+        updateVoiceUIState(true);
+
+        recordingSeconds = 0;
+        if (voiceTimer) voiceTimer.textContent = "00:00";
+        voiceTimerInterval = setInterval(() => {
+          recordingSeconds++;
+          const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, "0");
+          const secs = String(recordingSeconds % 60).padStart(2, "0");
+          if (voiceTimer) voiceTimer.textContent = `${mins}:${secs}`;
+          if (recordingSeconds >= 90) {
+            stopAudioRecording(true);
+          }
+        }, 1000);
+
+        return;
+      } catch (err) {
+        console.warn("MediaRecorder permission or device error, falling back to Web Speech:", err);
+      }
+    }
+
+    // Web Speech API Fallback if MediaRecorder is unavailable or denied
+    startWebSpeechFallback();
+  }
+
+  function stopAudioRecording(shouldSend = true) {
+    if (!isRecording) return;
+    shouldDiscardAudio = !shouldSend;
+
+    if (voiceTimerInterval) {
+      clearInterval(voiceTimerInterval);
+      voiceTimerInterval = null;
+    }
+
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+      try {
+        mediaRecorder.stop();
+      } catch (e) {}
+    } else if (recognition) {
+      try {
+        recognition.stop();
+      } catch (e) {}
+    }
+
+    updateVoiceUIState(false);
+  }
+
+  async function processVoiceWithGroqWhisper(audioBlob) {
+    isVoiceProcessing = true;
+    if (voiceNotice) voiceNotice.classList.remove("hidden");
+    if (voiceStatusText) voiceStatusText.innerHTML = `<span>⏳ آواز کو تحریر میں تبدیل کیا جا رہا ہے (Whisper AI)...</span>`;
+
+    try {
+      const apiKey = getApiKey();
+      const formData = new FormData();
+      const ext = audioBlob.type.includes("mp4") ? "mp4" : "webm";
+      formData.append("file", audioBlob, `voice_query.${ext}`);
+      formData.append("model", WHISPER_MODEL);
+      formData.append("prompt", "اسپِ شفا، گھوڑوں کا علاج، ونڈا، راشن، نیزہ بازی، چوٹ، ہلدی، دلیہ، لوسرن، پٹھے، کھر، موٹا کرنا، کھچاؤ، پیٹ درد، فہیم غیاث محمود");
+
+      const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`
+        },
+        body: formData
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      const transcribedText = (data.text || "").trim();
+
+      if (transcribedText) {
+        chatInput.value = transcribedText;
+        chatInput.style.height = "auto";
+        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
+
+        if (voiceStatusText) voiceStatusText.textContent = "✅ آواز مل گئی! ڈاکٹر سے جواب لیا جا رہا ہے...";
+        setTimeout(() => {
+          isVoiceProcessing = false;
+          if (voiceNotice) voiceNotice.classList.add("hidden");
+          if (chatForm) chatForm.dispatchEvent(new Event("submit"));
+        }, 500);
+      } else {
+        throw new Error("خالی آواز");
+      }
+    } catch (whisperErr) {
+      console.error("Groq Whisper transcription failed:", whisperErr);
+      if (voiceStatusText) voiceStatusText.textContent = "⚠️ آواز سمجھ نہیں آ سکی۔ براہ کرم دوبارہ بولیں یا لکھ کر پوچھیں۔";
+      setTimeout(() => {
+        isVoiceProcessing = false;
+        if (voiceNotice) voiceNotice.classList.add("hidden");
+      }, 3000);
+    }
+  }
+
+  function startWebSpeechFallback() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert("براہ کرم مائیکروفون کی اجازت دیں یا اپنا سوال لکھ کر پوچھیں۔");
       return;
     }
-    if (event.error !== "no-speech") {
-      stopRecordingUI();
-    }
-  };
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    updateSpeechRecognitionLang();
 
-  recognition.onend = () => {
-    stopRecordingUI();
-  };
+    recognition.onstart = () => {
+      updateVoiceUIState(true);
+    };
 
-  function toggleSpeechRecording() {
-    if (isRecording) {
-      try { recognition.stop(); } catch (e) {}
-      stopRecordingUI();
-    } else {
-      try {
-        accumulatedTranscript = chatInput.value ? chatInput.value.trim() + " " : "";
-        currentSessionFinal = "";
-        updateSpeechRecognitionLang();
-        recognition.start();
-      } catch (e) {
-        console.error("Speech start error:", e);
+    recognition.onresult = (event) => {
+      let text = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        text += event.results[i][0].transcript;
       }
+      if (text) {
+        chatInput.value = text.trim();
+        chatInput.style.height = "auto";
+        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
+      }
+    };
+
+    recognition.onerror = (e) => {
+      console.warn("Speech recognition error:", e);
+      stopAudioRecording(false);
+    };
+
+    recognition.onend = () => {
+      updateVoiceUIState(false);
+      if (chatInput.value.trim()) {
+        setTimeout(() => {
+          if (chatForm) chatForm.dispatchEvent(new Event("submit"));
+        }, 400);
+      }
+    };
+
+    try {
+      recognition.start();
+    } catch (e) {
+      console.error("Speech start error:", e);
     }
   }
 
   if (voiceBtn) {
-    voiceBtn.addEventListener("click", toggleSpeechRecording);
-  }
-
-  if (actionStripVoiceBtn) {
-    actionStripVoiceBtn.addEventListener("click", toggleSpeechRecording);
+    voiceBtn.addEventListener("click", () => {
+      if (isRecording) {
+        stopAudioRecording(true);
+      } else {
+        startAudioRecording();
+      }
+    });
   }
 
   if (stopVoiceBtn) {
     stopVoiceBtn.addEventListener("click", () => {
-      if (isRecording && recognition) {
-        try { recognition.stop(); } catch (e) {}
-      }
-      stopRecordingUI();
+      stopAudioRecording(true);
+    });
+  }
+
+  if (cancelVoiceBtn) {
+    cancelVoiceBtn.addEventListener("click", () => {
+      stopAudioRecording(false);
     });
   }
 }
