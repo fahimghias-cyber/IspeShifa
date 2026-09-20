@@ -488,16 +488,36 @@ function initChat() {
     try {
       const doctorReply = await callGroqVeterinaryAI(query, imageToSend);
       removeTypingIndicator();
-      appendDoctorMessage(doctorReply);
+      const botMsgRow = appendDoctorMessage(doctorReply);
       playNotificationSound();
       saveChatHistory();
+
+      // Automatically speak doctor's response if the question was submitted via voice
+      if (window.isVoiceInputQuery) {
+        window.isVoiceInputQuery = false;
+        setTimeout(() => {
+          if (typeof window.speakDoctorResponse === "function") {
+            window.speakDoctorResponse(doctorReply, botMsgRow);
+          }
+        }, 400);
+      }
     } catch (err) {
       console.warn("Groq API error, using smart local fallback engine:", err);
       removeTypingIndicator();
       const fallbackReply = generateSmartLocalRemedy(query, imageToSend);
-      appendDoctorMessage(fallbackReply);
+      const botMsgRow = appendDoctorMessage(fallbackReply);
       playNotificationSound();
       saveChatHistory();
+
+      // Automatically speak doctor's response if the question was submitted via voice
+      if (window.isVoiceInputQuery) {
+        window.isVoiceInputQuery = false;
+        setTimeout(() => {
+          if (typeof window.speakDoctorResponse === "function") {
+            window.speakDoctorResponse(fallbackReply, botMsgRow);
+          }
+        }, 400);
+      }
     } finally {
       sendBtn.disabled = false;
     }
@@ -1165,8 +1185,10 @@ function appendDoctorMessage(markdownText) {
       </div>
     </div>
   `;
+  msgRow.dataset.rawText = markdownText;
   chatMessages.appendChild(msgRow);
   scrollToBottom();
+  return msgRow;
 }
 
 function showTypingIndicator() {
@@ -1257,6 +1279,9 @@ function escapeHTML(str) {
 // ---------------------------------------------------------
 // Speech Synthesis & Recognition (Multilingual: Punjabi, Urdu, English)
 // ---------------------------------------------------------
+window.isVoiceInputQuery = false;
+window.currentSpeakingBtn = null;
+
 function updateSpeechRecognitionLang() {
   if (!recognition) return;
   if (currentLanguage === "pa") {
@@ -1268,6 +1293,8 @@ function updateSpeechRecognitionLang() {
   }
 }
 
+let recognition = null;
+let isRecording = false;
 let mediaRecorder = null;
 let audioChunks = [];
 let audioStream = null;
@@ -1303,7 +1330,7 @@ function initVoiceRecognition() {
       voiceBtn.classList.toggle("recording", recording);
       if (recording) {
         voiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-text">روکیں</span>`;
-        voiceBtn.title = "ریکارڈنگ جاری ہے... مکمل کرنے کے لیے کلک کریں";
+        voiceBtn.title = "ریکارڈنگ جاری ہے... مکمل کرنے اور بھیجنے کے لیے کلک کریں";
       } else {
         voiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-text">بولیں</span>`;
         voiceBtn.title = "پنجابی یا اردو میں بولیں (مائیک دبائیں)";
@@ -1312,7 +1339,7 @@ function initVoiceRecognition() {
     if (voiceNotice) {
       if (recording) {
         voiceNotice.classList.remove("hidden");
-        if (voiceStatusText) voiceStatusText.textContent = "🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولتے رہیں";
+        if (voiceStatusText) voiceStatusText.textContent = "🔴 آپ کی آواز سنی جا رہی ہے... بولتے رہیں";
       } else if (!isVoiceProcessing) {
         voiceNotice.classList.add("hidden");
       }
@@ -1389,10 +1416,13 @@ function initVoiceRecognition() {
         return;
       } catch (err) {
         console.warn("MediaRecorder permission or device error, falling back to Web Speech:", err);
+        alert("براہِ کرم براؤزر میں مائیکروفون (Microphone) کی اجازت دیں تاکہ آپ بول کر سوال پوچھ سکیں۔\nPlease allow microphone access in your browser.");
+        updateVoiceUIState(false);
+        return;
       }
     }
 
-    // Web Speech API Fallback if MediaRecorder is unavailable or denied
+    // Web Speech API Fallback if MediaRecorder is unavailable
     startWebSpeechFallback();
   }
 
@@ -1426,10 +1456,16 @@ function initVoiceRecognition() {
     try {
       const apiKey = getApiKey();
       const formData = new FormData();
-      const ext = audioBlob.type.includes("mp4") ? "mp4" : "webm";
+      const ext = audioBlob.type.includes("mp4") ? "m4a" : "webm";
       formData.append("file", audioBlob, `voice_query.${ext}`);
-      formData.append("model", WHISPER_MODEL);
-      formData.append("prompt", "اسپِ شفا، گھوڑوں کا علاج، ونڈا، راشن، نیزہ بازی، چوٹ، ہلدی، دلیہ، لوسرن، پٹھے، کھر، موٹا کرنا، کھچاؤ، پیٹ درد، فہیم غیاث محمود");
+      formData.append("model", WHISPER_MODEL || "whisper-large-v3");
+      formData.append("prompt", "اسپِ شفا، گھوڑے کا دیسی علاج، نیزہ بازی، ونڈا، راشن، کھچاؤ، چوٹ، ہلدی، دلیہ، لوسرن، پٹھے، کھر، موٹا کرنا، پیٹ درد، فہیم غیاث محمود");
+
+      if (currentLanguage === "en") {
+        formData.append("language", "en");
+      } else {
+        formData.append("language", "ur");
+      }
 
       const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
         method: "POST",
@@ -1452,12 +1488,21 @@ function initVoiceRecognition() {
         chatInput.style.height = "auto";
         chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
 
-        if (voiceStatusText) voiceStatusText.textContent = "✅ آواز مل گئی! ڈاکٹر سے جواب لیا جا رہا ہے...";
+        // Mark query as originated from voice so the doctor's response is spoken aloud
+        window.isVoiceInputQuery = true;
+
+        if (voiceStatusText) voiceStatusText.textContent = `✅ آواز مل گئی: "${transcribedText.substring(0, 30)}..." — ڈاکٹر سے جواب لیا جا رہا ہے...`;
         setTimeout(() => {
           isVoiceProcessing = false;
           if (voiceNotice) voiceNotice.classList.add("hidden");
-          if (chatForm) chatForm.dispatchEvent(new Event("submit"));
-        }, 500);
+          if (chatForm) {
+            if (typeof chatForm.requestSubmit === "function") {
+              chatForm.requestSubmit();
+            } else {
+              chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+            }
+          }
+        }, 350);
       } else {
         throw new Error("خالی آواز");
       }
@@ -1506,9 +1551,16 @@ function initVoiceRecognition() {
     recognition.onend = () => {
       updateVoiceUIState(false);
       if (chatInput.value.trim()) {
+        window.isVoiceInputQuery = true;
         setTimeout(() => {
-          if (chatForm) chatForm.dispatchEvent(new Event("submit"));
-        }, 400);
+          if (chatForm) {
+            if (typeof chatForm.requestSubmit === "function") {
+              chatForm.requestSubmit();
+            } else {
+              chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+            }
+          }
+        }, 300);
       }
     };
 
@@ -1542,44 +1594,140 @@ function initVoiceRecognition() {
   }
 }
 
+// ---------------------------------------------------------
+// Speech Synthesis (Doctor Voice Audio Response)
+// ---------------------------------------------------------
+function getBestSpeechVoice(targetLang) {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  if (voices.length === 0) return null;
+
+  if (targetLang === "en") {
+    return voices.find(v => v.lang && v.lang.startsWith("en")) || voices[0];
+  }
+
+  // For Urdu / Punjabi:
+  // 1. Direct Urdu or Punjabi voice
+  let best = voices.find(v => v.lang && (v.lang.startsWith("ur") || v.lang.startsWith("pa")));
+  // 2. Hindi voice (hi-IN) - native/near-native phonetic clarity on Windows/Chrome for Urdu/Punjabi
+  if (!best) {
+    best = voices.find(v => v.lang && v.lang.startsWith("hi"));
+  }
+  // 3. Fallback to system default or first available voice
+  if (!best) {
+    best = voices.find(v => v.default) || voices[0];
+  }
+  return best;
+}
+
+function cleanDoctorTextForSpeech(rawText) {
+  if (!rawText) return "";
+  return rawText
+    .replace(/https?:\/\/[^\s]+/g, "") // remove URLs
+    .replace(/[*_~`#|]/g, "")          // remove markdown characters
+    .replace(/<[^>]*>/g, "")           // remove HTML tags
+    .replace(/•|-|\d+\./g, " ")        // replace bullets and numbers with pauses
+    .replace(/⚠️|🐎|🏇|🩺|🩹|🌾|🌿|💊|🫁|💧|💎|📋|👑|🏛️|⚡|📸|🎥|🔊|⏹️|✅|❌|🚀|🔍|🌅|☀️|🌙/g, "") // remove emojis
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+window.speakDoctorResponse = function (rawText, targetRowOrBtn) {
+  if (!('speechSynthesis' in window)) {
+    console.warn("SpeechSynthesis not supported in this browser.");
+    return;
+  }
+
+  // Stop any currently playing speech
+  window.speechSynthesis.cancel();
+  if (window.currentSpeakingBtn) {
+    window.currentSpeakingBtn.innerHTML = `<span>🔊 سنیں</span>`;
+    window.currentSpeakingBtn.classList.remove("playing-audio");
+    window.currentSpeakingBtn = null;
+  }
+
+  let speakBtn = null;
+  if (targetRowOrBtn) {
+    if (targetRowOrBtn.classList && targetRowOrBtn.classList.contains("msg-action-btn")) {
+      speakBtn = targetRowOrBtn;
+    } else if (targetRowOrBtn.querySelector) {
+      speakBtn = targetRowOrBtn.querySelector(".msg-action-btn");
+    }
+  }
+
+  const cleaned = cleanDoctorTextForSpeech(rawText);
+  if (!cleaned) return;
+
+  // Split into sentences/chunks so Chrome never freezes/times out on long responses
+  const sentences = cleaned.match(/[^۔.!?\n]+[۔.!?\n]*/g) || [cleaned];
+  const chunks = sentences.map(s => s.trim()).filter(s => s.length > 0);
+  if (chunks.length === 0) return;
+
+  if (speakBtn) {
+    speakBtn.innerHTML = `<span>⏹️ بند کریں</span>`;
+    speakBtn.classList.add("playing-audio");
+    window.currentSpeakingBtn = speakBtn;
+  }
+
+  let chunkIndex = 0;
+  const targetLang = currentLanguage === "en" ? "en" : (currentLanguage === "pa" ? "pa" : "ur");
+
+  function speakNextChunk() {
+    if (chunkIndex >= chunks.length) {
+      if (speakBtn) {
+        speakBtn.innerHTML = `<span>🔊 سنیں</span>`;
+        speakBtn.classList.remove("playing-audio");
+      }
+      window.currentSpeakingBtn = null;
+      return;
+    }
+
+    const textChunk = chunks[chunkIndex++];
+    const utterance = new SpeechSynthesisUtterance(textChunk);
+    const voice = getBestSpeechVoice(targetLang);
+
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+    } else {
+      utterance.lang = targetLang === "en" ? "en-US" : (targetLang === "pa" ? "pa-PK" : "ur-PK");
+    }
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+
+    utterance.onend = () => {
+      speakNextChunk();
+    };
+
+    utterance.onerror = (err) => {
+      console.warn("Speech utterance error:", err);
+      speakNextChunk();
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  speakNextChunk();
+};
+
 window.speakText = function (btn) {
   if (!('speechSynthesis' in window)) {
     alert("آپ کے براؤزر میں آواز کی سہولت دستیاب نہیں ہے۔");
     return;
   }
 
-  if (speechSynthesis.speaking) {
-    speechSynthesis.cancel();
+  // If this button is already speaking, clicking it stops playback
+  if (window.currentSpeakingBtn === btn && window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
     btn.innerHTML = `<span>🔊 سنیں</span>`;
+    btn.classList.remove("playing-audio");
+    window.currentSpeakingBtn = null;
     return;
   }
 
-  const bubble = btn.closest(".msg-bubble");
-  const textContent = bubble.innerText.replace(/🔊 سنیں|📋 کاپی|🖨️ پرنٹ کارڈ|⏹️ بند کریں/g, '').trim();
-
-  currentSpeechUtterance = new SpeechSynthesisUtterance(textContent);
-  if (currentLanguage === "en") {
-    currentSpeechUtterance.lang = "en-US";
-  } else if (currentLanguage === "pa") {
-    currentSpeechUtterance.lang = "pa-PK";
-  } else {
-    currentSpeechUtterance.lang = "ur-PK";
-  }
-  currentSpeechUtterance.rate = 0.95;
-
-  currentSpeechUtterance.onstart = () => {
-    btn.innerHTML = `<span>⏹️ بند کریں</span>`;
-  };
-
-  currentSpeechUtterance.onend = () => {
-    btn.innerHTML = `<span>🔊 سنیں</span>`;
-  };
-
-  currentSpeechUtterance.onerror = () => {
-    btn.innerHTML = `<span>🔊 سنیں</span>`;
-  };
-
-  speechSynthesis.speak(currentSpeechUtterance);
+  const msgRow = btn.closest(".message-row.bot");
+  const rawText = msgRow ? (msgRow.dataset.rawText || msgRow.querySelector(".msg-bubble").innerText) : "";
+  window.speakDoctorResponse(rawText, btn);
 };
 
 window.copyPrescription = function (btn) {
@@ -2594,366 +2742,4 @@ function playNotificationSound() {
   } catch (e) {
     // AudioContext autoplay restrictions handled silently
   }
-}
-
-// ---------------------------------------------------------
-// Voice Recognition Engine (Dual-Layer: Web Speech API + Groq Whisper Fallback)
-// ---------------------------------------------------------
-let voiceMediaRecorder = null;
-let voiceAudioChunks = [];
-let voiceTimerInterval = null;
-let voiceSecondsElapsed = 0;
-
-function updateSpeechRecognitionLang() {
-  if (recognition) {
-    if (currentLanguage === "pa") {
-      recognition.lang = "ur-PK"; // Punjabi speakers in Pakistan are recognized accurately with ur-PK
-    } else if (currentLanguage === "ur") {
-      recognition.lang = "ur-PK";
-    } else if (currentLanguage === "en") {
-      recognition.lang = "en-US";
-    } else {
-      recognition.lang = "ur-PK";
-    }
-  }
-}
-
-function initVoiceRecognition() {
-  const voiceBtn = document.getElementById("voice-btn");
-  const stopVoiceBtn = document.getElementById("stop-voice-btn");
-  const cancelVoiceBtn = document.getElementById("cancel-voice-btn");
-  const voiceNotice = document.getElementById("voice-recording-notice");
-  const voiceTimer = document.getElementById("voice-timer");
-  const voiceStatusText = document.getElementById("voice-status-text");
-  const chatInput = document.getElementById("chat-input");
-  const chatForm = document.getElementById("chat-form");
-
-  if (!voiceBtn) return;
-
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let silenceTimeout = null;
-  let hasSubmittedThisSession = false;
-
-  function startVoiceTimer() {
-    voiceSecondsElapsed = 0;
-    if (voiceTimer) voiceTimer.textContent = "00:00";
-    if (voiceTimerInterval) clearInterval(voiceTimerInterval);
-    voiceTimerInterval = setInterval(() => {
-      voiceSecondsElapsed++;
-      const mins = String(Math.floor(voiceSecondsElapsed / 60)).padStart(2, "0");
-      const secs = String(voiceSecondsElapsed % 60).padStart(2, "0");
-      if (voiceTimer) voiceTimer.textContent = `${mins}:${secs}`;
-    }, 1000);
-  }
-
-  function stopVoiceTimer() {
-    if (voiceTimerInterval) {
-      clearInterval(voiceTimerInterval);
-      voiceTimerInterval = null;
-    }
-    voiceSecondsElapsed = 0;
-  }
-
-  function setRecordingUI(active, statusMsg) {
-    isRecording = active;
-    if (active) {
-      hasSubmittedThisSession = false;
-      voiceBtn.classList.add("recording");
-      const actionText = voiceBtn.querySelector(".action-text");
-      if (actionText) actionText.textContent = "سن رہا ہے...";
-      if (voiceNotice) voiceNotice.classList.remove("hidden");
-      if (voiceStatusText && statusMsg) voiceStatusText.textContent = statusMsg;
-      startVoiceTimer();
-    } else {
-      voiceBtn.classList.remove("recording");
-      const actionText = voiceBtn.querySelector(".action-text");
-      if (actionText) actionText.textContent = "بولیں";
-      if (voiceNotice) voiceNotice.classList.add("hidden");
-      stopVoiceTimer();
-      if (silenceTimeout) {
-        clearTimeout(silenceTimeout);
-        silenceTimeout = null;
-      }
-    }
-  }
-
-  // Reliable form submit helper
-  function submitCurrentVoiceQuery() {
-    if (hasSubmittedThisSession) return;
-    const query = chatInput ? chatInput.value.trim() : "";
-    if (!query) {
-      setRecordingUI(false);
-      return;
-    }
-
-    hasSubmittedThisSession = true;
-    setRecordingUI(false);
-
-    if (voiceStatusText) {
-      voiceStatusText.textContent = "🚀 سوال اے آئی ڈاکٹر کو بھیجا جا رہا ہے...";
-    }
-
-    setTimeout(() => {
-      if (chatForm) {
-        if (typeof chatForm.requestSubmit === "function") {
-          chatForm.requestSubmit();
-        } else {
-          chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-        }
-      }
-    }, 100);
-  }
-
-  // --- Layer 1: Web Speech API ---
-  if (SpeechRecognition) {
-    try {
-      recognition = new SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.maxAlternatives = 1;
-      updateSpeechRecognitionLang();
-
-      let finalTranscript = "";
-
-      recognition.onstart = () => {
-        setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولیں");
-      };
-
-      recognition.onresult = (event) => {
-        let interimTranscript = "";
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript + " ";
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-
-        const combinedText = (finalTranscript + interimTranscript).trim();
-        if (combinedText && chatInput) {
-          chatInput.value = combinedText;
-          chatInput.style.height = "auto";
-          chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
-        }
-
-        // Auto-detect speech silence: When user pauses for 1.8 seconds after speaking, auto-submit!
-        if (silenceTimeout) clearTimeout(silenceTimeout);
-        silenceTimeout = setTimeout(() => {
-          if (isRecording && chatInput && chatInput.value.trim()) {
-            stopWebSpeech(true);
-          }
-        }, 1800);
-      };
-
-      recognition.onerror = (event) => {
-        console.warn("Speech recognition error:", event.error);
-        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-          setRecordingUI(false);
-          alert("براہِ کرم براؤزر میں مائیکروفون (Microphone) کی اجازت دیں۔\nPlease allow microphone access in your browser.");
-        } else if (event.error === "network") {
-          console.log("Web Speech network error, falling back to MediaRecorder/Whisper...");
-          stopWebSpeech(false);
-          startMediaRecorderWhisper();
-        } else {
-          setRecordingUI(false);
-        }
-      };
-
-      recognition.onend = () => {
-        if (isRecording && !hasSubmittedThisSession) {
-          // Finalize and submit whatever was heard
-          setTimeout(() => {
-            submitCurrentVoiceQuery();
-          }, 150);
-        } else {
-          setRecordingUI(false);
-        }
-      };
-
-      function startWebSpeech() {
-        finalTranscript = "";
-        hasSubmittedThisSession = false;
-        updateSpeechRecognitionLang();
-        try {
-          recognition.start();
-        } catch (e) {
-          console.warn("Recognition already started or error:", e);
-        }
-      }
-
-      function stopWebSpeech(shouldSubmit = true) {
-        if (silenceTimeout) {
-          clearTimeout(silenceTimeout);
-          silenceTimeout = null;
-        }
-
-        try {
-          recognition.stop();
-        } catch (e) {}
-
-        if (shouldSubmit) {
-          setTimeout(() => {
-            submitCurrentVoiceQuery();
-          }, 150);
-        } else {
-          setRecordingUI(false);
-        }
-      }
-
-      function cancelWebSpeech() {
-        if (silenceTimeout) clearTimeout(silenceTimeout);
-        setRecordingUI(false);
-        try {
-          recognition.abort();
-        } catch (e) {}
-        if (chatInput) chatInput.value = "";
-      }
-
-      // Button Event Listeners
-      voiceBtn.addEventListener("click", () => {
-        if (isRecording) {
-          stopWebSpeech(true);
-        } else {
-          startWebSpeech();
-        }
-      });
-
-      if (stopVoiceBtn) {
-        stopVoiceBtn.addEventListener("click", () => {
-          stopWebSpeech(true);
-        });
-      }
-
-      if (cancelVoiceBtn) {
-        cancelVoiceBtn.addEventListener("click", () => {
-          cancelWebSpeech();
-        });
-      }
-
-      return; // Web Speech API successfully set up
-    } catch (e) {
-      console.warn("Web Speech API setup failed, initializing MediaRecorder fallback", e);
-    }
-  }
-
-  // --- Layer 2: MediaRecorder + Groq Whisper API Fallback ---
-  async function startMediaRecorderWhisper() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("آپ کے براؤزر میں مائیکروفون کی سہولت دستیاب نہیں ہے۔ براہِ کرم Chrome یا Edge استعمال کریں۔");
-      return;
-    }
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      voiceAudioChunks = [];
-      hasSubmittedThisSession = false;
-      voiceMediaRecorder = new MediaRecorder(stream);
-
-      voiceMediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) voiceAudioChunks.push(e.data);
-      };
-
-      voiceMediaRecorder.onstop = async () => {
-        stream.getTracks().forEach(track => track.stop());
-        if (voiceAudioChunks.length === 0) return;
-
-        const audioBlob = new Blob(voiceAudioChunks, { type: "audio/webm" });
-        setRecordingUI(false);
-
-        if (chatInput) {
-          chatInput.value = "⏳ آواز سمجھی جا رہی ہے (Transcribing with Whisper)...";
-        }
-
-        try {
-          const transcribedText = await transcribeAudioWithWhisper(audioBlob);
-          if (chatInput && transcribedText && transcribedText.trim()) {
-            chatInput.value = transcribedText.trim();
-            submitCurrentVoiceQuery();
-          } else {
-            if (chatInput) chatInput.value = "";
-          }
-        } catch (err) {
-          console.error("Whisper transcription error:", err);
-          if (chatInput) chatInput.value = "";
-          alert("آواز سمجھنے میں مسئلہ پیش آیا۔ براہِ کرم دوبارہ بولیں یا لکھ کر سوال پوچھیں۔");
-        }
-      };
-
-      voiceMediaRecorder.start();
-      setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے (Whisper Engine)... بولیں");
-    } catch (err) {
-      console.error("Microphone access error:", err);
-      alert("براہِ کرم مائیکروفون کے استعمال کی اجازت دیں (Microphone Permission Required)۔");
-      setRecordingUI(false);
-    }
-  }
-
-  function stopMediaRecorderWhisper(shouldSubmit = true) {
-    if (voiceMediaRecorder && voiceMediaRecorder.state !== "inactive") {
-      voiceMediaRecorder.stop();
-    } else {
-      setRecordingUI(false);
-    }
-  }
-
-  function cancelMediaRecorderWhisper() {
-    voiceAudioChunks = [];
-    if (voiceMediaRecorder && voiceMediaRecorder.state !== "inactive") {
-      voiceMediaRecorder.stop();
-    }
-    setRecordingUI(false);
-    if (chatInput) chatInput.value = "";
-  }
-
-  voiceBtn.addEventListener("click", () => {
-    if (isRecording) {
-      stopMediaRecorderWhisper(true);
-    } else {
-      startMediaRecorderWhisper();
-    }
-  });
-
-  if (stopVoiceBtn) {
-    stopVoiceBtn.addEventListener("click", () => {
-      stopMediaRecorderWhisper(true);
-    });
-  }
-
-  if (cancelVoiceBtn) {
-    cancelVoiceBtn.addEventListener("click", () => {
-      cancelMediaRecorderWhisper();
-    });
-  }
-}
-
-// Transcribe audio using Groq Whisper API
-async function transcribeAudioWithWhisper(audioBlob) {
-  const apiKey = getApiKey();
-  const formData = new FormData();
-  formData.append("file", audioBlob, "voice_input.webm");
-  formData.append("model", WHISPER_MODEL || "whisper-large-v3");
-  formData.append("prompt", "گھوڑے کا دیسی علاج، نیزہ بازی، خوراک، ونڈا، پٹھے، کھر، بیماری، چھولے، دلیہ، لتاں، سوجن");
-
-  if (currentLanguage === "ur" || currentLanguage === "pa") {
-    formData.append("language", "ur");
-  } else if (currentLanguage === "en") {
-    formData.append("language", "en");
-  }
-
-  const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: formData
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error?.message || `Whisper HTTP Error: ${response.status}`);
-  }
-
-  const data = await response.json();
-  return data.text || "";
 }
