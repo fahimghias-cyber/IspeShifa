@@ -529,11 +529,20 @@ function initChat() {
     chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + "px";
   });
 
+  function submitChatForm() {
+    if (!chatForm) return;
+    if (typeof chatForm.requestSubmit === "function") {
+      chatForm.requestSubmit();
+    } else {
+      chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+    }
+  }
+
   // Shift+Enter vs Enter
   chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      chatForm.dispatchEvent(new Event("submit"));
+      submitChatForm();
     }
   });
 
@@ -545,9 +554,11 @@ function initChat() {
         const promptText = btn.dataset.prompt;
         chatInput.value = promptText;
         chatInput.focus();
-        chatForm.dispatchEvent(new Event("submit"));
+        submitChatForm();
       }
     });
+  });
+
   // Global helper for one-click doctor AI questions
   window.askAiDoctor = function (queryText) {
     const desktopTab = document.querySelector('.nav-tab-btn[data-tab="chat-tab"]');
@@ -556,11 +567,10 @@ function initChat() {
     if (mobileTab) mobileTab.click();
 
     const chatInput = document.getElementById("chat-input");
-    const chatForm = document.getElementById("chat-form");
-    if (chatInput && chatForm) {
+    if (chatInput) {
       chatInput.value = queryText;
       chatInput.focus();
-      chatForm.dispatchEvent(new Event("submit"));
+      submitChatForm();
     }
   };
 
@@ -1118,7 +1128,7 @@ Feel free to attach a 📷 photo or use the 🎤 mic anytime for step-by-step gu
 • **کھروں کی سڑاند (Thrush) و پھوڑا:** کھر کی بدبو اور کالے مواد میں نیلا تھوتھا اور تارا میرا تیل لگائیں۔
 • **ٹٹنس پروٹوکول:** زنگ آلود چوٹ پر فوری Tetanus Antitoxin (TAT 1500-3000 IU) لگائیں۔
 
-مزید ویڈیوز کے لیے ڈاکٹر اسامہ اور ڈاکٹر سلطان کے یوٹیوب چینلز وزٹ کریں۔`;
+• اسپِ شفا اے آئی ڈاکٹر کے پاس ان تمام ماہر ڈاکٹرز کے کلینیکل کیسز اور رہنما اصول محفوظ ہیں۔ آپ کسی بھی مسئلے پر مزید رہنمائی لے سکتے ہیں۔`;
     conversationHistory.push({ role: "assistant", content: reply });
     return reply;
   }
