@@ -2631,6 +2631,8 @@ function initVoiceRecognition() {
   if (!voiceBtn) return;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let silenceTimeout = null;
+  let hasSubmittedThisSession = false;
 
   function startVoiceTimer() {
     voiceSecondsElapsed = 0;
@@ -2655,6 +2657,7 @@ function initVoiceRecognition() {
   function setRecordingUI(active, statusMsg) {
     isRecording = active;
     if (active) {
+      hasSubmittedThisSession = false;
       voiceBtn.classList.add("recording");
       const actionText = voiceBtn.querySelector(".action-text");
       if (actionText) actionText.textContent = "سن رہا ہے...";
@@ -2667,7 +2670,38 @@ function initVoiceRecognition() {
       if (actionText) actionText.textContent = "بولیں";
       if (voiceNotice) voiceNotice.classList.add("hidden");
       stopVoiceTimer();
+      if (silenceTimeout) {
+        clearTimeout(silenceTimeout);
+        silenceTimeout = null;
+      }
     }
+  }
+
+  // Reliable form submit helper
+  function submitCurrentVoiceQuery() {
+    if (hasSubmittedThisSession) return;
+    const query = chatInput ? chatInput.value.trim() : "";
+    if (!query) {
+      setRecordingUI(false);
+      return;
+    }
+
+    hasSubmittedThisSession = true;
+    setRecordingUI(false);
+
+    if (voiceStatusText) {
+      voiceStatusText.textContent = "🚀 سوال اے آئی ڈاکٹر کو بھیجا جا رہا ہے...";
+    }
+
+    setTimeout(() => {
+      if (chatForm) {
+        if (typeof chatForm.requestSubmit === "function") {
+          chatForm.requestSubmit();
+        } else {
+          chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        }
+      }
+    }, 100);
   }
 
   // --- Layer 1: Web Speech API ---
@@ -2682,7 +2716,7 @@ function initVoiceRecognition() {
       let finalTranscript = "";
 
       recognition.onstart = () => {
-        setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے... واضح بولیں");
+        setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولیں");
       };
 
       recognition.onresult = (event) => {
@@ -2695,11 +2729,21 @@ function initVoiceRecognition() {
             interimTranscript += transcript;
           }
         }
-        if (chatInput) {
-          chatInput.value = (finalTranscript + interimTranscript).trim();
+
+        const combinedText = (finalTranscript + interimTranscript).trim();
+        if (combinedText && chatInput) {
+          chatInput.value = combinedText;
           chatInput.style.height = "auto";
           chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
         }
+
+        // Auto-detect speech silence: When user pauses for 1.8 seconds after speaking, auto-submit!
+        if (silenceTimeout) clearTimeout(silenceTimeout);
+        silenceTimeout = setTimeout(() => {
+          if (isRecording && chatInput && chatInput.value.trim()) {
+            stopWebSpeech(true);
+          }
+        }, 1800);
       };
 
       recognition.onerror = (event) => {
@@ -2717,16 +2761,19 @@ function initVoiceRecognition() {
       };
 
       recognition.onend = () => {
-        if (isRecording) {
+        if (isRecording && !hasSubmittedThisSession) {
+          // Finalize and submit whatever was heard
+          setTimeout(() => {
+            submitCurrentVoiceQuery();
+          }, 150);
+        } else {
           setRecordingUI(false);
-          if (chatInput && chatInput.value.trim() && chatForm) {
-            chatForm.dispatchEvent(new Event("submit"));
-          }
         }
       };
 
       function startWebSpeech() {
         finalTranscript = "";
+        hasSubmittedThisSession = false;
         updateSpeechRecognitionLang();
         try {
           recognition.start();
@@ -2736,20 +2783,31 @@ function initVoiceRecognition() {
       }
 
       function stopWebSpeech(shouldSubmit = true) {
-        setRecordingUI(false);
+        if (silenceTimeout) {
+          clearTimeout(silenceTimeout);
+          silenceTimeout = null;
+        }
+
         try {
           recognition.stop();
         } catch (e) {}
-        if (shouldSubmit && chatInput && chatInput.value.trim() && chatForm) {
-          chatForm.dispatchEvent(new Event("submit"));
+
+        if (shouldSubmit) {
+          setTimeout(() => {
+            submitCurrentVoiceQuery();
+          }, 150);
+        } else {
+          setRecordingUI(false);
         }
       }
 
       function cancelWebSpeech() {
+        if (silenceTimeout) clearTimeout(silenceTimeout);
         setRecordingUI(false);
         try {
           recognition.abort();
         } catch (e) {}
+        if (chatInput) chatInput.value = "";
       }
 
       // Button Event Listeners
@@ -2770,7 +2828,6 @@ function initVoiceRecognition() {
       if (cancelVoiceBtn) {
         cancelVoiceBtn.addEventListener("click", () => {
           cancelWebSpeech();
-          if (chatInput) chatInput.value = "";
         });
       }
 
@@ -2790,6 +2847,7 @@ function initVoiceRecognition() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       voiceAudioChunks = [];
+      hasSubmittedThisSession = false;
       voiceMediaRecorder = new MediaRecorder(stream);
 
       voiceMediaRecorder.ondataavailable = (e) => {
@@ -2809,11 +2867,11 @@ function initVoiceRecognition() {
 
         try {
           const transcribedText = await transcribeAudioWithWhisper(audioBlob);
-          if (chatInput) {
+          if (chatInput && transcribedText && transcribedText.trim()) {
             chatInput.value = transcribedText.trim();
-            if (chatInput.value.trim() && chatForm) {
-              chatForm.dispatchEvent(new Event("submit"));
-            }
+            submitCurrentVoiceQuery();
+          } else {
+            if (chatInput) chatInput.value = "";
           }
         } catch (err) {
           console.error("Whisper transcription error:", err);
