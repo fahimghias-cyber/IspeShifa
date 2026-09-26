@@ -406,7 +406,7 @@ function detectQueryLanguage(text) {
   // English detection
   const englishWords = ["horse", "colic", "tie", "fatten", "diet", "doctor", "swelling", "leg", "wound", "feed", "hoof", "injury", "help", "treatment", "pain"];
   const isEnglish = englishWords.some(w => t.includes(w)) || /^[a-zA-Z0-9\s.,!?'"()-]+$/.test(t.trim());
-  if (isEnglish && t.length > 5) return "en";
+  if (isEnglish && t.trim().length >= 2) return "en";
 
   // Punjabi vocabulary markers
   const punjabiMarkers = [
@@ -1293,25 +1293,24 @@ window.isVoiceInputQuery = false;
 window.currentSpeakingBtn = null;
 
 function updateSpeechRecognitionLang() {
-  if (!recognition) return;
-  if (currentLanguage === "pa") {
-    recognition.lang = 'pa-PK';
-  } else if (currentLanguage === "en") {
-    recognition.lang = 'en-US';
-  } else {
-    recognition.lang = 'ur-PK';
+  if (recognition) {
+    if (currentLanguage === "en") {
+      recognition.lang = "en-US";
+    } else if (currentLanguage === "pa") {
+      recognition.lang = "ur-PK";
+    } else if (currentLanguage === "ur") {
+      recognition.lang = "ur-PK";
+    } else {
+      recognition.lang = "ur-PK";
+    }
   }
 }
 
-let recognition = null;
-let isRecording = false;
-let mediaRecorder = null;
-let audioChunks = [];
-let audioStream = null;
+let voiceMediaRecorder = null;
+let voiceAudioChunks = [];
 let voiceTimerInterval = null;
-let recordingSeconds = 0;
-let isVoiceProcessing = false;
-let shouldDiscardAudio = false;
+let voiceSecondsElapsed = 0;
+let voiceStream = null;
 
 function initVoiceRecognition() {
   const voiceBtn = document.getElementById("voice-btn");
@@ -1323,285 +1322,333 @@ function initVoiceRecognition() {
   const chatInput = document.getElementById("chat-input");
   const chatForm = document.getElementById("chat-form");
 
-  const hasMediaDevices = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-  const hasSpeechRec = ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window);
+  if (!voiceBtn) return;
 
-  if (!hasMediaDevices && !hasSpeechRec) {
-    if (voiceBtn) {
-      voiceBtn.title = "آپ کے براؤزر میں مائیکروفون کی سہولت دستیاب نہیں ہے";
-      voiceBtn.style.opacity = "0.5";
-    }
-    return;
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let silenceTimeout = null;
+  let hasSubmittedThisSession = false;
+  let activeVoiceEngine = null;
+
+  function startVoiceTimer() {
+    voiceSecondsElapsed = 0;
+    if (voiceTimer) voiceTimer.textContent = "00:00";
+    if (voiceTimerInterval) clearInterval(voiceTimerInterval);
+    voiceTimerInterval = setInterval(() => {
+      voiceSecondsElapsed++;
+      const mins = String(Math.floor(voiceSecondsElapsed / 60)).padStart(2, "0");
+      const secs = String(voiceSecondsElapsed % 60).padStart(2, "0");
+      if (voiceTimer) voiceTimer.textContent = `${mins}:${secs}`;
+    }, 1000);
   }
 
-  function updateVoiceUIState(recording) {
-    isRecording = recording;
-    if (voiceBtn) {
-      voiceBtn.classList.toggle("recording", recording);
-      if (recording) {
-        voiceBtn.innerHTML = `<span class="action-icon">🔴</span><span class="action-text">روکیں</span>`;
-        voiceBtn.title = "ریکارڈنگ جاری ہے... مکمل کرنے اور بھیجنے کے لیے کلک کریں";
-      } else {
-        voiceBtn.innerHTML = `<span class="action-icon">🎤</span><span class="action-text">بولیں</span>`;
-        voiceBtn.title = "پنجابی یا اردو میں بولیں (مائیک دبائیں)";
-      }
-    }
-    if (voiceNotice) {
-      if (recording) {
-        voiceNotice.classList.remove("hidden");
-        if (voiceStatusText) voiceStatusText.textContent = "🔴 آپ کی آواز سنی جا رہی ہے... بولتے رہیں";
-      } else if (!isVoiceProcessing) {
-        voiceNotice.classList.add("hidden");
-      }
-    }
-    if (recording) {
-      chatInput.placeholder = "🔴 آپ کی آواز ریکارڈ ہو رہی ہے... بولتے رہیں...";
-    } else {
-      chatInput.placeholder = "اپنا سوال لکھیں یا 🎤 مائیک دبا کر بولیں...";
-    }
-  }
-
-  async function startAudioRecording() {
-    if (isVoiceProcessing) return;
-
-    if (hasMediaDevices && window.MediaRecorder) {
-      try {
-        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioChunks = [];
-        shouldDiscardAudio = false;
-
-        let options = {};
-        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
-          options = { mimeType: "audio/webm;codecs=opus" };
-        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
-          options = { mimeType: "audio/webm" };
-        } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
-          options = { mimeType: "audio/mp4" };
-        }
-
-        mediaRecorder = new MediaRecorder(audioStream, options);
-
-        mediaRecorder.ondataavailable = (e) => {
-          if (e.data && e.data.size > 0) {
-            audioChunks.push(e.data);
-          }
-        };
-
-        mediaRecorder.onstop = async () => {
-          if (audioStream) {
-            audioStream.getTracks().forEach(t => t.stop());
-            audioStream = null;
-          }
-          if (voiceTimerInterval) {
-            clearInterval(voiceTimerInterval);
-            voiceTimerInterval = null;
-          }
-
-          if (shouldDiscardAudio || audioChunks.length === 0) {
-            shouldDiscardAudio = false;
-            updateVoiceUIState(false);
-            return;
-          }
-
-          const mime = mediaRecorder.mimeType || "audio/webm";
-          const audioBlob = new Blob(audioChunks, { type: mime });
-          await processVoiceWithGroqWhisper(audioBlob);
-        };
-
-        mediaRecorder.start(250);
-        updateVoiceUIState(true);
-
-        recordingSeconds = 0;
-        if (voiceTimer) voiceTimer.textContent = "00:00";
-        voiceTimerInterval = setInterval(() => {
-          recordingSeconds++;
-          const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, "0");
-          const secs = String(recordingSeconds % 60).padStart(2, "0");
-          if (voiceTimer) voiceTimer.textContent = `${mins}:${secs}`;
-          if (recordingSeconds >= 90) {
-            stopAudioRecording(true);
-          }
-        }, 1000);
-
-        return;
-      } catch (err) {
-        console.warn("MediaRecorder permission or device error, falling back to Web Speech:", err);
-        alert("براہِ کرم براؤزر میں مائیکروفون (Microphone) کی اجازت دیں تاکہ آپ بول کر سوال پوچھ سکیں۔\nPlease allow microphone access in your browser.");
-        updateVoiceUIState(false);
-        return;
-      }
-    }
-
-    // Web Speech API Fallback if MediaRecorder is unavailable
-    startWebSpeechFallback();
-  }
-
-  function stopAudioRecording(shouldSend = true) {
-    if (!isRecording) return;
-    shouldDiscardAudio = !shouldSend;
-
+  function stopVoiceTimer() {
     if (voiceTimerInterval) {
       clearInterval(voiceTimerInterval);
       voiceTimerInterval = null;
     }
-
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
-      try {
-        mediaRecorder.stop();
-      } catch (e) { }
-    } else if (recognition) {
-      try {
-        recognition.stop();
-      } catch (e) { }
-    }
-
-    updateVoiceUIState(false);
+    voiceSecondsElapsed = 0;
   }
 
-  async function processVoiceWithGroqWhisper(audioBlob) {
-    isVoiceProcessing = true;
-    if (voiceNotice) voiceNotice.classList.remove("hidden");
-    if (voiceStatusText) voiceStatusText.innerHTML = `<span>⏳ آواز کو تحریر میں تبدیل کیا جا رہا ہے (Whisper AI)...</span>`;
-
-    try {
-      const apiKey = getApiKey();
-      const formData = new FormData();
-      const ext = audioBlob.type.includes("mp4") ? "m4a" : "webm";
-      formData.append("file", audioBlob, `voice_query.${ext}`);
-      formData.append("model", WHISPER_MODEL || "whisper-large-v3");
-      formData.append("prompt", "اسپِ شفا، گھوڑے کا دیسی علاج، نیزہ بازی، ونڈا، راشن، کھچاؤ، چوٹ، ہلدی، دلیہ، لوسرن، پٹھے، کھر، موٹا کرنا، پیٹ درد، فہیم غیاث محمود");
-
-      if (currentLanguage === "en") {
-        formData.append("language", "en");
-      } else {
-        formData.append("language", "ur");
+  function setRecordingUI(active, statusMsg) {
+    isRecording = active;
+    if (active) {
+      hasSubmittedThisSession = false;
+      voiceBtn.classList.add("recording");
+      const actionText = voiceBtn.querySelector(".action-text");
+      if (actionText) actionText.textContent = "سن رہا ہے...";
+      if (voiceNotice) voiceNotice.classList.remove("hidden");
+      if (voiceStatusText && statusMsg) voiceStatusText.textContent = statusMsg;
+      startVoiceTimer();
+    } else {
+      activeVoiceEngine = null;
+      voiceBtn.classList.remove("recording");
+      const actionText = voiceBtn.querySelector(".action-text");
+      if (actionText) actionText.textContent = "بولیں";
+      if (voiceNotice) voiceNotice.classList.add("hidden");
+      stopVoiceTimer();
+      if (silenceTimeout) {
+        clearTimeout(silenceTimeout);
+        silenceTimeout = null;
       }
-
-      const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`
-        },
-        body: formData
-      });
-
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => ({}));
-        throw new Error(errJson.error?.message || `HTTP ${res.status}`);
-      }
-
-      const data = await res.json();
-      const transcribedText = (data.text || "").trim();
-
-      if (transcribedText) {
-        chatInput.value = transcribedText;
-        chatInput.style.height = "auto";
-        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
-
-        // Mark query as originated from voice so the doctor's response is spoken aloud
-        window.isVoiceInputQuery = true;
-
-        if (voiceStatusText) voiceStatusText.textContent = `✅ آواز مل گئی: "${transcribedText.substring(0, 30)}..." — ڈاکٹر سے جواب لیا جا رہا ہے...`;
-        setTimeout(() => {
-          isVoiceProcessing = false;
-          if (voiceNotice) voiceNotice.classList.add("hidden");
-          if (chatForm) {
-            if (typeof chatForm.requestSubmit === "function") {
-              chatForm.requestSubmit();
-            } else {
-              chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-            }
-          }
-        }, 350);
-      } else {
-        throw new Error("خالی آواز");
-      }
-    } catch (whisperErr) {
-      console.error("Groq Whisper transcription failed:", whisperErr);
-      if (voiceStatusText) voiceStatusText.textContent = "⚠️ آواز سمجھ نہیں آ سکی۔ براہ کرم دوبارہ بولیں یا لکھ کر پوچھیں۔";
-      setTimeout(() => {
-        isVoiceProcessing = false;
-        if (voiceNotice) voiceNotice.classList.add("hidden");
-      }, 3000);
     }
   }
 
-  function startWebSpeechFallback() {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      alert("براہ کرم مائیکروفون کی اجازت دیں یا اپنا سوال لکھ کر پوچھیں۔");
+  function submitCurrentVoiceQuery() {
+    if (hasSubmittedThisSession) return;
+    const query = chatInput ? chatInput.value.trim() : "";
+    if (!query) {
+      setRecordingUI(false);
       return;
     }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    updateSpeechRecognitionLang();
 
-    recognition.onstart = () => {
-      updateVoiceUIState(true);
-    };
+    hasSubmittedThisSession = true;
+    window.isVoiceInputQuery = true;
+    setRecordingUI(false);
 
-    recognition.onresult = (event) => {
-      let text = "";
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        text += event.results[i][0].transcript;
+    if (voiceStatusText) {
+      voiceStatusText.textContent = "🚀 سوال اے آئی ڈاکٹر کو بھیجا جا رہا ہے...";
+    }
+
+    setTimeout(() => {
+      if (chatForm) {
+        if (typeof chatForm.requestSubmit === "function") {
+          chatForm.requestSubmit();
+        } else {
+          chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        }
       }
-      if (text) {
-        chatInput.value = text.trim();
-        chatInput.style.height = "auto";
-        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
-      }
-    };
+    }, 120);
+  }
 
-    recognition.onerror = (e) => {
-      console.warn("Speech recognition error:", e);
-      stopAudioRecording(false);
-    };
-
-    recognition.onend = () => {
-      updateVoiceUIState(false);
-      if (chatInput.value.trim()) {
-        window.isVoiceInputQuery = true;
-        setTimeout(() => {
-          if (chatForm) {
-            if (typeof chatForm.requestSubmit === "function") {
-              chatForm.requestSubmit();
-            } else {
-              chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-            }
-          }
-        }, 300);
-      }
-    };
-
+  // --- Engine 1: Web Speech API ---
+  if (SpeechRecognition) {
     try {
-      recognition.start();
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+      updateSpeechRecognitionLang();
+
+      let finalTranscript = "";
+
+      recognition.onstart = () => {
+        activeVoiceEngine = 'speech-api';
+        setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے... بولیں (English / اردو / پنجابی)");
+      };
+
+      recognition.onresult = (event) => {
+        let interimTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + " ";
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        const combinedText = (finalTranscript + interimTranscript).trim();
+        if (combinedText && chatInput) {
+          chatInput.value = combinedText;
+          chatInput.style.height = "auto";
+          chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
+        }
+
+        if (silenceTimeout) clearTimeout(silenceTimeout);
+        silenceTimeout = setTimeout(() => {
+          if (isRecording && chatInput && chatInput.value.trim()) {
+            stopRecording(true);
+          }
+        }, 1800);
+      };
+
+      recognition.onerror = (event) => {
+        console.warn("Speech recognition error:", event.error);
+        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+          setRecordingUI(false);
+          alert("براہِ کرم براؤزر میں مائیکروفون (Microphone) کی اجازت دیں۔\nPlease allow microphone access in your browser.");
+        } else {
+          console.log("Web Speech issue (" + event.error + "), falling back to MediaRecorder/Whisper...");
+          try {
+            recognition.abort();
+          } catch(e) {}
+          startMediaRecorder();
+        }
+      };
+
+      recognition.onend = () => {
+        if (activeVoiceEngine === 'speech-api') {
+          if (isRecording && !hasSubmittedThisSession && chatInput && chatInput.value.trim()) {
+            setTimeout(() => {
+              submitCurrentVoiceQuery();
+            }, 150);
+          } else {
+            setRecordingUI(false);
+          }
+        }
+      };
     } catch (e) {
-      console.error("Speech start error:", e);
+      console.warn("Web Speech API setup failed", e);
+      recognition = null;
     }
   }
 
-  if (voiceBtn) {
-    voiceBtn.addEventListener("click", () => {
-      if (isRecording) {
-        stopAudioRecording(true);
-      } else {
-        startAudioRecording();
-      }
-    });
+  // --- Engine 2: MediaRecorder + Groq Whisper ---
+  async function startMediaRecorder() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("آپ کے براؤزر میں مائیکروفون کی سہولت دستیاب نہیں ہے۔ براہِ کرم Chrome یا Edge استعمال کریں۔");
+      setRecordingUI(false);
+      return;
+    }
+
+    try {
+      voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      voiceAudioChunks = [];
+      hasSubmittedThisSession = false;
+      activeVoiceEngine = 'media-recorder';
+
+      const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4', ''];
+      const supportedMime = mimeTypes.find(type => !type || MediaRecorder.isTypeSupported(type)) || '';
+      voiceMediaRecorder = supportedMime ? new MediaRecorder(voiceStream, { mimeType: supportedMime }) : new MediaRecorder(voiceStream);
+
+      voiceMediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) voiceAudioChunks.push(e.data);
+      };
+
+      voiceMediaRecorder.onstop = async () => {
+        if (voiceStream) {
+          voiceStream.getTracks().forEach(track => track.stop());
+          voiceStream = null;
+        }
+        if (voiceAudioChunks.length === 0) {
+          setRecordingUI(false);
+          return;
+        }
+
+        const mimeType = voiceMediaRecorder.mimeType || 'audio/webm';
+        const audioBlob = new Blob(voiceAudioChunks, { type: mimeType });
+        setRecordingUI(false);
+
+        if (chatInput) {
+          chatInput.value = "⏳ آواز سمجھی جا رہی ہے (Transcribing with Whisper)...";
+        }
+
+        try {
+          const transcribedText = await transcribeAudioWithWhisper(audioBlob);
+          if (chatInput && transcribedText && transcribedText.trim()) {
+            chatInput.value = transcribedText.trim();
+            submitCurrentVoiceQuery();
+          } else {
+            if (chatInput) chatInput.value = "";
+          }
+        } catch (err) {
+          console.error("Whisper transcription error:", err);
+          if (chatInput) chatInput.value = "";
+          alert("آواز سمجھنے میں مسئلہ پیش آیا۔ براہِ کرم دوبارہ بولیں یا لکھ کر سوال پوچھیں۔");
+        }
+      };
+
+      voiceMediaRecorder.start();
+      setRecordingUI(true, "🔴 لائیو آواز ریکارڈ ہو رہی ہے (Whisper Engine)... بولیں");
+    } catch (err) {
+      console.error("Microphone access error:", err);
+      alert("براہِ کرم مائیکروفون کے استعمال کی اجازت دیں (Microphone Permission Required)۔");
+      setRecordingUI(false);
+    }
   }
+
+  function startRecording() {
+    if (recognition) {
+      try {
+        updateSpeechRecognitionLang();
+        recognition.start();
+        return;
+      } catch (e) {
+        console.warn("Could not start Web Speech, using MediaRecorder", e);
+      }
+    }
+    startMediaRecorder();
+  }
+
+  function stopRecording(shouldSubmit = true) {
+    if (silenceTimeout) {
+      clearTimeout(silenceTimeout);
+      silenceTimeout = null;
+    }
+
+    if (activeVoiceEngine === 'speech-api' && recognition) {
+      try {
+        recognition.stop();
+      } catch (e) {}
+      if (shouldSubmit) {
+        setTimeout(() => submitCurrentVoiceQuery(), 150);
+      } else {
+        setRecordingUI(false);
+      }
+    } else if (activeVoiceEngine === 'media-recorder' && voiceMediaRecorder) {
+      if (voiceMediaRecorder.state !== "inactive") {
+        voiceMediaRecorder.stop();
+      } else {
+        setRecordingUI(false);
+      }
+    } else {
+      setRecordingUI(false);
+    }
+  }
+
+  function cancelRecording() {
+    if (silenceTimeout) {
+      clearTimeout(silenceTimeout);
+      silenceTimeout = null;
+    }
+    if (recognition) {
+      try { recognition.abort(); } catch (e) {}
+    }
+    voiceAudioChunks = [];
+    if (voiceMediaRecorder && voiceMediaRecorder.state !== "inactive") {
+      try { voiceMediaRecorder.stop(); } catch (e) {}
+    }
+    if (voiceStream) {
+      voiceStream.getTracks().forEach(track => track.stop());
+      voiceStream = null;
+    }
+    setRecordingUI(false);
+    if (chatInput && (chatInput.value.startsWith("⏳") || chatInput.value.startsWith("🔴"))) {
+      chatInput.value = "";
+    }
+  }
+
+  voiceBtn.addEventListener("click", () => {
+    if (isRecording) {
+      stopRecording(true);
+    } else {
+      startRecording();
+    }
+  });
 
   if (stopVoiceBtn) {
     stopVoiceBtn.addEventListener("click", () => {
-      stopAudioRecording(true);
+      stopRecording(true);
     });
   }
 
   if (cancelVoiceBtn) {
     cancelVoiceBtn.addEventListener("click", () => {
-      stopAudioRecording(false);
+      cancelRecording();
     });
   }
+}
+
+// Transcribe audio using Groq Whisper API
+async function transcribeAudioWithWhisper(audioBlob) {
+  const apiKey = getApiKey();
+  const ext = audioBlob.type.includes("mp4") ? "mp4" : audioBlob.type.includes("ogg") ? "ogg" : "webm";
+  const formData = new FormData();
+  formData.append("file", audioBlob, `voice_input.${ext}`);
+  formData.append("model", WHISPER_MODEL || "whisper-large-v3");
+  formData.append("prompt", "اسپِ شفا، گھوڑے کا دیسی علاج، نیزہ بازی، خوراک، ونڈا، پٹھے، کھر، بیماری، چھولے، دلیہ، لتاں، سوجن");
+
+  if (currentLanguage === "ur" || currentLanguage === "pa") {
+    formData.append("language", "ur");
+  } else if (currentLanguage === "en") {
+    formData.append("language", "en");
+  }
+
+  const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`
+    },
+    body: formData
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || `Whisper HTTP Error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.text || "";
 }
 
 // ---------------------------------------------------------
